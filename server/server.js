@@ -20,11 +20,7 @@ app.use(express.static(path.resolve(__dirname, '../client')));
 
 app.use('/build', express.static(path.resolve(__dirname, '../build')));
 app.use('/', (req, res) => {
-<<<<<<< HEAD
   res.status(200).sendFile(path.resolve(__dirname, '../index.html'));
-=======
-    res.status(200).sendFile(path.resolve(__dirname, '../index.html'));
->>>>>>> dev
 });
 
 // /**
