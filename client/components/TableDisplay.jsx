@@ -3,9 +3,8 @@ import TableColumn from './TableColumn.jsx';
 
 const TableDisplay = () => {
   return (
-    <div>
-      <h1>TableDisplay</h1>
-      <div>
+    <div id='tableDisplayOuter' className='container'>
+      <div id='tableDisplayInner'>
         <TableColumn />
       </div>
     </div>

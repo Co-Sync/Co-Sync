@@ -1,0 +1,109 @@
+* {
+  color: white;
+  text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.5);
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  animation-fill-mode: forwards;
+}
+
+html {
+  height: 100vh;
+  width: 100vw;
+  background: radial-gradient(ellipse at bottom, #1B2735 0%, transparent), radial-gradient(ellipse at top, #090A0F 100%, transparent);
+  overflow: hidden;
+}
+
+.container {
+  height: fit-content;
+  width: fit-content;
+  backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.01);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.homeMain {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.NavBar {
+  display: flex;
+  height: fit-content;
+  align-items: center;
+  position: fixed;
+  justify-content: space-between;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  padding: 10px;
+  backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.01);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 1.5rem;
+  ul {
+    height: inherit;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    list-style: none;
+    li {
+      height: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      cursor: pointer;
+      border-radius: 10px;
+      transition: all 0.2s ease-in-out;
+      &:hover {
+        scale: 1.1;
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+    }
+  }
+  h1 {
+    margin: 0;
+    padding: 1px 10px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: -webkit-linear-gradient(white, #38495a);
+    border-left: 0px transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    height: inherit;
+    -webkit-text-fill-color: transparent;
+    transition: all 0.2s ease-in-out;
+    &:hover {
+      transform: translateX(5px);
+      border-left: 1px solid rgba(255, 255, 255, 0.1);
+    }
+  }
+}
+
+#tableDisplayOuter {
+  width: 100vw;
+  border-radius: 1px;
+  display: flex;
+  justify-content: center;
+  height: 75vh;
+}
+
+#tableDisplayInner {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  width: 100%;
+  height: 100%;
+}
