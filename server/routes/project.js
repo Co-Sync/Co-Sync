@@ -1,29 +1,61 @@
 const express = require('express');
 
-const starWarsController = require('../controllers/starWarsController');
+const projectController = require('../controllers/ProjectController');
 
 const projectRouter = express.Router();
 
+// get all projects
 projectRouter.get('/',
-  projectController.getTasks,
-  (req, res) => res.status(200).json(res.locals.getTasks)
+  projectController.getProjects,
+  (req, res) => res.status(200).json(res.locals.projects)
 );
 
-projectRouter.patch('/',
-  projectController.updateTasks,
-  (req, res) => res.status(200).json(res.locals.updateTasks)
+// get one project
+projectRouter.get('/:projectId',
+  projectController.getOneProject,
+  (req, res) => res.status(200).json(res.locals.project)
 );
 
+// create a project, return created project
+projectRouter.post('/',
+  projectController.createProject,
+  (req, res) => res.status(200).json(res.locals.project)
+);
+
+// create a list, return created list
+projectRouter.post('/list',
+  projectController.createList,
+  (req, res) => res.status(200).json(res.locals.list)
+);
+
+// create a task, return created task
+projectRouter.post('/task',
+  projectController.createTask,
+  (req, res) => res.status(200).json(res.locals.task)
+);
+
+// update a task, return updated task
+projectRouter.patch('/task',
+  projectController.updateTask,
+  (req, res) => res.status(200).json(res.locals.task)
+);
+
+// delete a project
 projectRouter.delete('/',
-  projectController.deleteTasks,
-  (req, res) => res.status(200).json(res.locals.deleteTasks)
+  projectController.deleteProject,
+  (req, res) => res.status(200).end()
 );
 
-projectRouter.put('/',
-  projectController.changeList,
-  (req, res) => res.status(200).json(res.locals.deleteTasks)
+// delete a list
+projectRouter.delete('/list',
+  projectController.deleteList,
+  (req, res) => res.status(200).end()
 );
 
+// delete a task
+projectRouter.delete('/task',
+  projectController.deleteTask,
+  (req, res) => res.status(200).end()
+);
 
-
-module.exports = taskRouter;
+module.exports = projectRouter;
