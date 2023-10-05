@@ -11,10 +11,10 @@ projectRouter.get('/',
 );
 
 // get one project
-projectRouter.get('/:projectId',
-  projectController.getOneProject,
-  (req, res) => res.status(200).json(res.locals.project)
-);
+// projectRouter.get('/:projectId',
+//   projectController.getOneProject,
+//   (req, res) => res.status(200).json(res.locals.project)
+// );
 
 // create a project, return created project
 projectRouter.post('/',
