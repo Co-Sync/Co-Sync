@@ -28,8 +28,8 @@ app.use('/', (req, res) => {
 //  */
 // app.use('/api', apiRouter);
 
-// // catch-all route handler for any requests to an unknown route
-// app.use((req, res) => res.status(404).send('This is not the page you\'re looking for...'));
+// catch-all route handler for any requests to an unknown route
+app.use((req, res) => res.status(404).send('This is not the page you\'re looking for...'));
 
 /**
  * express error handler
