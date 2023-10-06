@@ -3,18 +3,18 @@ const mongoose = require('mongoose');
 
 // get all projects
 const getProjects = async (req, res, next) => {
-    try {
-        const tasks = await Project.find(); 
-        res.locals.projects = tasks;
-        res.status(200).json(res.locals.projects);
-        return next();
-      } catch (error) {
-        console.log(error);
-        next({
-          log: 'Failed to get all projects: ' + error,
-          message: { err: 'Failed to get all projects' },
-        })
-      }
+  try {
+    const tasks = await Project.find();
+    res.locals.projects = tasks;
+    res.status(200).json(res.locals.projects);
+    return next();
+  } catch (error) {
+    console.log(error);
+    next({
+      log: 'Failed to get all projects: ' + error,
+      message: { err: 'Failed to get all projects' },
+    })
+  }
 };
 
 // Create a new project
@@ -60,7 +60,7 @@ const createColumn = async (req, res, next) => {
     next({
       log: `Failed to create new column: ${error}`,
       status: 500,
-      message: { err: 'createColumn middleware is not working correctly.'}
+      message: { err: 'createColumn middleware is not working correctly.' }
     })
   }
 
@@ -68,14 +68,7 @@ const createColumn = async (req, res, next) => {
 
 // Create a new task within a column
 const createTask = async (req, res, next) => {
-  // Requires:
-  //   - req.body.projectId
-  //   - req.body.columnId
-  //   - req.body.taskName
-  
   // find the project with project id -- findOne
-  // insert a new task in the project's columnId column -- find
-  // write the updated project back to db
   try {
     const project = await Project.findOne({
       _id: req.body.projectId
@@ -84,18 +77,16 @@ const createTask = async (req, res, next) => {
     let column = {};
     for (let i = 0; i < project.columns.length; i++) {
       if (project.columns[i]._id.toString() === req.body.columnId) {
-       column = project.columns[i];
+        column = project.columns[i];
       }
     }
-
-    console.log('find project: ', project);
-    console.log('find project column: ', column);
+    // console.log('find project: ', project);
+    // console.log('find project column: ', column);
     const newTask = {
       taskName: req.body.taskName,
       taskComments: ''
     };
-   column.tasks.push(newTask);
-    console.log('insert new task: ', column.tasks);
+    column.tasks.push(newTask);
     await project.save();
 
     res.locals.task = newTask;
@@ -118,36 +109,27 @@ const updateTask = async (req, res, next) => {
     const project = await Project.findOne({
       _id: req.body.projectId
     });
-    console.log("Got Project: ", project);
-
-    console.log("To find column: ", req.body.columnId);
+    // console.log("Got Project: ", project);
+    // console.log("To find column: ", req.body.columnId);
     // find the column;
     let column = {};
     for (let i = 0; i < project.columns.length; i++) {
       if (project.columns[i]._id.toString() === req.body.columnId) {
-       column = project.columns[i];
+        column = project.columns[i];
       }
     }
-    console.log("Got Column: ", column);
-
-    console.log("To find and update task: ", req.body.taskId);
+    // console.log("Got Column: ", column);
+    // console.log("To find and update task: ", req.body.taskId);
     // find the task, and update properties;
     for (let i = 0; i < column.tasks.length; i++) {
       if (column.tasks[i]._id.toString() === req.body.taskId) {
-        console.log("Task before: ", column.tasks[i]);
         column.tasks[i].taskName = req.body.taskName;
         column.tasks[i].taskComments = req.body.taskComments;
-        console.log("Task after: ", column.tasks[i]);
         res.locals.task = column.tasks[i];
         break;
       }
     }
-  
-   // iterate through tasks, find the task, and replace it in the array;
-   
     await project.save();
-
-    
     // res.locals.project = project;
     return next();
   } catch (error) {
@@ -165,14 +147,14 @@ const deleteProject = async (req, res, next) => {
   try {
     const projectId = req.body.projectId;
     const project = await Project.findByIdAndRemove(projectId)
-    
-    if(!project) {
-      return res.status(404).json({message: 'Project not found'})
+
+    if (!project) {
+      return res.status(404).json({ message: 'Project not found' })
     }
 
     return next();
-    
-  } catch(error) {
+
+  } catch (error) {
     console.log(error);
     next({
       log: 'Failed to delete a project: ' + error,
@@ -192,13 +174,13 @@ const deleteColumn = async (req, res) => {
   //   if (!project){
   //     return res.status(404).json({message: 'Project not found'})
   //   }
-    
+
   // }
 };
 
 // Delete a task within a column
 const deleteTask = async (req, res, next) => {
-  try{
+  try {
     const projectId = req.body.projectId;
     const columnId = req.body.columnId;
     const taskId = req.body.taskId;
@@ -207,17 +189,17 @@ const deleteTask = async (req, res, next) => {
     //   projectId,
     //   {$pull: {'columns'}}
     // );
-  
-    if(!project) {
-      return res.status(404).json({message: 'Project not found'})
+
+    if (!project) {
+      return res.status(404).json({ message: 'Project not found' })
     }
 
     task.remove();
     await project.save();
     res.json({ message: 'Task deleted' });
-    
-  } catch(error) {
-        console.log(error);
+
+  } catch (error) {
+    console.log(error);
     next({
       log: 'Failed to delete a task: ' + error,
       message: { err: 'Failed to delete a task' },
