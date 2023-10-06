@@ -81,15 +81,13 @@ const createTask = async (req, res, next) => {
       _id: req.body.projectId
     });
     // find column by id;
-    // let column = {};
-    // for (let i = 0; i < project.columns.length; i++) {
-    //   if (project.columns[i][_id] === req.body.columnId) {
-    //    column = project.columns[i];
-    //   }
-    // }
-    const column = await Project.findOne({
-      _id: req.body.projectId
-    });
+    let column = {};
+    for (let i = 0; i < project.columns.length; i++) {
+      if (project.columns[i]._id.toString() === req.body.columnId) {
+       column = project.columns[i];
+      }
+    }
+
     console.log('find project: ', project);
     console.log('find project column: ', column);
     const newTask = {
@@ -120,17 +118,36 @@ const updateTask = async (req, res, next) => {
     const project = await Project.findOne({
       _id: req.body.projectId
     });
-    const updatedTask = {
-      taskName: req.body.taskName,
-      taskComments: req.body.taskComments
-    };
-    
-  project.columns[req.body.columnId].tasks[req.body.taskId] = updatedTask;
+    console.log("Got Project: ", project);
+
+    console.log("To find column: ", req.body.columnId);
+    // find the column;
+    let column = {};
+    for (let i = 0; i < project.columns.length; i++) {
+      if (project.columns[i]._id.toString() === req.body.columnId) {
+       column = project.columns[i];
+      }
+    }
+    console.log("Got Column: ", column);
+
+    console.log("To find and update task: ", req.body.taskId);
+    // find the task, and update properties;
+    for (let i = 0; i < column.tasks.length; i++) {
+      if (column.tasks[i]._id.toString() === req.body.taskId) {
+        console.log("Task before: ", column.tasks[i]);
+        column.tasks[i].taskName = req.body.taskName;
+        column.tasks[i].taskComments = req.body.taskComments;
+        console.log("Task after: ", column.tasks[i]);
+        res.locals.task = column.tasks[i];
+        break;
+      }
+    }
+  
    // iterate through tasks, find the task, and replace it in the array;
    
     await project.save();
 
-    res.locals.task = updatedTask;
+    
     // res.locals.project = project;
     return next();
   } catch (error) {
