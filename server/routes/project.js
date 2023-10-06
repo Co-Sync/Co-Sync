@@ -22,10 +22,10 @@ projectRouter.post('/',
   (req, res) => res.status(200).json(res.locals.project)
 );
 
-// create a list, return created list
-projectRouter.post('/list',
-  projectController.createList,
-  (req, res) => res.status(200).json(res.locals.list)
+// create a column, return created column
+projectRouter.post('/column',
+  projectController.createColumn,
+  (req, res) => res.status(200).json(res.locals.column)
 );
 
 // create a task, return created task
@@ -43,19 +43,19 @@ projectRouter.patch('/task',
 // delete a project
 projectRouter.delete('/',
   projectController.deleteProject,
-  (req, res) => res.status(200).end()
+  (req, res) => res.status(200).message('Project deleted').end()
 );
 
-// delete a list
-projectRouter.delete('/list',
-  projectController.deleteList,
-  (req, res) => res.status(200).end()
+// delete a column
+projectRouter.delete('/column',
+  projectController.deleteColumn,
+  (req, res) => res.status(200).message('Column deleted').end()
 );
 
 // delete a task
 projectRouter.delete('/task',
   projectController.deleteTask,
-  (req, res) => res.status(200).end()
+  (req, res) => res.status(200).message('Task deleted').end()
 );
 
 module.exports = projectRouter;
