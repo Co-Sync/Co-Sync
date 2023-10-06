@@ -1,0 +1,130 @@
+@import 'Variables.scss';
+
+@keyframes placeholderMoveUp {
+  0% {
+    transform: translate(0px, 0px);
+  }
+  100% {
+    transform: translate(-5.8rem, -1.8rem) scale(0.5);
+  }
+}
+
+@keyframes placeholderMoveDown {
+  0% {
+    transform: translate(-5.8rem, -1.8rem);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 50vw;
+  height: 75vh;
+  .header {
+    font-size: 1.5rem;
+    margin: 5px 0px 0px 0px;
+    padding: 0;
+    width: 100%;
+    color: white;
+    border-bottom: 1px solid white;
+    h1, h2 {
+      margin: 4px 0px;
+      padding: 0;
+    }
+  }
+  .formContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    .formInput {
+      width: 65%;
+      margin: 4px 0px;
+    }
+    .formButton {
+      width: 8rem;
+      height: 2rem;
+      margin: 10px;
+      border-radius: 5px;
+      border: none;
+      background-color: #52baff;
+      font-size: 1.4rem;
+      border: 1px solid white;
+      cursor: pointer;
+    }
+  }
+}
+
+.outerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.TextInputOuter {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  height: fit-content;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  font-size: 1.5rem;
+}
+
+.TextInput {
+  height: 2.5rem;
+  width: 15rem;
+  background-color: transparent;
+  border: none;
+  border-radius: 5px;
+  position: relative;
+  z-index: 1;
+  &:focus {
+    outline: none;
+  }
+}
+
+.TextField {
+  color: white;
+  font-size: 1.5rem;
+  margin: 0;
+  padding: 0;
+  width: fit-content;
+  background-color: transparent;
+  z-index: 2;
+  border: 1.5px solid white;
+  border-radius: 5px;
+  legend {
+    position: relative;
+    width: 4.5rem;
+  }
+  &:focus {
+    outline: none;
+  }
+}
+
+.TextInputHighlight {
+  animation: placeholderMoveDown 0.2s ease-in-out forwards;
+  font-size: 1.5rem;
+  position: absolute;
+  left: 5rem;
+  transform: scale(1);
+  transition: all 0.2s ease-in-out;
+  pointer-events: none;
+  border-radius: 5px;
+  z-index: 2;
+}

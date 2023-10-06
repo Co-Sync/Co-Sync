@@ -1,6 +1,6 @@
 import React from 'react';
 
-const TableTask = ({ taskName, taskComments }) => {
+const TableTask = () => {
   return (
     <div className='container' id='tableTaskMain'>
       <p>Test CSS styles in client</p>
