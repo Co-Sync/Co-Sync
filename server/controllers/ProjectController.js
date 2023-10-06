@@ -13,8 +13,23 @@ const getProjects = async (req, res) => {
 };
 
 // Create a new project
-const createProject = async (req, res) => {
-
+const createProject = async (req, res, next) => {
+  try {
+    const project = {
+      projectName: req.body.projectName,
+      columns: []
+    };
+    const savedProject = await Project.create(project);
+    console.log(savedProject);
+    res.locals.project = savedProject;
+    return next();
+  } catch (error) {
+    console.log(error);
+    next({
+      log: 'Failed to create new project: ' + err,
+      message: { err: 'Failed to create new project' },
+    })
+  }
 };
 
 // Create a new list within a project
