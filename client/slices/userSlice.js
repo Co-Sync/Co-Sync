@@ -5,9 +5,9 @@ const initialState = {
   username: '',
   projects: {
     'project1': {
-      tasks: [
-        'task1'
-      ]
+      columns: [
+        {columnName: 'column1', tasks: [{taskName: 'task1', taskComments: ''}]},
+      ],
     },
   },
   numOfProjects: 1,
