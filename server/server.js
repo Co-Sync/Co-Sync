@@ -38,7 +38,7 @@ app.use('/api/project', projectRouter);
 // these two must be in the end
 app.use('/build', express.static(path.resolve(__dirname, '../build')));
 app.use('/', (req, res) => {
-    res.status(200).sendFile(path.resolve(__dirname, '../index.html'));
+  res.status(200).sendFile(path.resolve(__dirname, '../index.html'));
 });
 
 // catch-all route handler for any requests to an unknown route
