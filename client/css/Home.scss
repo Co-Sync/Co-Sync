@@ -1,29 +1,11 @@
-* {
-  color: white;
-  text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.5);
-}
-
-body {
-  height: 100vh;
-  width: 100vw;
-  margin: 0;
-  padding: 0;
-  animation-fill-mode: forwards;
-}
-
-html {
-  height: 100vh;
-  width: 100vw;
-  background: radial-gradient(ellipse at bottom, #1B2735 0%, transparent), radial-gradient(ellipse at top, #090A0F 100%, transparent);
-  overflow: hidden;
-}
+@import 'Variables.scss';
 
 .container {
   height: fit-content;
   width: fit-content;
   backdrop-filter: blur(10px);
-  background-color: rgba(255, 255, 255, 0.01);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: $semi-transparent;
+  border: 1px solid white;
   border-radius: 10px;
 }
 
@@ -106,4 +88,60 @@ html {
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   width: 100%;
   height: 100%;
+}
+
+#tableColumnMain {
+  box-shadow: 2px 2px 12px rgba(44, 210, 222, 0.545);
+  margin: 20px;
+  min-height: 10vh;
+  background-color: #68697318;
+  min-width: 10vw;
+  height: 35vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  h1 {
+    margin: 0px 5px;
+    padding: 0;
+    font-size: 1.6rem;
+    text-align: center;
+  }
+}
+
+#tableTaskMain {
+  border-left: 2px transparent;
+  border-right: 2px transparent;
+  border-top: 2px solid rgba(255, 255, 255, 0.5);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+  display: grid;
+  padding: 5px;
+  max-width: 15vw;
+  background-color: #aeaeb641;
+  width: 100%;
+  border-radius: 1px;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  button {
+    position: relative;
+    justify-self: end;
+    cursor: pointer;
+    border: 0px transparent;
+    border-radius: 5px;
+    background-color: #6fcdff00;
+    margin: 0px 5px;
+    height: 1.5rem;
+    width: 1.5rem;
+    background-image: url(../../assets/messages.svg);
+    background-size: cover;
+    transition: all 0.2s ease-in-out;
+    &:hover {
+      scale: 1.1;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+  p {
+    font-size: large;
+    margin: 2px;
+    // max-width: 13vw;
+  }
 }
