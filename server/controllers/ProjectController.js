@@ -39,7 +39,38 @@ const createList = async (req, res) => {
 
 // Create a new task within a list
 const createTask = async (req, res) => {
+  // Requires:
+  //   - req.body.projectId
+  //   - req.body.columnId
+  //   - req.body.taskName
+  
+  // find the project with project id -- findOne
+  // insert a new task in the project's columnId column -- find
+  // write the updated project back to db
+  try {
 
+
+    const project = await Project.findOne({
+      _id: req.body.projectId
+    });
+    const newTask = {
+      taskName: req.body.taskName,
+      taskComments: []
+    };
+    project.columns[req.body.columnId].tasks.push(newTask)
+    await project.save();
+
+    res.locals.task = newTask;
+    // res.locals.project = project;
+
+    return next();
+  } catch (error) {
+    console.log(error);
+    next({
+      log: 'Failed to create new task: ' + err,
+      message: { err: 'Failed to create new task' },
+    })
+  }
 };
 
 // Update a task within a list
