@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
@@ -9,10 +11,8 @@ const projectRouter = require('./routes/project');
 // const userRouter = require('./routes/user');
 
 
-const PORT = 3000;
-
-const mongoURI = 'mongodb://localhost/coSyncTest';
-mongoose.connect(mongoURI);
+// const mongoURI = 'mongodb://localhost/coSyncTest';
+// mongoose.connect(mongoURI);
 /**
  * handle parsing request body
  */
@@ -63,8 +63,16 @@ app.use((err, req, res, next) => {
 /**
  * start server
  */
-app.listen(PORT, () => {
-  console.log(`Server listening on port: ${PORT}...`);
-});
+
+mongoose.connect('mongodb+srv://davidtskhvedadze:5dVVyXmiqsRhdSF9@david.hnynaog.mongodb.net/?retryWrites=true&w=majority')
+  .then(() => {
+    app.listen(process.env.PORT, () => {
+      console.log(`Connected to db & Server listening on port: ${process.env.PORT}...`);
+    });
+  })
+  .catch((error) => {
+    console.log(error);
+  })
+
 
 module.exports = app;
