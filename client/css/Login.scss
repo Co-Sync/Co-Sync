@@ -141,6 +141,8 @@
   border-radius: 5px;
   border: 1.5px solid white;
   transition: background-color 0.2s ease-in-out;
+  width: fit-content;
+  min-width: 8vw;
   &:hover {
     background-color: #4086ff;
   }

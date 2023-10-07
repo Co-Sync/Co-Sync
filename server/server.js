@@ -1,7 +1,7 @@
 const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
-
+require('dotenv').config();
 
 const app = express();
 
@@ -11,8 +11,8 @@ const projectRouter = require('./routes/project');
 
 const PORT = 3000;
 
-const mongoURI = 'mongodb://localhost/coSyncTest';
-mongoose.connect(mongoURI);
+// const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/cosync';
+// mongoose.connect(mongoURI);
 /**
  * handle parsing request body
  */

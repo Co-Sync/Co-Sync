@@ -6,12 +6,12 @@ const NavBar = () => {
     <nav className='NavBar'>
       <h1>Co-Sync</h1>
       <ul>
-        <Link to='/'>Home</Link>
-        <Link to='/'>Profile</Link>
+        <Link className='routerLink' to='/'>Home</Link>
+        <Link className='routerLink' to='/'>Profile</Link>
       </ul>
       <ul>
-        <Link to='/'>Settings</Link>
-        <Link to='/login'>Logout</Link>
+        <Link className='routerLink' to='/'>Settings</Link>
+        <Link className='routerLink' to='/login'>Logout</Link>
       </ul>
     </nav>
   )

@@ -12,9 +12,8 @@ const Button = ({ onClick, text }) => {
     <div className='buttonMain'>
       <button 
         className='buttonInput' 
-        type='submit' 
         onClick={(e) => {
-          onClick(e); 
+          if (onClick) onClick(e); 
           addAnimation();
         }}>
         {text}
