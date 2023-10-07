@@ -1,0 +1,39 @@
+/*
+* this needs to be here to enforce these settings at the top level 
+* otherwise things get weird and elements start getting cut off
+*/
+
+@font-face {
+  font-family: JetBrainsMono-Regular;
+  src: url(https://raw.githubusercontent.com/JetBrains/JetBrainsMono/master/fonts/ttf/JetBrainsMono-Regular.ttf);
+}
+
+html {
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  /* background: radial-gradient(ellipse at bottom, #1B2735 0%, transparent), radial-gradient(ellipse at top, #090A0F 100%, transparent); */
+  background-image: url(https://img.freepik.com/free-vector/gradient-dark-dynamic-lines-background_23-2148995950.jpg?w=1800&t=st=1696659036~exp=1696659636~hmac=ef295fc7f4f6967e2906684c6ed085d4b41c734134cba29cb72b3218f3546083);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  overflow: hidden;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: JetBrainsMono-Regular;
+  color: white;
+  text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.5);
+}
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}

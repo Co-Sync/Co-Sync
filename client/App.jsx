@@ -1,11 +1,17 @@
-import React from "react";
+import React from 'react';
+import Home from './components/Home.jsx';
+import Login from './components/Login.jsx';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 const App = () => {
-    return (
-        <div>
-            <h1>Hello World!</h1>
-        </div>
-    );
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;
