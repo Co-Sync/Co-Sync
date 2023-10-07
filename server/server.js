@@ -32,7 +32,7 @@ app.use(express.static(path.resolve(__dirname, '../client')));
 //  * define route handlers
 //  */
 app.use('/api/project', projectRouter);
-// app.use('/api/user', userRouter);
+app.use('/api/user', userRouter);
 
 
 

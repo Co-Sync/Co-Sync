@@ -25,8 +25,8 @@ userController.getAllUsers = (req, res, next) => {
 userController.createUser = async (req, res, next) => {
   // write code here
   // add logic to handle signup using existing username
- try{ if(req.body.username !== null && req.body.password !== null){
-   await User.create({username: req.body.username, password: req.body.password})
+ try{ if(req.body.username !== null && req.body.password !== null && req.body.email !== null){
+   await User.create({username: req.body.username, password: req.body.password, email: req.body.email})
     // console.log('newUser is: ', newUser);
     // console.log(`User list is ${res.locals.users}`)
     res.locals.verifyUser = true;
@@ -73,38 +73,71 @@ userController.createUser = async (req, res, next) => {
 * the appropriate user in the database, and then authenticate the submitted password
 * against the password stored in the database.
 */
-userController.verifyUser = (req, res, next) => {
-  //store the req.body (which should be an object) in a new constant, then use User.find
-  //to compare the username in the req.body to usernames stored in the database.
-  const credentials = req.body;
+userController.verifyUser = async (req, res, next) => {
+  // write code here
+  // console.log("111");
+  const {username, password} = req.body;
 
-  //User.find expects an object as an argument. Code breaks if it is not an object
-  User.findOne({ username: credentials.username })
-    .then ((user) => {
-      if (user == null || user.password !== credentials.password){
-        //redirect to /signup if the user doesn't exist
+  if(!username || !password)({
+    log: 'Please enter a username and password',
+    status: 400,
+    message: { err: 'Error: No username or password'}
+  })
+
+  User.findOne({username})
+    .then((user) => {
+      if(user === null){
+        console.log('error in verify user')
         res.redirect('/signup');
-        // res.locals.url = '/signup';
-      }
-      else {
-        bcrypt
-        .compare(password, credentials.password)
+      };
+      console.log('made it to Bcrypt')
+      bcrypt
+        .compare(password, user.password)
         .then((result) => {
           if(result === false) res.redirect('/signup')
           if(result === true) {
             console.log('Bcrypt compare confirmed');
             res.locals.verifyUser = true;
+            return next()
           }
       })
-        // console.log(user);
-        // res.locals._id = user._id.toString();
-        // //redirect to the homepage
-        // res.locals.url = '/home';
-      }
-    })
-    //reminder: if using asynchronous functions, the next() must be part of said function using .then.
-    //otherwise, it will skip everything since it is synchronous
-    .then (() => next());
+    })  
 };
+// userController.verifyUser = (req, res, next) => {
+//   //store the req.body (which should be an object) in a new constant, then use User.find
+//   //to compare the username in the req.body to usernames stored in the database.
+//   const credentials = req.body;
+//   console.log(credentials);
+ 
+
+  //User.find expects an object as an argument. Code breaks if it is not an object
+//   User.findOne({ username: credentials.username })
+//     .then ((user) => {
+//       if (user.username === null || user.password === null){
+//         //redirect to /signup if the user doesn't exist
+//         console.log('user was not found')
+//         res.redirect('/signup');
+//         // res.locals.url = '/signup';`
+//       }
+//       else {
+//         bcrypt
+//         .compare(user.password, credentials.password)
+//         .then((result) => {
+//           if(result === false) res.redirect('/signup')
+//           if(result === true) {
+//             console.log('Bcrypt compare confirmed');
+//             res.locals.verifyUser = true;
+//           }
+//       })
+//         // console.log(user);
+//         // res.locals._id = user._id.toString();
+//         // //redirect to the homepage
+//         // res.locals.url = '/home';
+//       }
+//     })
+//     //reminder: if using asynchronous functions, the next() must be part of said function using .then.
+//     //otherwise, it will skip everything since it is synchronous
+//     .then (() => next());
+// };
 
 module.exports = userController;

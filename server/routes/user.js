@@ -18,7 +18,7 @@ const userRouter = express.Router();
 
 userRouter.post('/signup', userController.createUser , cookieController.setSSIDCookie, sessionController.startSession, (req, res) => {
   // what should happen here on successful sign up?
-  res.redirect('/home');
+  res.status(200).end();
 });
 
 

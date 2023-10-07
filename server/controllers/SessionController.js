@@ -27,7 +27,12 @@ SessionController.isLoggedIn = async (req, res, next) => {
 SessionController.startSession = async (req, res, next) => {
   //write code here
   console.log('made it to startSession middleware');
+  
+  //create a session.find
+  
+
   const newSession = await Session.create({cookieId: res.locals.ssid})
+  console.log('session cookie', res.locals.ssid)
   console.log('session created');
   // console.log(newSession);
   return next();
