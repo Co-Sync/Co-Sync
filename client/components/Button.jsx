@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 const Button = ({ onClick, text }) => {
-  const spanRef = React.useRef(null);
+  const spanRef = useRef(null);
   const addAnimation = () => {
     spanRef.current.classList.add('buttonOverlayAnimation');
     setTimeout(() => {

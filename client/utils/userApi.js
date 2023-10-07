@@ -8,6 +8,9 @@ export const userApi = createApi({
       //might need to change method in terms of authentication - turn into post req and access body
       query: () => ({ url: '/user', method: 'GET' }),
     }),
+    sendUserCreds: builder.mutation({
+      query: (body) => ({ url: '/user', method: 'POST', body }),
+    }),
   }),
 });
 

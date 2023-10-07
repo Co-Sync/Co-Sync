@@ -8,7 +8,7 @@ const TextInput = ({ placeholder, onChange, value }) => {
           className='TextInput'
           type="text"
           value={value}
-          onChange={onChange}
+          onChange={(e) => onChange(e.target.value)}
           placeholder=''
         />
         <legend></legend>
