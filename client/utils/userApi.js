@@ -16,4 +16,4 @@ export const userApi = createApi({
 
 // const { data: albums = [], isLoading, isFetching, isError, error,} = useGetUserQuery(page);
 
-export const { useGetUserQuery } = userApi;
+export const { useGetUserQuery, sendUserCreds } = userApi;
