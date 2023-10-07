@@ -6,7 +6,7 @@ const getProjects = async (req, res, next) => {
   try {
     const tasks = await Project.find();
     res.locals.projects = tasks;
-    res.status(200).json(res.locals.projects);
+    // res.status(200).json(res.locals.projects);
     return next();
   } catch (error) {
     console.log(error);
@@ -296,7 +296,7 @@ const deleteTask = async (req, res, next) => {
     await project.save();
     return next();
 
-    // The following code uses poll on a nested array.
+    // The following code uses pull on a nested array.
     // let conditionObj = {};
     // conditionObj["columns." + columnIndex + ".tasks._id"] = taskId;
     // let result = await Project.updateOne(
