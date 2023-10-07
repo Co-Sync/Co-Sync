@@ -43,17 +43,22 @@ const createColumn = async (req, res, next) => {
     const project = await Project.findOne({
       _id: req.body.projectId
     });
-    console.log('find project: ', project);
-    console.log('find project column: ', project.columns);
+    if (!project) {
+      return next({
+        status: 404,
+        log: 'project does not exist. ',
+        message: { err: 'project does not exist.' },
+      });
+    }
     const newColumn = {
       columnName: req.body.columnName,
       tasks: []
     }
     project.columns.push(newColumn);
     // console.log('push project column: ', project.columns);
-    await project.save();
+    const updatedProject = await project.save();
 
-    res.locals.column = newColumn;
+    res.locals.column = updatedProject.columns[updatedProject.columns.length - 1];
     return next();
   } catch (error) {
     console.log(error);
@@ -73,12 +78,29 @@ const createTask = async (req, res, next) => {
     const project = await Project.findOne({
       _id: req.body.projectId
     });
+    if (!project) {
+      return next({
+        status: 404,
+        log: 'project does not exist. ',
+        message: { err: 'project does not exist.' },
+      });
+    }
     // find column by id;
-    let column = {};
+    let column;
+    let columnIndex;
     for (let i = 0; i < project.columns.length; i++) {
       if (project.columns[i]._id.toString() === req.body.columnId) {
         column = project.columns[i];
+        columnIndex = i;
+        break;
       }
+    }
+    if (!column) {
+      return next({
+        status: 404,
+        log: 'column does not exist. ',
+        message: { err: 'column does not exist.' },
+      });
     }
     // console.log('find project: ', project);
     // console.log('find project column: ', column);
@@ -87,9 +109,9 @@ const createTask = async (req, res, next) => {
       taskComments: ''
     };
     column.tasks.push(newTask);
-    await project.save();
+    const updatedProject = await project.save();
 
-    res.locals.task = newTask;
+    res.locals.task = updatedProject.columns[columnIndex].tasks[updatedProject.columns[columnIndex].tasks.length - 1];
     // res.locals.project = project;
     return next();
   } catch (error) {
@@ -109,27 +131,52 @@ const updateTask = async (req, res, next) => {
     const project = await Project.findOne({
       _id: req.body.projectId
     });
+    if (!project) {
+      return next({
+        status: 404,
+        log: 'project does not exist. ',
+        message: { err: 'project does not exist.' },
+      });
+    }
     // console.log("Got Project: ", project);
     // console.log("To find column: ", req.body.columnId);
     // find the column;
-    let column = {};
+    let column;
     for (let i = 0; i < project.columns.length; i++) {
       if (project.columns[i]._id.toString() === req.body.columnId) {
         column = project.columns[i];
+        break;
       }
+    }
+    if (!column) {
+      return next({
+        status: 404,
+        log: 'column does not exist. ',
+        message: { err: 'column does not exist.' },
+      });
     }
     // console.log("Got Column: ", column);
     // console.log("To find and update task: ", req.body.taskId);
     // find the task, and update properties;
+    let task;
     for (let i = 0; i < column.tasks.length; i++) {
       if (column.tasks[i]._id.toString() === req.body.taskId) {
-        column.tasks[i].taskName = req.body.taskName;
-        column.tasks[i].taskComments = req.body.taskComments;
-        res.locals.task = column.tasks[i];
+        task = column.tasks[i];
         break;
       }
     }
+    if (!task) {
+      return next({
+        status: 404,
+        log: 'task does not exist. ',
+        message: { err: 'task does not exist.' },
+      });
+    }
+    task.taskName = req.body.taskName;
+    task.taskComments = req.body.taskComments;
     await project.save();
+
+    res.locals.task = task;
     // res.locals.project = project;
     return next();
   } catch (error) {
@@ -145,11 +192,16 @@ const updateTask = async (req, res, next) => {
 // Delete a project (this will delete all column and tasks within the project)
 const deleteProject = async (req, res, next) => {
   try {
-    const projectId = req.body.projectId;
+    const projectId = req.params.projectId;
     const project = await Project.findByIdAndRemove(projectId)
+    console.log('removed project: ', project);
 
     if (!project) {
-      return res.status(404).json({ message: 'Project not found' })
+      return next({
+        status: 404,
+        log: 'project does not exist. ',
+        message: { err: 'project does not exist.' },
+      })
     }
 
     return next();
@@ -164,39 +216,100 @@ const deleteProject = async (req, res, next) => {
 };
 
 // Delete a column within a project (this will delete all tasks within the column)
-const deleteColumn = async (req, res) => {
-  // try{
-  //   const projectId = req.body.projectId;
-  //   const columnId = req.body.columnId;
+const deleteColumn = async (req, res, next) => {
+  try {
+    const projectId = req.params.projectId;
+    const columnId = req.params.columnId;
 
-  //   const project = await Project.findById(projectId);
-
-  //   if (!project){
-  //     return res.status(404).json({message: 'Project not found'})
-  //   }
-
-  // }
+    let result = await Project.updateOne(
+      { _id: projectId },
+      { $pull: { columns: { _id: columnId } } }
+    )
+    // console.log("result: ", result);
+    if (result.modifiedCount < 1) {
+      return next({
+        status: 404,
+        log: 'project or column does not exist. ',
+        message: { err: 'project or column does not exist.' },
+      })
+    }
+    return next();
+  } catch (error) {
+    console.log(error);
+    next({
+      log: 'Failed to delete a column: ' + error,
+      message: { err: 'Failed to delete a column' },
+    })
+  }
 };
 
 // Delete a task within a column
 const deleteTask = async (req, res, next) => {
   try {
-    const projectId = req.body.projectId;
-    const columnId = req.body.columnId;
-    const taskId = req.body.taskId;
+    const projectId = req.params.projectId;
+    const columnId = req.params.columnId;
+    const taskId = req.params.taskId;
 
-    // const project = await Project.findByAndUpdate(
-    //   projectId,
-    //   {$pull: {'columns'}}
-    // );
-
+    const project = await Project.findOne({
+      _id: projectId
+    });
     if (!project) {
-      return res.status(404).json({ message: 'Project not found' })
+      return next({
+        status: 404,
+        log: 'project does not exist. ',
+        message: { err: 'project does not exist.' },
+      });
+    }
+    // find column by id;
+    let column;
+    let columnIndex;
+    for (let i = 0; i < project.columns.length; i++) {
+      if (project.columns[i]._id.toString() === columnId) {
+        column = project.columns[i];
+        columnIndex = i;
+        break;
+      }
+    }
+    if (!column) {
+      return next({
+        status: 404,
+        log: 'column does not exist. ',
+        message: { err: 'column does not exist.' },
+      });
     }
 
-    task.remove();
+    let taskIndex;
+    for (let i = 0; i < column.tasks.length; i++) {
+      if (column.tasks[i]._id.toString() === taskId) {
+        taskIndex = i;
+        break;
+      }
+    }
+    if (taskIndex === undefined) {
+      return next({
+        status: 404,
+        log: 'task does not exist. ',
+        message: { err: 'task does not exist.' },
+      });
+    }
+    column.tasks.splice(taskIndex, 1);
     await project.save();
-    res.json({ message: 'Task deleted' });
+    return next();
+
+    // The following code uses poll on a nested array.
+    // let conditionObj = {};
+    // conditionObj["columns." + columnIndex + ".tasks._id"] = taskId;
+    // let result = await Project.updateOne(
+    //   { _id: projectId },
+    //   { $pull: conditionObj }
+    // )
+    // if (result.modifiedCount < 1) {
+    //   return next({
+    //     status: 404,
+    //     log: 'task does not exist. ',
+    //     message: { err: 'task does not exist.' },
+    //   })
+    // }
 
   } catch (error) {
     console.log(error);

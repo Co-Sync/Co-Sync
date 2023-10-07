@@ -59,7 +59,10 @@ projectRouter.patch('/task',
 // returns a 200 status with a success message.
 projectRouter.delete('/:projectId',
   projectController.deleteProject,
-  (req, res) => res.status(200).message('Project deleted').end()
+  (req, res) => {
+    res.statusMessage = 'Project deleted';
+    res.status(200).end();
+  }
 );
 
 // delete a column
@@ -69,7 +72,10 @@ projectRouter.delete('/:projectId',
 // returns a 200 status with a success message.
 projectRouter.delete('/column/:projectId/:columnId',
   projectController.deleteColumn,
-  (req, res) => res.status(200).message('Column deleted').end()
+  (req, res) => {
+    res.statusMessage = 'Column deleted';
+    res.status(200).end();
+  }
 );
 
 // delete a task
@@ -80,7 +86,10 @@ projectRouter.delete('/column/:projectId/:columnId',
 // returns a 200 status with a success message.
 projectRouter.delete('/task/:projectId/:columnId/:taskId',
   projectController.deleteTask,
-  (req, res) => res.status(200).message('Task deleted').end()
+  (req, res) => {
+    res.statusMessage = 'Task deleted';
+    res.status(200).end();
+  }
 );
 
 module.exports = projectRouter;
