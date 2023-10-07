@@ -10,12 +10,15 @@
   height: 75vh;
   .header {
     font-size: 1.5rem;
-    margin: 5px 0px 0px 0px;
+    margin: 0px;
     padding: 0;
     width: 100%;
     color: white;
     border-bottom: 1px solid white;
+    background-color: $glass-blue;
+    border-radius: 10px 10px 0px 0px;
     h1, h2 {
+      text-shadow: 0px 0px 10px rgba(60, 164, 255, 0.5);
       margin: 4px 0px;
       padding: 0;
     }
@@ -25,22 +28,11 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    .formInput {
-      width: 65%;
-      margin: 4px 0px;
-    }
-    .formButton {
-      width: 8rem;
-      height: 2rem;
-      margin: 10px;
-      border-radius: 5px;
-      border: none;
-      background-color: #52baff;
-      font-size: 1.4rem;
-      border: 1px solid white;
-      cursor: pointer;
-    }
+    width: 49.9vw;
+    height: 35vh;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    backdrop-filter: blur(15px);
   }
 }
 
@@ -68,8 +60,8 @@
 }
 
 .TextInput {
-  height: 2.8rem;
-  width: 20rem;
+  height: 3rem;
+  width: 22rem;
   background-color: transparent;
   border: none;
   border-radius: 5px;
@@ -78,20 +70,20 @@
   padding: 5px;
   font-size: large;
   &:not(:placeholder-shown) + legend + .TextInputHighlight {
-    transform: translate(-2.2rem, -1.45rem) scale(0.5);
+    transform: translate(-2.5rem, -1.5rem) scale(0.5);
   }
   &:not(:placeholder-shown) + legend {
-    width: 4rem;
+    width: var(--legend-width, 4rem);
   }
   &:focus {
     border: none;
     outline: none;
     & + legend {
       position: relative;
-      width: 4rem;
+      width: var(--legend-width, 4rem);
     }
     & + legend + .TextInputHighlight {
-      transform: translate(-2.2rem, -1.45rem) scale(0.5);
+      transform: translate(-2.5rem, -1.5rem) scale(0.5);
     }
   }
 }
@@ -114,9 +106,10 @@
 }
 
 .TextInputHighlight {
+  letter-spacing: 0;
   font-size: 1.5rem;
   position: absolute;
-  top: .4rem;
+  top: .5rem;
   left: 1rem;
   transform: scale(1);
   transition: all 0.2s ease-in-out;
@@ -133,15 +126,13 @@
 
 .buttonInput {
   cursor: pointer;
-  font-size: large;
+  font-size: 1.5rem;
   z-index: 1;
-  width: 7rem;
-  height: 2rem;
+  height: 2.5rem;
   background-color: #52baff;
   border-radius: 5px;
   border: 1.5px solid white;
   transition: background-color 0.2s ease-in-out;
-  width: fit-content;
   min-width: 8vw;
   &:hover {
     background-color: #4086ff;
