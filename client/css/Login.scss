@@ -1,23 +1,5 @@
 @import 'Variables.scss';
 
-@keyframes placeholderMoveUp {
-  0% {
-    transform: translate(0px, 0px);
-  }
-  100% {
-    transform: translate(-5.8rem, -1.8rem) scale(0.5);
-  }
-}
-
-@keyframes placeholderMoveDown {
-  0% {
-    transform: translate(-5.8rem, -1.8rem);
-  }
-  100% {
-    transform: translate(0px, 0px) scale(1);
-  }
-}
-
 .login {
   display: flex;
   flex-direction: column;
@@ -78,7 +60,7 @@
   align-items: center;
   width: fit-content;
   height: fit-content;
-  margin: 0;
+  margin: 5px;
   padding: 0;
   border: none;
   background-color: transparent;
@@ -86,15 +68,31 @@
 }
 
 .TextInput {
-  height: 2.5rem;
-  width: 15rem;
+  height: 2.8rem;
+  width: 20rem;
   background-color: transparent;
   border: none;
   border-radius: 5px;
   position: relative;
   z-index: 1;
+  padding: 5px;
+  font-size: large;
+  &:not(:placeholder-shown) + legend + .TextInputHighlight {
+    transform: translate(-2.2rem, -1.45rem) scale(0.5);
+  }
+  &:not(:placeholder-shown) + legend {
+    width: 4rem;
+  }
   &:focus {
+    border: none;
     outline: none;
+    & + legend {
+      position: relative;
+      width: 4rem;
+    }
+    & + legend + .TextInputHighlight {
+      transform: translate(-2.2rem, -1.45rem) scale(0.5);
+    }
   }
 }
 
@@ -109,22 +107,70 @@
   border: 1.5px solid white;
   border-radius: 5px;
   legend {
-    position: relative;
-    width: 4.5rem;
-  }
-  &:focus {
-    outline: none;
+    width: 0rem;
+    padding: 0;
+    transition: width 0.2s ease-in-out;
   }
 }
 
 .TextInputHighlight {
-  animation: placeholderMoveDown 0.2s ease-in-out forwards;
   font-size: 1.5rem;
   position: absolute;
-  left: 5rem;
+  top: .4rem;
+  left: 1rem;
   transform: scale(1);
   transition: all 0.2s ease-in-out;
   pointer-events: none;
   border-radius: 5px;
   z-index: 2;
+}
+
+.buttonMain {
+  width: fit-content;
+  height: fit-content;
+}
+
+.buttonInput {
+  cursor: pointer;
+  font-size: large;
+  z-index: 1;
+  width: 7rem;
+  height: 2rem;
+  background-color: #52baff;
+  border-radius: 5px;
+  border: 1.5px solid white;
+  transition: background-color 0.2s ease-in-out;
+  &:hover {
+    background-color: #4086ff;
+  }
+}
+
+@keyframes buttonOverlayAnimation {
+  from {
+    opacity: 0;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(0);
+  }
+}
+
+.buttonOverlay {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.644);
+  opacity: 0;
+  transform: scale(1);
+  width: 7rem;
+  height: 2rem;
+  right: 16rem;
+  border-radius: 10px;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.buttonOverlayAnimation {
+  animation: buttonOverlayAnimation 0.5s ease-in-out;
+  animation-fill-mode: forwards;
 }

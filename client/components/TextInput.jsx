@@ -4,15 +4,16 @@ const TextInput = ({ placeholder, onChange, value }) => {
   return (
     <div className='TextInputOuter'>
       <fieldset className='TextField'>
-        <legend></legend>
         <input
           className='TextInput'
           type="text"
           value={value}
           onChange={onChange}
+          placeholder=''
         />
+        <legend></legend>
+        <span className={'TextInputHighlight'}>{ placeholder }</span>
       </fieldset>
-      <span className={'TextInputHighlight'}>{ placeholder }</span>
     </div>
   )
 }
