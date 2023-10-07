@@ -7,6 +7,8 @@ import './css/index.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
+if (module.hot) module.hot.accept();
+
 root.render(
   <Provider store={store}>
     <App />

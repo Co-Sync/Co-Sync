@@ -2,8 +2,9 @@ import React from 'react';
 
 const TableTask = () => {
   return (
-    <div>
-      <h1>TableTask</h1>
+    <div className='container' id='tableTaskMain'>
+      <p>Test CSS styles in client</p>
+      <button></button>
     </div>
   );
 }
