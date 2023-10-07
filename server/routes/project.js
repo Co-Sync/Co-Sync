@@ -1,12 +1,14 @@
 const express = require('express');
 
 const projectController = require('../controllers/ProjectController');
+const sessionController = require('../controllers/SessionController');
 
 const projectRouter = express.Router();
 
 // get all projects
 // returns a json object which is an array of all existing projects.
 projectRouter.get('/',
+  sessionController.isLoggedIn,
   projectController.getProjects,
   (req, res) => res.status(200).json(res.locals.projects)
 );
@@ -16,6 +18,7 @@ projectRouter.get('/',
 //   - projectName
 // returns a json object of the created project.
 projectRouter.post('/',
+  sessionController.isLoggedIn,
   projectController.createProject,
   (req, res) => res.status(200).json(res.locals.project)
 );
@@ -26,6 +29,7 @@ projectRouter.post('/',
 //   - columnName
 // returns a json object of the created column.
 projectRouter.post('/column',
+  sessionController.isLoggedIn,
   projectController.createColumn,
   (req, res) => res.status(200).json(res.locals.column)
 );
@@ -37,6 +41,7 @@ projectRouter.post('/column',
 //   - taskName
 // returns a json object of the created task.
 projectRouter.post('/task',
+  sessionController.isLoggedIn,
   projectController.createTask,
   (req, res) => res.status(200).json(res.locals.task)
 );
@@ -50,6 +55,7 @@ projectRouter.post('/task',
 //   - taskComments
 // returns a json object of the created task.
 projectRouter.patch('/task',
+  sessionController.isLoggedIn,
   projectController.updateTask,
   (req, res) => res.status(200).json(res.locals.task)
 );
@@ -58,6 +64,7 @@ projectRouter.patch('/task',
 // req.params.projectId: the projectId to delete;
 // returns a 200 status with a success message.
 projectRouter.delete('/:projectId',
+  sessionController.isLoggedIn,
   projectController.deleteProject,
   (req, res) => {
     res.statusMessage = 'Project deleted';
@@ -71,6 +78,7 @@ projectRouter.delete('/:projectId',
 //   - columnId
 // returns a 200 status with a success message.
 projectRouter.delete('/column/:projectId/:columnId',
+  sessionController.isLoggedIn,
   projectController.deleteColumn,
   (req, res) => {
     res.statusMessage = 'Column deleted';
@@ -85,6 +93,7 @@ projectRouter.delete('/column/:projectId/:columnId',
 //   - taskId
 // returns a 200 status with a success message.
 projectRouter.delete('/task/:projectId/:columnId/:taskId',
+sessionController.isLoggedIn,
   projectController.deleteTask,
   (req, res) => {
     res.statusMessage = 'Task deleted';

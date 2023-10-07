@@ -3,14 +3,16 @@ require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
 
 
 const app = express();
 
 const projectRouter = require('./routes/project');
 // const userRouter = require('./routes/user');
+const userRouter = require('./routes/user');
 
-
+app.use(cookieParser());
 // const mongoURI = 'mongodb://localhost/coSyncTest';
 // mongoose.connect(mongoURI);
 /**
@@ -66,8 +68,8 @@ app.use((err, req, res, next) => {
 
 mongoose.connect('mongodb+srv://davidtskhvedadze:5dVVyXmiqsRhdSF9@david.hnynaog.mongodb.net/?retryWrites=true&w=majority')
   .then(() => {
-    app.listen(process.env.PORT, () => {
-      console.log(`Connected to db & Server listening on port: ${process.env.PORT}...`);
+    app.listen(3000, () => {
+      console.log(`Connected to db & Server listening on port: ${3000}...`);
     });
   })
   .catch((error) => {

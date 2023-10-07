@@ -1,5 +1,4 @@
 const Project = require('../models/projectModel');
-const mongoose = require('mongoose');
 
 // get all projects
 const getProjects = async (req, res, next) => {
@@ -330,10 +329,3 @@ module.exports = {
   deleteColumn,
   deleteTask,
 };
-
-
-/*const project = await project.findByIdAndUpdate({
-   projectId,
-   {$pull: { 'columns': {_id:columnId}}},
-   {new: true}
-})*/
