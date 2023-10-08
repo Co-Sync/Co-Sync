@@ -68,22 +68,25 @@
   position: relative;
   z-index: 1;
   padding: 5px;
-  font-size: large;
+  height: fit-content;
   &:not(:placeholder-shown) + legend + .TextInputHighlight {
-    transform: translate(-2.5rem, -1.5rem) scale(0.5);
+    transform-origin: left top 0px;
+    transform: translate(0.8rem, -1rem) scale(0.5);
   }
   &:not(:placeholder-shown) + legend {
-    width: var(--legend-width, 4rem);
+    position: relative;
+    max-width: 100%;
   }
   &:focus {
     border: none;
     outline: none;
     & + legend {
       position: relative;
-      width: var(--legend-width, 4rem);
+      max-width: 100%;
     }
     & + legend + .TextInputHighlight {
-      transform: translate(-2.5rem, -1.5rem) scale(0.5);
+      transform-origin: left top 0px;
+      transform: translate(0.8rem, -1rem) scale(0.5);
     }
   }
 }
@@ -92,25 +95,44 @@
   color: white;
   font-size: 1.5rem;
   margin: 0;
-  padding: 0;
+  padding: 0px 10px;
   width: fit-content;
   background-color: transparent;
   z-index: 2;
   border: 1.5px solid white;
-  border-radius: 5px;
-  legend {
-    width: 0rem;
+  border-radius: 8px;
+  height: fit-content;
+  input {
     padding: 0;
-    transition: width 0.2s ease-in-out;
+    margin: 0px 5px;
+    height: 2.5rem;
+  }
+  legend {
+    max-width: 0.01px;
+    white-space: nowrap;
+    visibility: hidden;
+    font-size: 0.8rem;
+    padding: 0;
+    transition: max-width 0.2s ease-in-out;
+    overflow: hidden;
+    span {
+      visibility: visible;
+      opacity: 0;
+      display: inline-block;
+      padding-right: 8px;
+    }
   }
 }
 
 .TextInputHighlight {
   letter-spacing: 0;
-  font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
-  top: .5rem;
-  left: 1rem;
+  padding: 0px 5px;
+  top: 1rem;
+  left: 0rem;
   transform: scale(1);
   transition: all 0.2s ease-in-out;
   pointer-events: none;

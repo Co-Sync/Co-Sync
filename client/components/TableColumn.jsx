@@ -9,9 +9,10 @@ const TableColumn = ({ column }) => {
 
   const handleInputChange = (e) => {
     setToggleModal((toggleModal) => !toggleModal);
-    setEventCoords({ ...eventCoords, x: e.pageX, y: e.pageY });
+    const coords = e.target.getBoundingClientRect();
+    setEventCoords({ x: coords.x / 34.5, y: coords.y / 38 });
   };
-  
+
   return (
     <div className="container" id="tableColumnMain">
       <div id="tableColumnHeader">
@@ -29,6 +30,7 @@ const TableColumn = ({ column }) => {
         </div>
       </div>
       {column.tasks?.map((task, index) => {
+        //need pass down taskId in tabletask component
         return <TableTask key={index} task={task} />;
       })}
     </div>

@@ -1,10 +1,9 @@
 import React from 'react';
 
 const TextInput = ({ placeholder, setterFunction, value }) => {
-  const legendWidth = `${placeholder.length * 0.32}em`;
   return (
     <div className='TextInputOuter'>
-      <fieldset className='TextField' style={{ '--legend-width': legendWidth }}>
+      <fieldset className='TextField'>
         <input
           className='TextInput'
           type="text"
@@ -12,8 +11,14 @@ const TextInput = ({ placeholder, setterFunction, value }) => {
           onChange={(e) => setterFunction(e.target.value)}
           placeholder=''
         />
-        <legend></legend>
-        <span className={'TextInputHighlight'}>{ placeholder }</span>
+        <legend>
+          <span>
+            {placeholder}
+          </span>
+        </legend>
+        <span className={'TextInputHighlight'}>
+          { placeholder }
+        </span>
       </fieldset>
     </div>
   )

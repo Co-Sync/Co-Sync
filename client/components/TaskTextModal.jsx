@@ -13,7 +13,7 @@ const TaskTextModal = ({ visible = false, eventCoords, columnName }) => {
   };
 
   return (
-    <div style={{ left: `${eventCoords.x - 150}px`, top: `${eventCoords.y - 50}px` }} className={`${visible ? 'textModalVisible' : 'textModalHidden'}`}>
+    <div style={{ left: `${eventCoords.x}em`, top: `${eventCoords.y}em` }} className={`${visible ? 'textModalVisible' : 'textModalHidden'}`}>
       <form className="textModalInner">
         <TextInput placeholder={'Task Name'} setterFunction={setTask} />
         <Button onClick={onClick} text="Save" />

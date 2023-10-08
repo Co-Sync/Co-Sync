@@ -38,12 +38,9 @@
   ul {
     height: fit-content;
     margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: row;
-    gap: 15px;
-    list-style: none;
     width: fit-content;
+    padding: 0;
+    list-style: none;
     .routerLink {
       display: flex;
       align-items: center;
@@ -109,6 +106,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 1;
   h1 {
     margin: 0px 5px;
     padding: 0;
@@ -125,7 +123,7 @@
   display: grid;
   padding: 5px;
   max-width: 18vw;
-  background-color: #aeaeb641;
+  background-color: $glass-blue;
   width: 100%;
   border-radius: 1px;
   overflow: visible;
@@ -229,35 +227,11 @@
   border: 1px solid white;
   border-radius: 10px;
   padding: 5px;
-  input {
-    width: 15vw;
-    height: 2vh;
-    &:not(:placeholder-shown) + legend + .TextInputHighlight {
-      transform: translate(-2rem, -1.2rem) scale(0.5);
-    }
-    &:not(:placeholder-shown) + legend {
-    width: var(--legend-width, 4rem);
-    }
-    &:focus {
-      border: none;
-      outline: none;
-      & + legend {
-        position: relative;
-        width: var(--legend-width, 4rem);
-      }
-      & + legend + .TextInputHighlight {
-        transform: translate(-2.2rem, -1.2rem) scale(0.5);
-      }
-    }
-  }
   .textModalInner {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-  }
-  span {
-    font-size: 1rem;
   }
   button {
     position: relative;

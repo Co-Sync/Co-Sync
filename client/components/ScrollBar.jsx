@@ -8,7 +8,8 @@ const ScrollBar = () => {
   const [ eventCoords, setEventCoords ] = useState({x: 0, y: 0});
   const onClick = (e) => {
     setToggleModal(prev => !prev);
-    setEventCoords({ x: e.pageX, y: e.pageY});
+    const coords = e.target.getBoundingClientRect();
+    setEventCoords({ x: coords.x/34.5, y: coords.y/38 });
   }
   return (
     <div className='scrollBarOuter'>

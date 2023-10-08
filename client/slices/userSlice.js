@@ -57,9 +57,10 @@ export const userSlice = createSlice({
     },
     //need to check
     updateTask: (state, action) => {
-      const { updateTask, taskName, projectName, columnName } = action.payload;
+      const { updateTask, taskName, columnName } = action.payload;
       let outerIndx = 0;
-      const column = state.projects[projectName].columns.find(
+      const currentProject = state.currentProject;
+      const column = state.projects[currentProject].columns.find(
         (column, indx) => {
           column.columnName === columnName;
           outerIndx = indx;
@@ -73,7 +74,7 @@ export const userSlice = createSlice({
         );
         if (taskIndex !== -1) {
           const newColumn = { ...column, tasks: updateTask };
-          state.projects[projectName].columns[outerIndx] = newColumn;
+          state.projects[currentProject].columns[outerIndx] = newColumn;
         }
       }
     },
@@ -89,9 +90,9 @@ export const userSlice = createSlice({
     },
     deleteColumn: (state, action) => {
       let outerIndx = 0;
-      const { projectName, columnName } = action.payload;
-      //find the column by accessing projects, [projectname], columns
-      const column = state.projects[projectName].columns.find(
+      const { columnName } = action.payload;
+      const currentProject = state.currentProject;
+      const column = state.projects[currentProject].columns.find(
         (column, indx) => {
           column.columnName === columnName;
           outerIndx = indx;
@@ -99,14 +100,15 @@ export const userSlice = createSlice({
       );
 
       if (column) {
-        delete state.projects[projectName].columns[outerIndx];
+        delete state.projects[currentProject].columns[outerIndx];
       }
     },
     deleteTask: (state, action) => {
       let outerIndx = 0;
-      const { projectName, columnName, taskToDelete } = action.payload;
+      const { columnName, taskToDelete } = action.payload;
+      const currentProject = state.currentProject;
       //find the column by accessing projects, [projectname], columns
-      const column = state.projects[projectName].columns.find(
+      const column = state.projects[currentProject].columns.find(
         (column, indx) => {
           column.columnName === columnName;
           outerIndx = indx;
@@ -123,7 +125,7 @@ export const userSlice = createSlice({
         if (taskIndex !== -1) {
           const spliced = column.tasks.toSpliced(taskIndex, 1);
           const newColumn = { ...column, tasks: spliced };
-          state.projects[projectName].columns[outerIndx] = newColumn;
+          state.projects[currentProject].columns[outerIndx] = newColumn;
         }
       }
     },

@@ -9,12 +9,11 @@ const TextModal = ({ visible = false, eventCoords }) => {
   const [columnName, setColumnName] = useState('');
   const onClick = (e) => {
     e.preventDefault();
-    
     dispatch(createColumn(columnName));
   }
 
   return (
-    <div style={{ left: `${eventCoords.x - 150}px`, top: `${eventCoords.y - 50}px` }} className={`${visible ? 'textModalVisible' : 'textModalHidden'}`}>
+    <div style={{ left: `${eventCoords.x}em`, top: `${eventCoords.y}em` }} className={`${visible ? 'textModalVisible' : 'textModalHidden'}`}>
       <form className='textModalInner'>
         <TextInput placeholder={'Column Name'} setterFunction={setColumnName} />
         <Button onClick={onClick} text='Save' />

@@ -1,11 +1,11 @@
-import React from "react";
-import { deleteTask } from "../slices/userSlice";
-import { useDispatch } from "react-redux";
+import React from 'react';
+import { deleteTask } from '../slices/userSlice';
+import { useDispatch } from 'react-redux';
 
 const TableTask = ({ task }) => {
   //instead of task, might need to pass down props to
   //access props.task.taskId / props.projects.projectId
-  
+
   const dispatch = useDispatch();
 
   /*update tasks
@@ -24,7 +24,7 @@ const TableTask = ({ task }) => {
   const handleDeleteClick = (e) => {
     /*
       e.preventDefault(); 
-      fetch(`/task/${projectId}/${columnId}/${taskId}`), {
+      fetch(`/task/${props.projectId}/${props.columnId}/${props.taskId}`), {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

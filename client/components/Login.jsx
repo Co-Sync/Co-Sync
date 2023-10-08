@@ -42,8 +42,8 @@ const Login = () => {
         </div>
         <div className='login'>
           <form className='formContainer'>
-            <TextInput placeholder='Username' onChange={ setUsername } />
-            <TextInput placeholder='Password' onChange={ setPassword } />
+            <TextInput placeholder='Username' setterFunction={ setUsername } />
+            <TextInput placeholder='Password' setterFunction={ setPassword } />
             <Button onClick={ handleSubmit } text='Login' />
           </form>
         </div>
