@@ -1,4 +1,8 @@
-require('dotenv').config();
+// require('dotenv').config();
+
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 const path = require('path');
 const express = require('express');
@@ -66,10 +70,10 @@ app.use((err, req, res, next) => {
  * start server
  */
 
-mongoose.connect('mongodb+srv://davidtskhvedadze:5dVVyXmiqsRhdSF9@david.hnynaog.mongodb.net/?retryWrites=true&w=majority')
+mongoose.connect(process.env.MONGO_URI)
   .then(() => {
-    app.listen(3000, () => {
-      console.log(`Connected to db & Server listening on port: ${3000}...`);
+    app.listen(process.env.PORT, () => {
+      console.log(`Connected to db & Server listening on port: ${process.env.PORT}...`);
     });
   })
   .catch((error) => {

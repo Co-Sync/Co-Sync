@@ -70,9 +70,82 @@ const createColumn = async (req, res, next) => {
 
 };
 
+// Change a task from one column to another (eg. drag and drop one task from "To-do" to "Doing")
+const changeColumn = async (req, res, next) => {
+  const {projectId, oldColumnId, newColumnId, taskId} = req.body;
+  try {
+    const project = await Project.findOne({
+      _id: projectId
+    })
+    if (!project) {
+      return next({
+        status: 404,
+        log: 'project does not exist. ',
+        message: { err: 'project does not exist.' },
+      });
+    }
+     // find column by id;
+     let column;
+     for (let i = 0; i < project.columns.length; i++) {
+       if (project.columns[i]._id.toString() === oldColumnId) {
+         column = project.columns[i];
+         break;
+       }
+     }
+     if (!column) {
+       return next({
+         status: 404,
+         log: 'column does not exist. ',
+         message: { err: 'column does not exist.' },
+       });
+     }
+
+     // find the task inside the column, slice this from the tasks array
+     let task;
+     let taskIndex;
+     for (let i = 0; i < column.tasks.length; i++) {
+      if (column.tasks[i]._id.toString() === taskId) {
+        task = column.tasks[i];
+        // console.log('task', task);
+        taskIndex = i;
+        break;
+      }
+    }
+      column.tasks.splice(taskIndex, 1);
+
+     // go into the newColumn with newColumnId, and then push it into the newColumn array
+      // let newColumn;
+      // let newColumnIndex;
+
+      for(let i=0; i < project.columns.length; i++){
+        if (project.columns[i]._id.toString() === newColumnId){
+          console.log('column is: ', project.columns[i]);
+          console.log('task is: ', task);
+          
+          console.log('tasks is: ', project.columns[i].tasks);
+          project.columns[i].tasks.push(task);
+          // newColumn = project.columns[i];
+          break;
+        }
+      }  
+      newColumn.tasks.push(task);
+   await project.save();
+    return next();
+  } catch (error) {
+    console.log(error);
+    next({
+      log: `Failed to change a task from one column to another column: ${error}`,
+      status: 500,
+      message: { err: 'changeColumn middleware is not working correctly.' }
+    })
+  }
+
+};
+
 // Create a new task within a column
 const createTask = async (req, res, next) => {
   // find the project with project id -- findOne
+
   try {
     const project = await Project.findOne({
       _id: req.body.projectId
@@ -101,8 +174,6 @@ const createTask = async (req, res, next) => {
         message: { err: 'column does not exist.' },
       });
     }
-    // console.log('find project: ', project);
-    // console.log('find project column: ', column);
     const newTask = {
       taskName: req.body.taskName,
       taskComments: ''
@@ -323,6 +394,7 @@ module.exports = {
   getProjects,
   createProject,
   createColumn,
+  changeColumn,
   createTask,
   updateTask,
   deleteProject,
