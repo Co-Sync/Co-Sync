@@ -1,6 +1,6 @@
 import React from 'react';
 
-const TextInput = ({ placeholder, onChange, value }) => {
+const TextInput = ({ placeholder, setterFunction, value }) => {
   const legendWidth = `${placeholder.length * 0.32}em`;
   return (
     <div className='TextInputOuter'>
@@ -9,7 +9,7 @@ const TextInput = ({ placeholder, onChange, value }) => {
           className='TextInput'
           type="text"
           value={value}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={(e) => setterFunction(e.target.value)}
           placeholder=''
         />
         <legend></legend>

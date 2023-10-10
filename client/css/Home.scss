@@ -105,7 +105,7 @@
   min-height: 10vh;
   background-color: #68697318;
   min-width: 10vw;
-  height: 35vh;
+  height: 40vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -124,13 +124,13 @@
   border-bottom: 2px solid rgba(255, 255, 255, 0.5);
   display: grid;
   padding: 5px;
-  max-width: 15vw;
+  max-width: 18vw;
   background-color: #aeaeb641;
   width: 100%;
   border-radius: 1px;
-  overflow: hidden;
+  overflow: visible;
   overflow-wrap: anywhere;
-  button {
+  #messagesButton {
     position: relative;
     justify-self: end;
     cursor: pointer;
@@ -141,6 +141,24 @@
     height: 1.5rem;
     width: 1.5rem;
     background-image: url(../../assets/messages.svg);
+    background-size: cover;
+    transition: all 0.2s ease-in-out;
+    &:hover {
+      scale: 1.1;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+  #moveTaskButton {
+    position: relative;
+    justify-self: end;
+    cursor: pointer;
+    border: 0px transparent;
+    border-radius: 5px;
+    background-color: #6fcdff00;
+    margin: 0px 5px;
+    height: 1.5rem;
+    width: 1.5rem;
+    background-image: url(../../assets/three-dots.svg);
     background-size: cover;
     transition: all 0.2s ease-in-out;
     &:hover {
@@ -173,4 +191,94 @@
   list-style: none;
   display: flex;
   gap: 10px;
+}
+
+#tableColumnHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  button {
+    position: relative;
+    justify-self: end;
+    cursor: pointer;
+    border: 0px transparent;
+    border-radius: 5px;
+    background-color: #6fcdff00;
+    margin: 0px 5px;
+    font-size: 15px;
+    height: 1.5rem;
+    width: 1.5rem;
+    color:rgb(44, 210, 222);
+    background-size: cover;
+    transition: all 0.2s ease-in-out;
+    &:hover {
+      scale: 1.1;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+}
+
+.textModalVisible {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background-color: #38495a;
+  border: 1px solid white;
+  border-radius: 10px;
+  padding: 5px;
+  input {
+    width: 15vw;
+    height: 2vh;
+    &:not(:placeholder-shown) + legend + .TextInputHighlight {
+      transform: translate(-2rem, -1.2rem) scale(0.5);
+    }
+    &:not(:placeholder-shown) + legend {
+    width: var(--legend-width, 4rem);
+    }
+    &:focus {
+      border: none;
+      outline: none;
+      & + legend {
+        position: relative;
+        width: var(--legend-width, 4rem);
+      }
+      & + legend + .TextInputHighlight {
+        transform: translate(-2.2rem, -1.2rem) scale(0.5);
+      }
+    }
+  }
+  .textModalInner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  span {
+    font-size: 1rem;
+  }
+  button {
+    position: relative;
+    cursor: pointer;
+    font-size: 1rem;
+    border: 0px transparent;
+    border-radius: 5px;
+    background-color: #6fcdff00;
+    margin: 0px 5px;
+    height: 1.5rem;
+    width: 1.5rem;
+    color:rgb(44, 210, 222);
+    background-size: cover;
+    transition: all 0.2s ease-in-out;
+    &:hover {
+      scale: 1.1;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+}
+
+.textModalHidden {
+  display: none;
 }

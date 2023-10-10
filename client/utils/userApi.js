@@ -2,13 +2,13 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const userApi = createApi({
   reducerPath: 'userApi',
-  baseQuery: fetchBaseQuery({ baseUrl: '/' }),
+  // had to change baseUrl to the actual url to the api we want to make the req to and not the end path 
+  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3000/' }),
   endpoints: (builder) => ({
     getUser: builder.query({
-      //might need to change method in terms of authentication - turn into post req and access body
       query: () => ({ url: '/user', method: 'GET' }),
     }),
-    sendUserCreds: builder.mutation({
+    sendUserCredsMutation: builder.mutation({
       query: (body) => ({ url: '/user', method: 'POST', body }),
     }),
   }),
@@ -16,4 +16,4 @@ export const userApi = createApi({
 
 // const { data: albums = [], isLoading, isFetching, isError, error,} = useGetUserQuery(page);
 
-export const { useGetUserQuery } = userApi;
+export const { useGetUserQuery, sendUserCredsMutation } = userApi;
