@@ -3,13 +3,21 @@ import TextInput from './TextInput.jsx';
 import Button from './Button.jsx';
 import { useDispatch } from 'react-redux';
 import { createColumn } from '../slices/userSlice.js';
+import { useAddColumnMutation } from '../utils/userApi.js';
 
 const TextModal = ({ visible = false, eventCoords }) => {
   const dispatch = useDispatch();
   const [columnName, setColumnName] = useState('');
-  const onClick = (e) => {
+  const [addColumn] = useAddColumnMutation();
+  const onClick = async (e) => {
     e.preventDefault();
-    dispatch(createColumn(columnName));
+    try {
+      const res = await addColumn({ columnName });
+      if (res.error) throw new Error(res.error.message);
+      dispatch(createColumn(res.data));
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return (
