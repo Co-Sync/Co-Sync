@@ -29,14 +29,16 @@ SessionController.startSession = async (req, res, next) => {
   console.log('made it to startSession middleware');
   
   //create a session.find
-  
-
-  const newSession = await Session.create({cookieId: res.locals.ssid})
-  console.log('session cookie', res.locals.ssid)
-  console.log('session created');
-  // console.log(newSession);
-  return next();
-
+  const session = await Session.findOne({cookieId: res.locals.ssid});
+  if (session) {
+    return next();
+  } else {
+    const newSession = await Session.create({cookieId: res.locals.ssid})
+    console.log('session cookie', res.locals.ssid)
+    console.log('session created');
+    // console.log(newSession);
+    return next();
+  }
 };
 
 module.exports = SessionController;
