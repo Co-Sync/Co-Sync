@@ -10,7 +10,7 @@ export const userApi = createApi({
       providesTags: ['Projects'],
     }),
     sendUserCreds: builder.mutation({
-      query: (body) => ({ url: '/user/login', method: 'POST', body }),
+      query: (body) => ({ url: '/user/login', method: 'POST', body, credentials: 'include' }),
       providesTags: ['User'],
     }),
     signupUser: builder.mutation({
@@ -37,8 +37,10 @@ export const userApi = createApi({
       invalidatesTags: ['Projects'],
     }),
     updateTask: builder.mutation({
-      query: (body) => ({ url: '/task', 
-      method: 'PATCH', body }),
+      query: (body) => ({
+        url: '/task',
+        method: 'PATCH', body
+      }),
       invalidatesTags: ['Projects'],
     }),
     deleteTask: builder.mutation({

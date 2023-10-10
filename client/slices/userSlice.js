@@ -27,7 +27,7 @@ export const userSlice = createSlice({
       console.log(task);
       state.projects[currentProject].columns = state.projects[currentProject].columns.map(el => {
         if (el.columnName === columnName) {
-          el.tasks.push({taskName: task, taskComments: []});
+          el.tasks.push({ taskName: task, taskComments: [] });
         }
         return el;
       });
@@ -63,8 +63,11 @@ export const userSlice = createSlice({
       const currentProject = state.currentProject;
       const column = state.projects[currentProject].columns.find(
         (column, indx) => {
-          column.columnName === columnName;
-          outerIndx = indx;
+          if (column.columnName === columnName) {
+            outerIndx = indx;
+            return true;
+          }
+          return false;
         }
       );
 
@@ -74,7 +77,7 @@ export const userSlice = createSlice({
           (task) => task.taskName === taskName
         );
         if (taskIndex !== -1) {
-          const newColumn = { ...column, tasks: updateTask };
+          const newColumn = { ...column, tasks: [updateTask] };
           state.projects[currentProject].columns[outerIndx] = newColumn;
         }
       }
@@ -137,7 +140,7 @@ export const userSlice = createSlice({
           el.tasks = el.tasks.filter(task => task.taskName !== taskToMove);
         }
         if (el.columnName === newColumn) {
-          el.tasks.push({taskName: taskToMove, taskComments: []});
+          el.tasks.push({ taskName: taskToMove, taskComments: [] });
         }
         return el;
       })
@@ -145,11 +148,7 @@ export const userSlice = createSlice({
   }
 });
 
-// need to do:  moveTask
-
-// need to do:  moveTask
-
 // Action creators are generated for each case reducer function
-export const { setState, createTask, createColumn, createProject, updateTask, deleteProject, deleteColumn, deleteTask } =
+export const { setState, createTask, createColumn, createProject, updateTask, deleteProject, deleteColumn, deleteTask, moveTask } =
   userSlice.actions;
 export default userSlice.reducer;
