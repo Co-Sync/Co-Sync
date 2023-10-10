@@ -2,6 +2,7 @@ import React from 'react';
 import TableDisplay from './TableDisplay.jsx';
 import NavBar from './NavBar.jsx';
 import '../css/Home.scss';
+import '../css/Modal.scss'
 import { useDispatch } from 'react-redux';
 import { setState } from '../slices/userSlice.js';
 

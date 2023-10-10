@@ -1,19 +1,25 @@
+// require('dotenv').config();
+
+const dotenv = require('dotenv');
+
+dotenv.config();
+
 const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
-require('dotenv').config();
+const cookieParser = require('cookie-parser');
+
 
 const app = express();
 
 const projectRouter = require('./routes/project');
+// const userRouter = require('./routes/user');
 const userRouter = require('./routes/user');
 
-
-const PORT = 3000;
-
-const mongoURI = process.env.MONGODB_URI;
+app.use(cookieParser());
+// const mongoURI = 'mongodb://localhost/coSyncTest';
+const mongoURI = process.env.MONGO_URI;
 mongoose.connect(mongoURI);
-
 /**
  * handle parsing request body
  */
@@ -64,8 +70,16 @@ app.use((err, req, res, next) => {
 /**
  * start server
  */
-app.listen(PORT, () => {
-  console.log(`Server listening on port: ${PORT}...`);
-});
+
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => {
+    app.listen(process.env.PORT, () => {
+      console.log(`Connected to db & Server listening on port: ${process.env.PORT}...`);
+    });
+  })
+  .catch((error) => {
+    console.log(error);
+  })
+
 
 module.exports = app;

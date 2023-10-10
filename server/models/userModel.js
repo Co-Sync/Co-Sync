@@ -9,7 +9,17 @@ const bcrypt = require('bcryptjs');
 const userSchema = new Schema({
   username: {type: String, required: true, unique: true},
   password: {type: String, required: true},
-  email:    {type: String, required: true},
+  email:    {type: String},
 });
+
+userSchema.pre('save', function (next) {
+  bcrypt.hash(this.password, SALT_WORK_FACTOR, (err, hash) => {
+    if (err) return next(err);
+    // console.log('err is: ', err);
+    this.password = hash; //where is this saved? How can we reference it later when the user tries to log in?
+    // console.log('hash is: ', hash);
+    return next();
+  })
+})
 
 module.exports = mongoose.model('User', userSchema);

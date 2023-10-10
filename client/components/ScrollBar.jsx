@@ -1,31 +1,20 @@
-import React from 'react';
-import Button from './Button.jsx';
-import TextModal from './TextModal.jsx';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import ScrollBarItem from './ScrollBarItem.jsx';
+import { useDispatch } from 'react-redux';
 
 const ScrollBar = () => {
-  const [toggleModal, setToggleModal] = useState(false);
-  const [eventCoords, setEventCoords] = useState({x: 0, y: 0});
-  const onClick = (e) => {
-    setToggleModal(prev => !prev);
-    const coords = e.target.getBoundingClientRect();
-    setEventCoords({ x: coords.x/34.5, y: coords.y/38 });
+  const [column, setColumn] = useState('');
+  const dispatch = useDispatch();
+  const dispatchColumn = (e) => {
+    e.preventDefault();
+    dispatch();
   }
   return (
     <div className='scrollBarOuter'>
       <ul className='scrollBarInner'>
-        <li className='scrollBarListItem'>
-          <Button 
-            onClick={ onClick } 
-            text='Add Column' 
-          />
-        </li>
+        <ScrollBarItem setterFunction={setColumn} onClick={dispatchColumn} placeholder='Add Column' type='text' title='Column Name'/>
+        <ScrollBarItem placeholder='My Projects' type='view' title='Projects'/>
       </ul>
-      <TextModal 
-        visible={ toggleModal }
-        eventCoords={ eventCoords }
-        placeholder='Column Name'
-      />
     </div>
   )
 }

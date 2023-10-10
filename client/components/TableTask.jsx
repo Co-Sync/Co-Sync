@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { deleteTask, updateTask } from '../slices/userSlice';
 import { useDispatch } from 'react-redux';
-import TaskButton from './TaskButtonModal.jsx';
+import TaskButton from './TaskButton.jsx';
 import TextModal from './TextModal.jsx';
 import { useDeleteTaskMutation, useUpdateTaskMutation } from '../utils/userApi.js';
 
@@ -15,10 +15,6 @@ const TableTask = ({ task, eventCoords }) => {
 
   const handleEditClick = async (e) => {
     e.preventDefault();
-
-    const coords = e.target.getBoundingClientRect();
-    eventCoords = { x: coords.x / 34.5, y: coords.y / 38 };
-
     const body = {
       incomingData,
     };
@@ -68,10 +64,10 @@ const TableTask = ({ task, eventCoords }) => {
           text='Comment'
           idOverride='innerTaskButton'
         />
-        { toggleModal && (<TextModal 
+        {toggleModal && (<TextModal
           eventCoords={eventCoords}
           visible={toggleModal}
-          placeholder={'Task Name'} 
+          placeholder={'Task Name'}
           setterFunction={setIncomingData}
           onClick={(e) => handleEditClick(e)}
         />)}

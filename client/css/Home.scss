@@ -180,7 +180,7 @@
   width: 100%;
   border-bottom: 1px solid white;
   height: 8vh;
-  overflow-x: scroll;
+  overflow-x: visible;
   font-size: 3vh;
   padding: 0px 10px;
 }
@@ -224,43 +224,6 @@
   display: flex;
 }
 
-.textModalVisible {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 100;
-  background-color: #38495a;
-  border: 1px solid white;
-  border-radius: 10px;
-  padding: 5px;
-  width: fit-content;
-  transform: scale(0.8);
-  .textModalInner {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  button {
-    position: relative;
-    cursor: pointer;
-    font-size: 1rem;
-    border: 0px transparent;
-    border-radius: 5px;
-    background-color: #6fcdff00;
-    margin: 0px 5px;
-    height: 1.5rem;
-    width: 1.5rem;
-    color:rgb(44, 210, 222);
-    background-size: cover;
-    transition: all 0.2s ease-in-out;
-    &:hover {
-      scale: 1.1;
-      background-color: rgba(255, 255, 255, 0.1);
-    }
-  }
-}
-
 #innerTaskButton {
   background-color: #38495a;
   border: 1px solid transparent;
@@ -274,7 +237,14 @@
     background-color: rgba(255, 255, 255, 0.1);
   }
 }
+.scrollBarOuter {
+  position: relative;
+}
 
-.textModalHidden {
-  display: none;
+.scrollBarListItem {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
