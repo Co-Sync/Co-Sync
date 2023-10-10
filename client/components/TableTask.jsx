@@ -1,20 +1,35 @@
-import React from 'react';
-import { deleteTask } from '../slices/userSlice';
+import React, { useState } from 'react';
+import { deleteTask, updateTask } from '../slices/userSlice';
 import { useDispatch } from 'react-redux';
+import TaskButton from './TaskButtonModal.jsx';
+import TextModal from './TextModal.jsx';
+import { useDeleteTaskMutation, useUpdateTaskMutation } from '../utils/userApi.js';
 
-const TableTask = ({ task }) => {
-  //instead of task, might need to pass down props to
-  //access props.task.taskId / props.projects.projectId
-
+const TableTask = ({ task, eventCoords }) => {
+  //instead of task, might need to pass down props to access props.task.taskId / props.projects.projectId
+  const [incomingData, setIncomingData] = useState('');
+  const [toggleModal, setToggleModal] = useState(false);
+  const [deleteTaskMutation] = useDeleteTaskMutation();
+  const [updateTaskMutation] = useUpdateTaskMutation();
   const dispatch = useDispatch();
 
-  /*update tasks
-  req.body:
-  - projectId
-  - columnId
-   - taskId
-   - taskName
-   - taskComments on req.body */
+  const handleEditClick = async (e) => {
+    e.preventDefault();
+
+    const coords = e.target.getBoundingClientRect();
+    eventCoords = { x: coords.x / 34.5, y: coords.y / 38 };
+
+    const body = {
+      incomingData,
+    };
+    try {
+      const res = await updateTaskMutation(body);
+      if (res.error) throw new Error(res.error.message);
+      dispatch(updateTask(res.data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   /* for delete task
    req.params:
@@ -22,31 +37,45 @@ const TableTask = ({ task }) => {
    - columnId
    - taskId*/
   const handleDeleteClick = (e) => {
-    /*
-      e.preventDefault(); 
-      fetch(`/task/${props.projectId}/${props.columnId}/${props.taskId}`), {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      .then((res) => {
-        if (res.status === 200) {
-          return res.send('Successful: Task Deleted');
-        }
-      })
-      .then((data) => {
-        dispatch(deleteTask(data))
-      })
-      .catch((err) => {
-        console.error('Delete Task ERROR: ', err);
-      });
-     }*/
+    e.preventDefault();
+    const body = {
+      _id: task.taskId,
+      taskName: task.taskName
+    };
+    try {
+      const res = deleteTaskMutation(body);
+      if (res.error) throw new Error(res.error.message);
+      dispatch(deleteTask(res.data));
+    } catch (error) {
+      console.log(error);
+    }
   };
-
   return (
     <div className="container" id="tableTaskMain">
       <p>{task.taskName}</p>
-      <button onClick={(e) => handleDeleteClick(e)}>Delete Task</button>
+      <div id='tableTaskButtons'>
+        <TaskButton
+          onClick={(e) => handleDeleteClick(e)}
+          text='Delete'
+          idOverride='innerTaskButton' />
+        <TaskButton
+          onClick={() => setToggleModal(!toggleModal)}
+          text='Edit'
+          idOverride='innerTaskButton'
+        />
+        <TaskButton
+          onClick={() => setToggleModal(!toggleModal)}
+          text='Comment'
+          idOverride='innerTaskButton'
+        />
+        { toggleModal && (<TextModal 
+          eventCoords={eventCoords}
+          visible={toggleModal}
+          placeholder={'Task Name'} 
+          setterFunction={setIncomingData}
+          onClick={(e) => handleEditClick(e)}
+        />)}
+      </div>
     </div>
   );
 };

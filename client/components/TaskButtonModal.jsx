@@ -1,10 +1,10 @@
 import React from 'react';
 
-const TaskButton = ({ onClick, visible }) => {
+const TaskButton = ({ onClick, text, idOverride }) => {
   return (
-    <div className={`${visible ? 'TaskButtonVisible' : 'TaskButtonHidden'}`}>
-      <button onClick={ onClick } style={{fontSize: '15px'}}>
-        +
+    <div className={'TaskButton'}>
+      <button id={`${idOverride ? idOverride : ''}`} onClick={ onClick } style={{fontSize: '15px'}}>
+        { text }
       </button>
     </div>
   );

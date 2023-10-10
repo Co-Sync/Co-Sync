@@ -154,39 +154,15 @@
   background-color: #52baff;
   border-radius: 5px;
   border: 1.5px solid white;
-  transition: background-color 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
   min-width: 8vw;
   &:hover {
     background-color: #4086ff;
+    transform: scale(1.1);
   }
-}
-
-@keyframes buttonOverlayAnimation {
-  from {
-    opacity: 0;
+  &:active {
+    background-color: #4086ff;
+    border: 1px solid rgb(0, 157, 255);
     transform: scale(1);
   }
-
-  to {
-    opacity: 1;
-    transform: scale(0);
-  }
-}
-
-.buttonOverlay {
-  position: absolute;
-  background-color: rgba(255, 255, 255, 0.644);
-  opacity: 0;
-  transform: scale(1);
-  width: 7rem;
-  height: 2rem;
-  right: 0vw;
-  border-radius: 8px;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.buttonOverlayAnimation {
-  animation: buttonOverlayAnimation 0.5s ease-in-out;
-  animation-fill-mode: forwards;
 }

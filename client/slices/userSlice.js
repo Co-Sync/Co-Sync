@@ -52,6 +52,7 @@ export const userSlice = createSlice({
           columns: [],
         };
         state.currentProject = projectName;
+        state.currentProject = projectName;
         state.numOfProjects++;
       }
     },
@@ -114,7 +115,6 @@ export const userSlice = createSlice({
           outerIndx = indx;
         }
       );
-
       //OR iterate over the arr and push values that ARE NOT taskTo
       if (column) {
         //find index of the task to delete
@@ -142,13 +142,14 @@ export const userSlice = createSlice({
         return el;
       })
     }
-  },
+  }
 });
+
+// need to do:  moveTask
 
 // need to do:  moveTask
 
 // Action creators are generated for each case reducer function
 export const { setState, createTask, createColumn, createProject, updateTask, deleteProject, deleteColumn, deleteTask } =
   userSlice.actions;
-
 export default userSlice.reducer;

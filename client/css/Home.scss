@@ -103,6 +103,7 @@
   background-color: #68697318;
   min-width: 10vw;
   height: 40vh;
+  height: 40vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -126,6 +127,7 @@
   background-color: $glass-blue;
   width: 100%;
   border-radius: 1px;
+  overflow: visible;
   overflow: visible;
   overflow-wrap: anywhere;
   #messagesButton {
@@ -218,6 +220,10 @@
   }
 }
 
+#tableTaskButtons {
+  display: flex;
+}
+
 .textModalVisible {
   position: absolute;
   top: 0;
@@ -227,6 +233,8 @@
   border: 1px solid white;
   border-radius: 10px;
   padding: 5px;
+  width: fit-content;
+  transform: scale(0.8);
   .textModalInner {
     display: flex;
     flex-direction: column;
@@ -250,6 +258,20 @@
       scale: 1.1;
       background-color: rgba(255, 255, 255, 0.1);
     }
+  }
+}
+
+#innerTaskButton {
+  background-color: #38495a;
+  border: 1px solid transparent;
+  position: relative;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0.1rem;
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    transform: scale(1.1);
+    background-color: rgba(255, 255, 255, 0.1);
   }
 }
 

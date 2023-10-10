@@ -26,6 +26,36 @@ const Home = () => {
   if (data) {
     dispatch(setState(data));
   }
+  /*
+  a way to use query of getting user -- maybe considering useEffect for less re-rendering ? 
+  
+  const { data: userData, isError, isLoading, isSuccess, error } = useGetUserQuery();
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error: {error}</div>;
+  }
+
+  if (isSuccess) {
+    const {username, projects, numOfProjects, currentProject} = userData;
+  
+    const transformedData = {
+      username,
+      projects: {
+        [currentProject]: {
+          columns:
+            projects[currentProject].columns,
+        },
+      },
+      numOfProjects,
+      currentProject,
+    };
+
+    dispatch(setState(transformedData));
+  } */
   return (
     <div className='homeMain'>
       <NavBar />

@@ -4,8 +4,8 @@ import TextModal from './TextModal.jsx';
 import { useState } from 'react';
 
 const ScrollBar = () => {
-  const [ toggleModal, setToggleModal ] = useState(false);
-  const [ eventCoords, setEventCoords ] = useState({x: 0, y: 0});
+  const [toggleModal, setToggleModal] = useState(false);
+  const [eventCoords, setEventCoords] = useState({x: 0, y: 0});
   const onClick = (e) => {
     setToggleModal(prev => !prev);
     const coords = e.target.getBoundingClientRect();
@@ -15,10 +15,17 @@ const ScrollBar = () => {
     <div className='scrollBarOuter'>
       <ul className='scrollBarInner'>
         <li className='scrollBarListItem'>
-          <Button onClick={ onClick } text='Add Column' />
+          <Button 
+            onClick={ onClick } 
+            text='Add Column' 
+          />
         </li>
       </ul>
-      <TextModal visible={ toggleModal } eventCoords={ eventCoords } />
+      <TextModal 
+        visible={ toggleModal }
+        eventCoords={ eventCoords }
+        placeholder='Column Name'
+      />
     </div>
   )
 }
