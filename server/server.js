@@ -6,13 +6,13 @@ require('dotenv').config();
 const app = express();
 
 const projectRouter = require('./routes/project');
-// const userRouter = require('./routes/user');
+const userRouter = require('./routes/user');
 
 
 const PORT = 3000;
 
-// const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/cosync';
-// mongoose.connect(mongoURI);
+const mongoURI = process.env.MONGODB_URI;
+mongoose.connect(mongoURI);
 
 /**
  * handle parsing request body
@@ -31,7 +31,7 @@ app.use(express.static(path.resolve(__dirname, '../client')));
 //  * define route handlers
 //  */
 app.use('/api/project', projectRouter);
-// app.use('/api/user', userRouter);
+app.use('/api/user', userRouter);
 
 
 
