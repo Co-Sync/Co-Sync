@@ -4,19 +4,30 @@ import Button from './Button.jsx';
 import { useDispatch } from 'react-redux';
 import { createTask } from '../slices/userSlice.js';
 
-const TaskTextModal = ({ visible = false, eventCoords, columnName }) => {
+//FOR ADD TASK ?
+
+const TaskTextModal = ({ columnName, placeholder, setIsOpen, title }) => {
   const dispatch = useDispatch();
   const [task, setTask] = useState('');
   const onClick = (e) => {
     e.preventDefault();
-    dispatch(createTask({columnName, task}));
+    dispatch(createTask({ columnName, task }));
   };
 
   return (
-    <div style={{ left: `${eventCoords.x}em`, top: `${eventCoords.y}em` }} className={`${visible ? 'textModalVisible' : 'textModalHidden'}`}>
-      <form className="textModalInner">
-        <TextInput placeholder={'Task Name'} setterFunction={setTask} />
-        <Button onClick={onClick} text="Save" />
+    <div id='modal' className='textModalVisible'>
+      <form className='textModalInner'>
+        <div className='textModalHeader'>
+          <p>{title}</p>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              setIsOpen(prev => !prev)
+            }}
+            className='closeModalButton'>x</button>
+        </div>
+        <TextInput placeholder={placeholder} setterFunction={setTask} />
+        <Button onClick={onClick} text='Save' />
       </form>
     </div>
   );
