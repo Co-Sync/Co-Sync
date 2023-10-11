@@ -8,8 +8,10 @@ const TableDisplay = () => {
   if (!currentProject) {
     return (
       <>
-        <ScrollBar currentProject={currentProject} />
-        <div >Please Select A Project</div>
+        <div id='tableDisplayOuter' className='container'>
+          <ScrollBar currentProject={currentProject} />
+          <h1>Please Select A Project</h1>
+        </div>
       </>
     );
   }

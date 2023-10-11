@@ -6,6 +6,7 @@ import { createColumn } from '../slices/userSlice.js';
 
 const ScrollBar = () => {
   const [column, setColumn] = useState('');
+  const [currentProjectName, setCurrentProjectName] = useState('');
   // let projectId = currentProject._id;
 
   const dispatch = useDispatch();
@@ -17,7 +18,7 @@ const ScrollBar = () => {
   //tested this - 404 err: 'project does not exist' => projectcontroler.js - createcolumn, NEEDS PROJECT ID IN REQ BODY
   const [addColumnMutation] = useAddColumnMutation();
 
-  const handleAddClick = async (e) => {
+  const handleAddColumnClick = async (e) => {
     e.preventDefault();
     const body = {
       // projectId,
@@ -33,11 +34,16 @@ const ScrollBar = () => {
     }
   };
 
+  const handleSetProjectName = (e) => {
+    e.preventDefault();
+    dispatch(setCurrentProjectName(currentProjectName));
+  }
+
   return (
     <div className='scrollBarOuter'>
       <ul className='scrollBarInner'>
-        <ScrollBarItem setterFunction={setColumn} onClick={handleAddClick} placeholder='Add Column' type='text' title='Column Name' />
-        <ScrollBarItem setterFunction={setColumn} onClick={handleAddClick} placeholder='Create Project' type='text' title='Project Name' />
+        <ScrollBarItem setterFunction={setColumn} onClick={handleAddColumnClick} placeholder='Add Column' type='text' title='Column Name' />
+        <ScrollBarItem setterFunction={setCurrentProjectName} onClick={handleSetProjectName} placeholder='Create Project' type='text' title='Project Name' />
         <ScrollBarItem placeholder='My Projects' type='view' title='Projects' />
       </ul>
     </div>
