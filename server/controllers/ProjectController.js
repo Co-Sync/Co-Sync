@@ -5,7 +5,7 @@ const getProjects = async (req, res, next) => {
   try {
     const tasks = await Project.find();
     res.locals.projects = tasks;
-    res.status(200).json(res.locals.projects);
+    // res.status(200).json(res.locals.projects);
     return next();
   } catch (error) {
     console.log(error);
@@ -119,16 +119,13 @@ const changeColumn = async (req, res, next) => {
 
       for(let i=0; i < project.columns.length; i++){
         if (project.columns[i]._id.toString() === newColumnId){
-          console.log('column is: ', project.columns[i]);
-          console.log('task is: ', task);
-          
-          console.log('tasks is: ', project.columns[i].tasks);
-          project.columns[i].tasks.push(task);
+          const newTask = { taskName : task.taskName, taskComments : task.taskComments, _id : task._id };
+          project.columns[i].tasks.push(newTask);
           // newColumn = project.columns[i];
           break;
         }
       }  
-      newColumn.tasks.push(task);
+    
    await project.save();
     return next();
   } catch (error) {
