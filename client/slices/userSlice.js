@@ -38,7 +38,6 @@ export const userSlice = createSlice({
       } catch (error) {
         console.error('Error in createTask reducer: ', error);
       }
-
     },
     //need to check
     createColumn: (state, action) => {

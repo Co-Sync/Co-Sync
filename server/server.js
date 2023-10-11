@@ -18,12 +18,7 @@ const userRouter = require('./routes/user');
 
 app.use(cookieParser());
 // const mongoURI = 'mongodb://localhost/coSyncTest';
-const mongoURI = process.env.MONGO_URI;
-mongoose.connect(mongoURI);
-/**
- * handle parsing request body
- */
-app.use(express.json());
+// mongoose.connect(mongoURI);
 app.use(express.urlencoded({ extended: true }));
 
 // /**
@@ -34,12 +29,6 @@ app.use('/api/user', userRouter);
 
 // these two must be in the end
 app.use(express.static(path.resolve(__dirname, '../build')));
-app.get('/', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../index.html'));
-});
-
-// catch-all route handler for any requests to an unknown route
-app.use((req, res) => res.status(404).send('This is not the page you\'re looking for...'));
 
 /**
  * express error handler
@@ -56,7 +45,6 @@ app.use((err, req, res, next) => {
   console.log(errorObj.log);
   return res.status(errorObj.status).json(errorObj.message);
 });
-
 /**
  * start server
  */
