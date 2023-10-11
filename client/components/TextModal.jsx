@@ -8,11 +8,11 @@ const TextModal = ({ placeholder, setterFunction, onClick, setIsOpen, title }) =
       <form className='textModalInner'>
         <div className='textModalHeader'>
           <p>{title}</p>
-          <button 
+          <button
             onClick={(e) => {
               e.preventDefault();
               setIsOpen(prev => !prev)
-            }} 
+            }}
             className='closeModalButton'>x</button>
         </div>
         <TextInput placeholder={placeholder} setterFunction={setterFunction} />

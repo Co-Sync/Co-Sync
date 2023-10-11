@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import Button from './Button.jsx';
 import TextInput from './TextInput.jsx';
 import { useNavigate } from 'react-router';
+// import { useSignupUserMutation } from '../utils/userApi.js';
+
 const SignUp = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const navigate = useNavigate();
+  // const [signUpUserMutation] = useSignupUserMutation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();

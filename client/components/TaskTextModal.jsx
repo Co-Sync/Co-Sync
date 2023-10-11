@@ -4,12 +4,14 @@ import Button from './Button.jsx';
 import { useDispatch } from 'react-redux';
 import { createTask } from '../slices/userSlice.js';
 
+//FOR ADD TASK ?
+
 const TaskTextModal = ({ columnName, placeholder, setIsOpen, title }) => {
   const dispatch = useDispatch();
   const [task, setTask] = useState('');
   const onClick = (e) => {
     e.preventDefault();
-    dispatch(createTask({columnName, task}));
+    dispatch(createTask({ columnName, task }));
   };
 
   return (
@@ -17,11 +19,11 @@ const TaskTextModal = ({ columnName, placeholder, setIsOpen, title }) => {
       <form className='textModalInner'>
         <div className='textModalHeader'>
           <p>{title}</p>
-          <button 
+          <button
             onClick={(e) => {
               e.preventDefault();
               setIsOpen(prev => !prev)
-            }} 
+            }}
             className='closeModalButton'>x</button>
         </div>
         <TextInput placeholder={placeholder} setterFunction={setTask} />

@@ -6,19 +6,24 @@ import TaskTextModal from './TaskTextModal.jsx';
 import { deleteColumn } from '../slices/userSlice.js';
 import { useDeleteColumnMutation } from '../utils/userApi.js';
 
-const TableColumn = ({ column }) => {
+const TableColumn = ({ column, currentProject }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [eventCoords, setEventCoords] = useState({ x: 0, y: 0 });
   const [deleteColumnMutation] = useDeleteColumnMutation();
+  const dispatch = useDispatch();
+
   const handleInputChange = (e) => {
     e.preventDefault();
     setIsOpen(prev => !prev);
   };
-  const dispatch = useDispatch();
-  const handleDeleteClick = async (e) => {
-    e.preventDefault();
+
+  const handleDeleteClick = async () => {
+    // e.preventDefault();
+    //_id is coming back as undefined: http://localhost:8080/api/project/column/undefined/undefined
+    //payload works though -- selecting 'column1'
+
     const body = {
-      _id: column._id,
+      columnId: column._id,
+      projectId: currentProject._id,
       columnName: column.columnName,
     }
     try {
@@ -29,9 +34,10 @@ const TableColumn = ({ column }) => {
       console.log(error);
     }
   };
+
   return (
     <div className="container" id="tableColumnMain">
-      {isOpen ? <TaskTextModal columnName={column.columnName} placeholder={'Task Name'} setIsOpen={setIsOpen} title='Enter Task Name'/> : null}
+      {isOpen ? <TaskTextModal columnName={column.columnName} placeholder={'Task Name'} setIsOpen={setIsOpen} title='Enter Task Name' /> : null}
       <div id="tableColumnHeader">
         <h1>{column.columnName}</h1>
         <TaskButton
@@ -39,12 +45,12 @@ const TableColumn = ({ column }) => {
           text='+'
         />
         <TaskButton
-          onClick={(e) => handleDeleteClick(e)}
+          onClick={() => handleDeleteClick(column._id, column.columnName)}
           text='-'
         />
       </div>
       {column.tasks?.map((task, index) => {
-        return <TableTask key={index} task={task} setEventCoords={setEventCoords} />;
+        return <TableTask key={index} task={task} column={column} currentProject={currentProject} />;
       })}
     </div>
   );
