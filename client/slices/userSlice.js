@@ -69,27 +69,21 @@ export const userSlice = createSlice({
     },
     updateTask: (state, action) => {
       try {
-        const { updateTask, taskName, findColumnName } = action.payload;
-        let outerIndx = 0;
+        const { updatedTask, columnId } = action.payload;
         const currentProject = state.currentProject;
+        // Find the column whose _id is columnId.
         const column = state.projects[currentProject].columns.find(
-          (col, indx) => {
-            if (col.columnName === findColumnName) {
-              outerIndx = indx;
-              return true;
-            }
-            return false;
-          }
+          (col) => (col._id === columnId)
         );
 
-        //OR iterate over the arr and push values that ARE NOT taskTo
         if (column) {
+          // Find the task whose _id is updatedTask._id (_id is not changed).
           const taskIndex = column.tasks.findIndex(
-            (task) => task.taskName === taskName
+            (task) => task._id === updatedTask._id
           );
           if (taskIndex !== -1) {
-            const newColumn = { ...column, tasks: [updateTask] };
-            state.projects[currentProject].columns[outerIndx] = newColumn;
+            // Update state.
+            column[taskIndex] = updatedTask;
           }
         }
       } catch (error) {
