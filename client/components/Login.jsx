@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import TextInput from './TextInput.jsx';
 import '../css/Login.scss';
 import Button from './Button.jsx';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -11,10 +11,9 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Login clicked');
     const data = { username, password };
     setTimeout(() => {
-      fetch('/login', {
+      fetch('/api/user/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -47,6 +46,7 @@ const Login = () => {
             <Button onClick={ handleSubmit } text='Login' />
           </form>
         </div>
+        <Link to='/signup'>Sign Up</Link>
       </div>
     </div>
   );

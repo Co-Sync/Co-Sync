@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Button from './Button.jsx';
 import TextInput from './TextInput.jsx';
 import { useNavigate } from 'react-router';
-
 const SignUp = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -14,7 +13,7 @@ const SignUp = () => {
     console.log('Sign up clicked');
     try {
       const body = { email, password, username };
-      const res = await fetch('/signup', {
+      const res = await fetch('/api/user/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -41,9 +40,9 @@ const SignUp = () => {
         </div>
         <div className='login'>
           <form className='formContainer'>
-            <TextInput placeholder='Username' onChange={setUsername} />
-            <TextInput placeholder='Email' onChange={setEmail} />
-            <TextInput placeholder='Password' onChange={setPassword} />
+            <TextInput placeholder='Username' setterFunction={setUsername} />
+            <TextInput placeholder='Email' setterFunction={setEmail} />
+            <TextInput placeholder='Password' setterFunction={setPassword} />
             <Button onClick={handleSubmit} text='Sign Up' />
           </form>
         </div>

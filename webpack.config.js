@@ -31,7 +31,6 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'bundle.js',
-    publicPath: '/build/', // Add publicPath for correct asset loading
   },
   mode: isDevelopment ? 'development' : 'production',
   module: {
@@ -69,9 +68,9 @@ module.exports = {
   },
   devServer: {
     static: {
+      publicPath: '/build',
       directory: path.resolve(__dirname, 'build'),
     },
-    hot: true, // Enable HMR
     historyApiFallback: true,
     proxy: {
       '/': 'http://localhost:3000',

@@ -26,26 +26,16 @@ mongoose.connect(mongoURI);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-/**
- * handle requests for static files
- */
-app.use(express.static(path.resolve(__dirname, '../client')));
-
-
-
 // /**
 //  * define route handlers
 //  */
 app.use('/api/project', projectRouter);
 app.use('/api/user', userRouter);
 
-
-
-
 // these two must be in the end
-app.use('/build', express.static(path.resolve(__dirname, '../build')));
-app.use('/', (req, res) => {
-  res.status(200).sendFile(path.resolve(__dirname, '../index.html'));
+app.use(express.static(path.resolve(__dirname, '../build')));
+app.get('/', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../index.html'));
 });
 
 // catch-all route handler for any requests to an unknown route

@@ -2,7 +2,7 @@
   "name": "scratch",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.jsx",
   "scripts": {
     "start": "nodemon ./server/server.js",
     "build": "webpack --mode production",
