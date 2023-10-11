@@ -38,7 +38,7 @@ export const userApi = createApi({
     }),
     updateTask: builder.mutation({
       query: (body) => ({
-        url: '/task',
+        url: '/project/task',
         method: 'PATCH', body
       }),
       invalidatesTags: ['Projects'],

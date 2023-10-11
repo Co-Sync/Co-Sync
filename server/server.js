@@ -19,6 +19,7 @@ const userRouter = require('./routes/user');
 app.use(cookieParser());
 // const mongoURI = 'mongodb://localhost/coSyncTest';
 // mongoose.connect(mongoURI);
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // /**

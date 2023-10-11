@@ -24,12 +24,19 @@ const TableTask = ({ task, column, currentProject }) => {
   const handleEditClick = async (e) => {
     e.preventDefault();
     const body = {
-      incomingData,
+      projectId: currentProject._id,
+      columnId: column._id,
+      taskId: task._id,
+      taskName: incomingData,
+      taskComments: "",
     };
     try {
       const res = await updateTaskMutation(body);
       if (res.error) throw new Error(res.error.message);
-      dispatch(updateTask(res.data));
+      // Update state in redux store.
+      dispatch(updateTask({ updatedTask : res.data, columnId: column._id }));
+      // Update isOpen state to close the "edit task" window.
+      setIsOpen(false);
     } catch (error) {
       console.log(error);
     }
