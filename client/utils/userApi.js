@@ -58,6 +58,4 @@ export const userApi = createApi({
   }),
 });
 
-// const { data: albums = [], isLoading, isFetching, isError, error,} = useGetUserQuery(page);
-
 export const { useGetProjectQuery, useSendUserCredsMutation, useSignupUserMutation, useAddProjectMutation, useAddColumnMutation, useAddTaskMutation, useMoveTaskMutation, useUpdateTaskMutation, useDeleteTaskMutation, useDeleteColumnMutation, useDeleteProjectMutation } = userApi;

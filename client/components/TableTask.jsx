@@ -20,6 +20,7 @@ const TableTask = ({ task, column, currentProject }) => {
     setIsOpen(prev => !prev);
   };
 
+  //NEEDS FOCUS
   const handleEditClick = async (e) => {
     e.preventDefault();
     const body = {
@@ -34,6 +35,7 @@ const TableTask = ({ task, column, currentProject }) => {
     }
   };
 
+  //NEEDS FOCUS 
   const handleMoveTask = async (columnName, taskToMove, newColumn) => {
     // e.preventDefault();
     const body = {
@@ -56,6 +58,8 @@ const TableTask = ({ task, column, currentProject }) => {
    - projectId
    - columnId
    - taskId*/
+
+  //NEEDS THE ACCESS OF PARAMS 
   const handleDeleteClick = async () => {
     // e.preventDefault();
     const body = {

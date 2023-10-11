@@ -7,14 +7,12 @@ const initialState = {
     project1: {
       columns: [
         {
-          columnName: 'column1',
-          tasks: [],
         },
       ],
     },
   },
   numOfProjects: 1,
-  currentProject: 'project1'
+  currentProject: ''
 };
 
 export const userSlice = createSlice({
@@ -39,7 +37,6 @@ export const userSlice = createSlice({
         console.error('Error in createTask reducer: ', error);
       }
     },
-    //need to check
     createColumn: (state, action) => {
       try {
         const addColumnName = action.payload;
@@ -55,7 +52,6 @@ export const userSlice = createSlice({
         console.error('Error in createColumn reducer: ', error);
       }
     },
-    //need to check
     createProject: (state, action) => {
       try {
         const { projectName } = action.payload;
@@ -71,7 +67,6 @@ export const userSlice = createSlice({
         console.error('Error in createProject reducer: ', error);
       }
     },
-    //need to check
     updateTask: (state, action) => {
       try {
         const { updateTask, taskName, findColumnName } = action.payload;
@@ -101,7 +96,6 @@ export const userSlice = createSlice({
         console.error('Error in updateTask reducer: ', error);
       }
     },
-    //need to check
     deleteProject: (state, action) => {
       try {
         const { projectName } = action.payload;
@@ -149,7 +143,7 @@ export const userSlice = createSlice({
           }
         );
 
-        //returning undefined, why? 
+        //returning undefined but is selected in the DELETE method, why? 
         console.log('Found column:', column);
 
         if (column) {

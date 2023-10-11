@@ -3,8 +3,16 @@ import TableColumn from './TableColumn.jsx';
 import ScrollBar from './ScrollBar.jsx';
 import { useSelector } from 'react-redux';
 
-const TableDisplay = (props) => {
+const TableDisplay = () => {
   const currentProject = useSelector((state) => state.user.projects[state.user.currentProject]);
+  if (!currentProject) {
+    return (
+      <>
+        <ScrollBar currentProject={currentProject} />
+        <div >Please Select A Project</div>
+      </>
+    );
+  }
   return (
     <div id='tableDisplayOuter' className='container'>
       <ScrollBar currentProject={currentProject} />
