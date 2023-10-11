@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const NavBar = () => {
   return (
     <nav className='NavBar'>
-      <h1>Co-Sync</h1>
+      <h1><a href='https://github.com/Co-Sync/Co-Sync'>Co-Sync</a></h1>
       <ul>
         <Link className='routerLink' to='/'>Home</Link>
         <Link className='routerLink' to='/'>Profile</Link>

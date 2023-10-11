@@ -3,15 +3,8 @@ import { createSlice, current } from '@reduxjs/toolkit';
 
 const initialState = {
   username: '',
-  projects: {
-    project1: {
-      columns: [
-        {
-        },
-      ],
-    },
-  },
-  numOfProjects: 1,
+  projects: {},
+  numOfProjects: 0,
   currentProject: ''
 };
 
@@ -19,7 +12,7 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setState: (state, action) => {
+    setUserState: (state, action) => {
       return action.payload;
     },
     createTask: (state, action) => {
@@ -197,11 +190,20 @@ export const userSlice = createSlice({
       } catch (error) {
         console.error('Error in moveTask reducer: ', error);
       }
+    },
+    setCurrentProjectName: (state, action) => {
+      try {
+        const projectName = action.payload;
+        console.log(projectName)
+        state.currentProject = projectName;
+      } catch (error) {
+        console.error('Error in setCurrentProjectName reducer: ', error);
+      }
     }
   }
 });
 
 // Action creators are generated for each case reducer function
-export const { setState, createTask, createColumn, createProject, updateTask, deleteProject, deleteColumn, deleteTask, moveTask } =
+export const { setUserState, createTask, createColumn, createProject, updateTask, deleteProject, deleteColumn, deleteTask, moveTask, setCurrentProjectName } =
   userSlice.actions;
 export default userSlice.reducer;

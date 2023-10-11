@@ -1,10 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-const ProjectsViewModal = ({ setIsOpen, title }) => {
+const ProjectsViewModal = ({ setIsOpen, title, onClick }) => {
   const projects = useSelector(state => state.user.projects);
+  console.log(projects)
   const projectsList = Object.keys(projects).map(project => project);
-  console.log(projectsList)
   return (
     <div id='modal' className='textModalVisible'>
       <form className='textModalInner'>
@@ -19,8 +19,8 @@ const ProjectsViewModal = ({ setIsOpen, title }) => {
             className='closeModalButton'>x</button>
         </div>
         <div className='projectsList'>          
-          { projectsList.map((project, index) => {
-            return <button className='projectsListButton' key={index}>{project}</button>
+          {projectsList.map((project, index) => {
+            return <button value={project} onClick={onClick} className='projectsListButton' key={index}>{project}</button>
           })}
         </div>
       </form>

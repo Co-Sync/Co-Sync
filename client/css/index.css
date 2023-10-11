@@ -21,6 +21,11 @@ html {
   overflow: hidden;
 }
 
+*::selection {
+  background: #3baaffae;
+  color: white;
+}
+
 * {
   box-sizing: border-box;
   font-family: JetBrainsMono-Regular;

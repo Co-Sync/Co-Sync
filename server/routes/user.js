@@ -15,7 +15,6 @@ const userRouter = express.Router();
 // userRouter.get('/signup', (req, res) => {
 //   res.sendFile(path.resolve(__dirname, '../client/index.html'));
 // });
-
 userRouter.post('/signup', userController.createUser , cookieController.setSSIDCookie, sessionController.startSession, (req, res) => {
   // what should happen here on successful sign up?
   res.status(200).end();
@@ -27,11 +26,11 @@ userRouter.post('/signup', userController.createUser , cookieController.setSSIDC
 */
 userRouter.post('/login', userController.verifyUser, cookieController.setSSIDCookie, sessionController.startSession, (req, res) => {
   // what should happen here on successful log in?
-    res.status(200).end();
+  res.status(200).end();
 });
 
-
-
-
+userRouter.get('/validate', sessionController.isLoggedIn, (req, res) => {
+  res.status(200).end();
+});
 
 module.exports = userRouter;

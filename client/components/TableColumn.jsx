@@ -42,15 +42,15 @@ const TableColumn = ({ column, currentProject }) => {
         <h1>{column.columnName}</h1>
         <TaskButton
           onClick={(e) => handleInputChange(e)}
-          text='+'
+          text='Add Task'
         />
         <TaskButton
           onClick={() => handleDeleteClick(column._id, column.columnName)}
-          text='-'
+          text='Delete'
         />
       </div>
       {column.tasks?.map((task, index) => {
-        return <TableTask key={index} task={task} column={column} currentProject={currentProject} />;
+        return <TableTask key={index} task={task} column={column._id} currentProject={currentProject._id} />;
       })}
     </div>
   );

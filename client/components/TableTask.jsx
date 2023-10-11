@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { deleteTask, updateTask, moveTask } from '../slices/userSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import TaskButton from './TaskButton.jsx';
 import TextModal from './TextModal.jsx';
 import { useDeleteTaskMutation, useUpdateTaskMutation, useMoveTaskMutation } from '../utils/userApi.js';
 
 const TableTask = ({ task, column, currentProject }) => {
-  //instead of task, might need to pass down props to access props.task.taskId / props.projects.projectId
   const [incomingData, setIncomingData] = useState('');
   const [toggleModal, setToggleModal] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  // const comment = useSelector((state) => state.user.projects[state.user.currentProject].columns.taskComment);
   const [deleteTaskMutation] = useDeleteTaskMutation();
   const [updateTaskMutation] = useUpdateTaskMutation();
   const [moveTaskMutation] = useMoveTaskMutation();
@@ -77,11 +77,6 @@ const TableTask = ({ task, column, currentProject }) => {
     }
 
     //getting back undefined: http://localhost:8080/api/project/task/undefined/undefined/undefined
-
-    // console.log('Deleting task:', task.taskName);
-    // console.log('Find column', column.columnName);
-    // dispatch(deleteTask(task.taskName, column.columnName));
-    // console.log('clicked');
   };
 
 

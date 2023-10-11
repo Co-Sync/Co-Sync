@@ -101,7 +101,7 @@
   margin: 20px;
   min-height: 10vh;
   background-color: #68697318;
-  min-width: 10vw;
+  min-width: 15vw;
   height: 40vh;
   height: 40vh;
   display: flex;
@@ -209,7 +209,7 @@
     margin: 0px 5px;
     font-size: 15px;
     height: 1.5rem;
-    width: 1.5rem;
+    width: fit-content;
     color:rgb(44, 210, 222);
     background-size: cover;
     transition: all 0.2s ease-in-out;

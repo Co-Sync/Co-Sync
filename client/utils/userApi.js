@@ -55,7 +55,11 @@ export const userApi = createApi({
       query: (body, projectId) => ({ url: `/project/${projectId}`, method: 'DELETE', body }),
       invalidatesTags: ['Projects'],
     }),
+    validateUser: builder.query({
+      query: () => ({ url: '/user/validate', method: 'GET', credentials: 'include' }),
+      providesTags: ['User'],
+    }),
   }),
 });
 
-export const { useGetProjectQuery, useSendUserCredsMutation, useSignupUserMutation, useAddProjectMutation, useAddColumnMutation, useAddTaskMutation, useMoveTaskMutation, useUpdateTaskMutation, useDeleteTaskMutation, useDeleteColumnMutation, useDeleteProjectMutation } = userApi;
+export const { useGetProjectQuery, useSendUserCredsMutation, useSignupUserMutation, useAddProjectMutation, useAddColumnMutation, useAddTaskMutation, useMoveTaskMutation, useUpdateTaskMutation, useDeleteTaskMutation, useDeleteColumnMutation, useDeleteProjectMutation, useValidateUserQuery } = userApi;
