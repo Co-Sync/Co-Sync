@@ -1,23 +1,5 @@
 @import 'Variables.scss';
 
-@keyframes placeholderMoveUp {
-  0% {
-    transform: translate(0px, 0px);
-  }
-  100% {
-    transform: translate(-5.8rem, -1.8rem) scale(0.5);
-  }
-}
-
-@keyframes placeholderMoveDown {
-  0% {
-    transform: translate(-5.8rem, -1.8rem);
-  }
-  100% {
-    transform: translate(0px, 0px) scale(1);
-  }
-}
-
 .login {
   display: flex;
   flex-direction: column;
@@ -28,12 +10,15 @@
   height: 75vh;
   .header {
     font-size: 1.5rem;
-    margin: 5px 0px 0px 0px;
+    margin: 0px;
     padding: 0;
     width: 100%;
     color: white;
     border-bottom: 1px solid white;
+    background-color: $glass-blue;
+    border-radius: 10px 10px 0px 0px;
     h1, h2 {
+      text-shadow: 0px 0px 10px rgba(60, 164, 255, 0.5);
       margin: 4px 0px;
       padding: 0;
     }
@@ -43,22 +28,11 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    .formInput {
-      width: 65%;
-      margin: 4px 0px;
-    }
-    .formButton {
-      width: 8rem;
-      height: 2rem;
-      margin: 10px;
-      border-radius: 5px;
-      border: none;
-      background-color: #52baff;
-      font-size: 1.4rem;
-      border: 1px solid white;
-      cursor: pointer;
-    }
+    width: 49.9vw;
+    height: 35vh;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    backdrop-filter: blur(15px);
   }
 }
 
@@ -78,7 +52,7 @@
   align-items: center;
   width: fit-content;
   height: fit-content;
-  margin: 0;
+  margin: 5px;
   padding: 0;
   border: none;
   background-color: transparent;
@@ -86,15 +60,34 @@
 }
 
 .TextInput {
-  height: 2.5rem;
-  width: 15rem;
+  height: 3rem;
+  width: 22rem;
   background-color: transparent;
   border: none;
   border-radius: 5px;
   position: relative;
   z-index: 1;
+  padding: 5px;
+  height: fit-content;
+  &:not(:placeholder-shown) + legend + .TextInputHighlight {
+    transform-origin: left top 0px;
+    transform: translate(0.8rem, -1rem) scale(0.5);
+  }
+  &:not(:placeholder-shown) + legend {
+    position: relative;
+    max-width: 100%;
+  }
   &:focus {
+    border: none;
     outline: none;
+    & + legend {
+      position: relative;
+      max-width: 100%;
+    }
+    & + legend + .TextInputHighlight {
+      transform-origin: left top 0px;
+      transform: translate(0.8rem, -1rem) scale(0.5);
+    }
   }
 }
 
@@ -102,29 +95,75 @@
   color: white;
   font-size: 1.5rem;
   margin: 0;
-  padding: 0;
+  padding: 0px 10px;
   width: fit-content;
   background-color: transparent;
   z-index: 2;
   border: 1.5px solid white;
-  border-radius: 5px;
-  legend {
-    position: relative;
-    width: 4.5rem;
+  border-radius: 8px;
+  height: fit-content;
+  input {
+    padding: 0;
+    margin: 0px 5px;
+    height: 2.5rem;
+    font-size: 1.5rem;
   }
-  &:focus {
-    outline: none;
+  legend {
+    max-width: 0.01px;
+    white-space: nowrap;
+    visibility: hidden;
+    font-size: 0.8rem;
+    padding: 0;
+    transition: max-width 0.2s ease-in-out;
+    overflow: hidden;
+    span {
+      visibility: visible;
+      opacity: 0;
+      display: inline-block;
+      padding-right: 8px;
+    }
   }
 }
 
 .TextInputHighlight {
-  animation: placeholderMoveDown 0.2s ease-in-out forwards;
-  font-size: 1.5rem;
+  letter-spacing: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
-  left: 5rem;
+  padding: 0px 5px;
+  top: 1rem;
+  left: 0rem;
   transform: scale(1);
   transition: all 0.2s ease-in-out;
   pointer-events: none;
   border-radius: 5px;
   z-index: 2;
+}
+
+.buttonMain {
+  width: fit-content;
+  height: fit-content;
+  position: relative;
+}
+
+.buttonInput {
+  cursor: pointer;
+  font-size: 1.5rem;
+  z-index: 1;
+  height: 2.5rem;
+  background-color: #52baff;
+  border-radius: 5px;
+  border: 1.5px solid white;
+  transition: all 0.2s ease-in-out;
+  min-width: 8vw;
+  &:hover {
+    background-color: #4086ff;
+    transform: scale(1.1);
+  }
+  &:active {
+    background-color: #4086ff;
+    border: 1px solid rgb(0, 157, 255);
+    transform: scale(1);
+  }
 }

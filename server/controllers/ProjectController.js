@@ -84,26 +84,26 @@ const changeColumn = async (req, res, next) => {
         message: { err: 'project does not exist.' },
       });
     }
-     // find column by id;
-     let column;
-     for (let i = 0; i < project.columns.length; i++) {
-       if (project.columns[i]._id.toString() === oldColumnId) {
-         column = project.columns[i];
-         break;
-       }
-     }
-     if (!column) {
-       return next({
-         status: 404,
-         log: 'column does not exist. ',
-         message: { err: 'column does not exist.' },
-       });
-     }
+    // find column by id;
+    let column;
+    for (let i = 0; i < project.columns.length; i++) {
+      if (project.columns[i]._id.toString() === oldColumnId) {
+        column = project.columns[i];
+        break;
+      }
+    }
+    if (!column) {
+      return next({
+        status: 404,
+        log: 'column does not exist. ',
+        message: { err: 'column does not exist.' },
+      });
+    }
 
-     // find the task inside the column, slice this from the tasks array
-     let task;
-     let taskIndex;
-     for (let i = 0; i < column.tasks.length; i++) {
+    // find the task inside the column, slice this from the tasks array
+    let task;
+    let taskIndex;
+    for (let i = 0; i < column.tasks.length; i++) {
       if (column.tasks[i]._id.toString() === taskId) {
         task = column.tasks[i];
         // console.log('task', task);
@@ -111,22 +111,22 @@ const changeColumn = async (req, res, next) => {
         break;
       }
     }
-      column.tasks.splice(taskIndex, 1);
+    column.tasks.splice(taskIndex, 1);
 
-     // go into the newColumn with newColumnId, and then push it into the newColumn array
-      // let newColumn;
-      // let newColumnIndex;
+    // go into the newColumn with newColumnId, and then push it into the newColumn array
+    // let newColumn;
+    // let newColumnIndex;
 
-      for(let i=0; i < project.columns.length; i++){
-        if (project.columns[i]._id.toString() === newColumnId){
-          const newTask = { taskName : task.taskName, taskComments : task.taskComments, _id : task._id };
-          project.columns[i].tasks.push(newTask);
-          // newColumn = project.columns[i];
-          break;
-        }
-      }  
+    for(let i=0; i < project.columns.length; i++){
+      if (project.columns[i]._id.toString() === newColumnId){
+        const newTask = { taskName : task.taskName, taskComments : task.taskComments, _id : task._id };
+        project.columns[i].tasks.push(newTask);
+        // newColumn = project.columns[i];
+        break;
+      }
+    }  
     
-   await project.save();
+    await project.save();
     return next();
   } catch (error) {
     console.log(error);

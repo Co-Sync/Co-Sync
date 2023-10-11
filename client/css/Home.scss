@@ -11,39 +11,41 @@
 
 .homeMain {
   display: flex;
+  position: relative;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
 }
 
 .NavBar {
-  display: flex;
-  height: fit-content;
+  display: grid;
+  height: 10vh;
   align-items: center;
   position: fixed;
-  justify-content: space-between;
   width: 100vw;
+  grid-template-columns: 1fr 1fr auto;
   top: 0;
   left: 0;
-  padding: 10px;
+  padding: .5rem .5rem;
   backdrop-filter: blur(10px);
   background-color: rgba(255, 255, 255, 0.01);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  font-size: 1.5rem;
+  border-bottom: 1px solid rgb(255, 255, 255);
+  font-size: 3vh;
   ul {
-    height: inherit;
+    height: fit-content;
     margin: 0;
+    width: fit-content;
     padding: 0;
-    display: flex;
-    flex-direction: row;
-    gap: 15px;
     list-style: none;
-    li {
-      height: inherit;
+    .routerLink {
       display: flex;
       align-items: center;
       justify-content: center;
+      height: fit-content;
       padding: 0;
       cursor: pointer;
       border-radius: 10px;
@@ -59,13 +61,12 @@
     padding: 1px 10px;
     cursor: pointer;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: -webkit-linear-gradient(white, #38495a);
-    border-left: 0px transparent;
+    background: -webkit-linear-gradient(rgb(255, 255, 255), #38495a);
+    border-left: 1px transparent;
     -webkit-background-clip: text;
     background-clip: text;
-    height: inherit;
+    height: fit-content;
+    width: fit-content;
     -webkit-text-fill-color: transparent;
     transition: all 0.2s ease-in-out;
     &:hover {
@@ -76,18 +77,23 @@
 }
 
 #tableDisplayOuter {
+  position: relative;
+  top: 10vh;
   width: 100vw;
-  border-radius: 1px;
+  border-radius: 0px;
+  border: none;
   display: flex;
-  justify-content: center;
-  height: 75vh;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
 }
 
 #tableDisplayInner {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   width: 100%;
   height: 100%;
+  overflow: scroll;
 }
 
 #tableColumnMain {
@@ -96,10 +102,12 @@
   min-height: 10vh;
   background-color: #68697318;
   min-width: 10vw;
-  height: 35vh;
+  height: 40vh;
+  height: 40vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 1;
   h1 {
     margin: 0px 5px;
     padding: 0;
@@ -115,13 +123,14 @@
   border-bottom: 2px solid rgba(255, 255, 255, 0.5);
   display: grid;
   padding: 5px;
-  max-width: 15vw;
-  background-color: #aeaeb641;
+  max-width: 18vw;
+  background-color: $glass-blue;
   width: 100%;
   border-radius: 1px;
-  overflow: hidden;
+  overflow: visible;
+  overflow: visible;
   overflow-wrap: anywhere;
-  button {
+  #messagesButton {
     position: relative;
     justify-self: end;
     cursor: pointer;
@@ -139,9 +148,103 @@
       background-color: rgba(255, 255, 255, 0.1);
     }
   }
+  #moveTaskButton {
+    position: relative;
+    justify-self: end;
+    cursor: pointer;
+    border: 0px transparent;
+    border-radius: 5px;
+    background-color: #6fcdff00;
+    margin: 0px 5px;
+    height: 1.5rem;
+    width: 1.5rem;
+    background-image: url(../../assets/three-dots.svg);
+    background-size: cover;
+    transition: all 0.2s ease-in-out;
+    &:hover {
+      scale: 1.1;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+  }
   p {
     font-size: large;
     margin: 2px;
-    // max-width: 13vw;
   }
+}
+
+.scrollBarOuter {
+  background-color: $glass-blue;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border-bottom: 1px solid white;
+  height: 8vh;
+  overflow-x: visible;
+  font-size: 3vh;
+  padding: 0px 10px;
+}
+
+.scrollBarInner {
+  padding: 0px;
+  margin: 0px;
+  list-style: none;
+  display: flex;
+  gap: 10px;
+}
+
+#tableColumnHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  button {
+    position: relative;
+    justify-self: end;
+    cursor: pointer;
+    border: 0px transparent;
+    border-radius: 5px;
+    background-color: #6fcdff00;
+    margin: 0px 5px;
+    font-size: 15px;
+    height: 1.5rem;
+    width: 1.5rem;
+    color:rgb(44, 210, 222);
+    background-size: cover;
+    transition: all 0.2s ease-in-out;
+    &:hover {
+      scale: 1.1;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+}
+
+#tableTaskButtons {
+  display: flex;
+}
+
+#innerTaskButton {
+  background-color: #38495a;
+  border: 1px solid transparent;
+  position: relative;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0.1rem;
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    transform: scale(1.1);
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+}
+.scrollBarOuter {
+  position: relative;
+}
+
+.scrollBarListItem {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }

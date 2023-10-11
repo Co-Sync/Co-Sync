@@ -1,18 +1,25 @@
 import React from 'react';
 
-const TextInput = ({ placeholder, onChange, value }) => {
+const TextInput = ({ placeholder, setterFunction, value }) => {
   return (
     <div className='TextInputOuter'>
       <fieldset className='TextField'>
-        <legend></legend>
         <input
           className='TextInput'
           type="text"
           value={value}
-          onChange={onChange}
+          onChange={(e) => setterFunction(e.target.value)}
+          placeholder=''
         />
+        <legend>
+          <span>
+            {placeholder}
+          </span>
+        </legend>
+        <span className={'TextInputHighlight'}>
+          { placeholder }
+        </span>
       </fieldset>
-      <span className={'TextInputHighlight'}>{ placeholder }</span>
     </div>
   )
 }
