@@ -4,9 +4,6 @@ import { useDispatch } from 'react-redux';
 import { useAddColumnMutation, useAddProjectMutation } from '../utils/userApi.js';
 import { createColumn, createProject } from '../slices/userSlice.js';
 
-
-
-
 const ScrollBar = () => {
   const [column, setColumn] = useState('');
   const [project, setProject] = useState('');
@@ -15,6 +12,7 @@ const ScrollBar = () => {
 
   const [addColumnMutation] = useAddColumnMutation();
   const [addProjectMutation] = useAddProjectMutation();
+
   const handleAddColumnClick = async (e) => {
     e.preventDefault();
     const body = {
@@ -45,31 +43,14 @@ const ScrollBar = () => {
     } catch (error) {
       console.log(error);
     }
-  }
-
-
+  };
 
   return (
     <div className='scrollBarOuter'>
       <ul className='scrollBarInner'>
-        <ScrollBarItem 
-          setterFunction={setColumn} 
-          onClick={handleAddColumnClick} 
-          placeholder='Add Column' 
-          type='text' 
-          title='Column Name' 
-        />
-        <ScrollBarItem 
-          placeholder='Create Project' 
-          type='text' 
-          title='Project Name' 
-        />
-        <ScrollBarItem 
-          placeholder='My Projects' 
-          type='view' 
-          title='Projects' 
-          onClick={handleSetProject}
-        />
+        <ScrollBarItem setterFunction={setColumn} onClick={handleAddColumnClick} placeholder='Add Column' type='text' title='Column Name' />
+        <ScrollBarItem setterFunction={setProject} onClick={handleSetProject} placeholder='Create Project' type='text' title='Project Name' />
+        <ScrollBarItem placeholder='My Projects' type='view' title='Projects' />
       </ul>
     </div>
   );
