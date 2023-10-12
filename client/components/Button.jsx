@@ -6,6 +6,7 @@ const Button = ({ onClick, text, idOverride }) => {
       <button 
         className='buttonInput' 
         onClick={(e) => {
+          e.preventDefault();
           if (onClick) onClick(e); 
         }}>
         {text}

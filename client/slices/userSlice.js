@@ -40,13 +40,15 @@ export const userSlice = createSlice({
     },
     createColumn: (state, action) => {
       try {
-        const addColumnName = action.payload;
-        console.log(addColumnName)
+        const {columnName, _id} = action.payload;
+        console.log(columnName)
+        console.log('current project is:', current(state.currentProject));
         const currentProject = state.currentProject;
-        if (!state.projects[currentProject].columns.find((col) => col.columnName === addColumnName)) {
+        if (!state.projects[currentProject].columns.find((col) => col.columnName === columnName)) {
           state.projects[currentProject].columns.push({
-            addColumnName,
+            columnName,
             tasks: [],
+            _id: _id
           });
         }
       } catch (error) {
@@ -186,7 +188,6 @@ export const userSlice = createSlice({
     setCurrentProjectName: (state, action) => {
       try {
         const projectName = action.payload;
-        console.log(projectName)
         state.currentProject = projectName;
       } catch (error) {
         console.error('Error in setCurrentProjectName reducer: ', error);
