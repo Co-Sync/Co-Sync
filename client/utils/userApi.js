@@ -31,6 +31,10 @@ export const userApi = createApi({
       query: (body) => ({ url: '/project/task', method: 'POST', body }),
       invalidatesTags: ['Projects'],
     }),
+    addComment: builder.mutation({
+      query: (body) => ({ url: '/project/task/comment', method: 'POST', body }),
+      invalidatesTags: ['Projects'],
+    }),
     // Body: { projectId, columnId, taskId, taskName, taskComments}
     moveTask: builder.mutation({
       query: (body) => ({ url: '/project/', method: 'PATCH', body }),
@@ -38,13 +42,13 @@ export const userApi = createApi({
     }),
     updateTask: builder.mutation({
       query: (body) => ({
-        url: '/task',
+        url: '/project/task',
         method: 'PATCH', body
       }),
       invalidatesTags: ['Projects'],
     }),
     deleteTask: builder.mutation({
-      query: (body, projectId, columnId, taskId) => ({ url: `/project/task/${projectId}/${columnId}/${taskId}`, method: 'DELETE', body }),
+      query: ({ projectId, columnId, taskId }) => ({ url: `/project/task/${projectId}/${columnId}/${taskId}`, method: 'DELETE', }),
       invalidatesTags: ['Projects'],
     }),
     deleteColumn: builder.mutation({

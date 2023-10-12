@@ -9,7 +9,7 @@ const TableTask = ({ task, column, currentProject }) => {
   const [incomingData, setIncomingData] = useState('');
   const [toggleModal, setToggleModal] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  // const comment = useSelector((state) => state.user.projects[state.user.currentProject].columns.taskComment);
+  // const comment = useSelector((state) => state.user.projects[state.user.currentProject]?.columns[task]?.[0]?.taskComment);
   const [deleteTaskMutation] = useDeleteTaskMutation();
   const [updateTaskMutation] = useUpdateTaskMutation();
   const [moveTaskMutation] = useMoveTaskMutation();
@@ -24,16 +24,45 @@ const TableTask = ({ task, column, currentProject }) => {
   const handleEditClick = async (e) => {
     e.preventDefault();
     const body = {
-      incomingData,
+      projectId: currentProject._id,
+      columnId: column._id,
+      taskId: task._id,
+      taskName: incomingData,
+      taskComments: "",
     };
     try {
       const res = await updateTaskMutation(body);
       if (res.error) throw new Error(res.error.message);
-      dispatch(updateTask(res.data));
+      // Update state in redux store.
+      dispatch(updateTask({ updatedTask : res.data, columnId: column._id }));
+      // Update isOpen state to close the "edit task" window.
+      setIsOpen(false);
     } catch (error) {
       console.log(error);
     }
   };
+
+  /* create a task - comments
+   req.body: a json object with the following fields:
+   - projectId
+   - columnId
+   - taskName
+*/
+  // const handleAddComment = async (e) => {
+  //   e.preventDefault();
+  //   const body = {
+  //     projectId: currentProject._id,
+  //     columnId: column._id,
+  //     taskId: task._id,
+  //     taskComments: incomingData,
+  //   };
+  //   try {
+  //     const res = await 
+  //   } catch (error) {
+
+  //   }
+  // }
+
 
   //NEEDS FOCUS 
   const handleMoveTask = async (columnName, taskToMove, newColumn) => {
@@ -59,24 +88,28 @@ const TableTask = ({ task, column, currentProject }) => {
    - columnId
    - taskId*/
 
-  //NEEDS THE ACCESS OF PARAMS 
   const handleDeleteClick = async () => {
     // e.preventDefault();
     const body = {
       taskId: task._id,
       columnId: column._id,
       projectId: currentProject._id,
-      taskName: task.taskName
     };
-    try {
-      const res = await deleteTaskMutation(body);
-      if (res.error) throw new Error(res.error.message);
-      dispatch(deleteTask(res.data));
-    } catch (error) {
-      console.log(error);
-    }
 
-    //getting back undefined: http://localhost:8080/api/project/task/undefined/undefined/undefined
+    console.log('proj', body);
+    try {
+      if (!currentProject._id || !column._id || !task._id) {
+        console.error('Invalid project, column, or task id');
+        return;
+      }
+
+      const res = await deleteTaskMutation(body);
+      console.log('res', res);
+      if (res.error) throw new Error(res.error.message);
+      dispatch(deleteTask({ columnId: column._id, taskId: task._id, projectId: currentProject._id }));
+    } catch (error) {
+      console.log('Error in handleDeleteClick: ', error);
+    }
   };
 
 
@@ -88,11 +121,6 @@ const TableTask = ({ task, column, currentProject }) => {
           onClick={() => handleDeleteClick(task.taskName, column.columnName)}
           text='Delete'
           idOverride='innerTaskButton' />
-        {/* <TaskButton
-          onClick={() => setToggleModal(!toggleModal)}
-          text='Edit'
-          idOverride='innerTaskButton'
-        /> */}
         <TaskButton
           onClick={(e) => handleInputChange(e)}
           text='Edit'
