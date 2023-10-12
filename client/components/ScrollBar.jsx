@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useAddColumnMutation, useAddProjectMutation } from '../utils/userApi.js';
 import { createColumn, createProject, setCurrentProjectName } from '../slices/userSlice.js';
 
-const ScrollBar = ({ currentProject }) => {
+const ScrollBar = ({currentProject}) => {
   const [project, setProject] = useState('');
   const [column, setColumn] = useState('');
   const [addColumnMutation] = useAddColumnMutation();
@@ -12,7 +12,6 @@ const ScrollBar = ({ currentProject }) => {
   const dispatch = useDispatch();
 
   // console.log(`Current project is: ${currentProject}`);
-
   const handleAddColumnClick = async (e) => {
     e.preventDefault();
     const body = {
@@ -63,17 +62,17 @@ const ScrollBar = ({ currentProject }) => {
           type='text'
           title='Column Name'
         />
-        <ScrollBarItem
-          placeholder='Create Project'
-          type='text'
+        <ScrollBarItem 
+          placeholder='Create Project' 
+          type='text' 
           title='Project Name'
           setterFunction={setProject}
           onClick={handleSetProject}
         />
-        <ScrollBarItem
-          placeholder='My Projects'
+        <ScrollBarItem 
+          placeholder='My Projects' 
           type='view'
-          title='Projects'
+          title='Projects' 
           onClick={handleSetProjectName}
         />
       </ul>
