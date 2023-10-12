@@ -5,6 +5,7 @@ import SignUp from './components/SignUp.jsx'
 import Settings from './components/Settings.jsx';
 import Profile from './components/Profile.jsx';
 import { Route, Routes } from 'react-router-dom';
+import './css/index.css';
 
 const App = () => {
   return (

@@ -22,7 +22,7 @@ const ProjectsViewModal = ({ setIsOpen, title, saveFunc }) => {
               e.preventDefault();
               setIsOpen(prev => !prev);
               saveFunc(e);
-            }} className='projectsListButton' key={index}>{project}</button>
+            }} className='projectsListButton' key={index}>{index} - {project}</button>
           })}
         </div>
       </form>
