@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { deleteTask, updateTask, moveTask } from '../slices/userSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import TaskButton from './TaskButton.jsx';
 import TextModal from './TextModal.jsx';
 import { useDeleteTaskMutation, useUpdateTaskMutation, useMoveTaskMutation } from '../utils/userApi.js';
 
 const TableTask = ({ task, column, currentProject }) => {
-  //instead of task, might need to pass down props to access props.task.taskId / props.projects.projectId
   const [incomingData, setIncomingData] = useState('');
   const [toggleModal, setToggleModal] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  // const comment = useSelector((state) => state.user.projects[state.user.currentProject]?.columns[task]?.[0]?.taskComment);
   const [deleteTaskMutation] = useDeleteTaskMutation();
   const [updateTaskMutation] = useUpdateTaskMutation();
   const [moveTaskMutation] = useMoveTaskMutation();
@@ -42,6 +42,28 @@ const TableTask = ({ task, column, currentProject }) => {
     }
   };
 
+  /* create a task - comments
+   req.body: a json object with the following fields:
+   - projectId
+   - columnId
+   - taskName
+*/
+  // const handleAddComment = async (e) => {
+  //   e.preventDefault();
+  //   const body = {
+  //     projectId: currentProject._id,
+  //     columnId: column._id,
+  //     taskId: task._id,
+  //     taskComments: incomingData,
+  //   };
+  //   try {
+  //     const res = await 
+  //   } catch (error) {
+
+  //   }
+  // }
+
+
   //NEEDS FOCUS 
   const handleMoveTask = async (columnName, taskToMove, newColumn) => {
     // e.preventDefault();
@@ -66,29 +88,28 @@ const TableTask = ({ task, column, currentProject }) => {
    - columnId
    - taskId*/
 
-  //NEEDS THE ACCESS OF PARAMS 
   const handleDeleteClick = async () => {
     // e.preventDefault();
     const body = {
       taskId: task._id,
       columnId: column._id,
       projectId: currentProject._id,
-      taskName: task.taskName
     };
+
+    console.log('proj', body);
     try {
+      if (!currentProject._id || !column._id || !task._id) {
+        console.error('Invalid project, column, or task id');
+        return;
+      }
+
       const res = await deleteTaskMutation(body);
+      console.log('res', res);
       if (res.error) throw new Error(res.error.message);
-      dispatch(deleteTask(res.data));
+      dispatch(deleteTask({ columnId: column._id, taskId: task._id, projectId: currentProject._id }));
     } catch (error) {
-      console.log(error);
+      console.log('Error in handleDeleteClick: ', error);
     }
-
-    //getting back undefined: http://localhost:8080/api/project/task/undefined/undefined/undefined
-
-    // console.log('Deleting task:', task.taskName);
-    // console.log('Find column', column.columnName);
-    // dispatch(deleteTask(task.taskName, column.columnName));
-    // console.log('clicked');
   };
 
 
@@ -100,11 +121,6 @@ const TableTask = ({ task, column, currentProject }) => {
           onClick={() => handleDeleteClick(task.taskName, column.columnName)}
           text='Delete'
           idOverride='innerTaskButton' />
-        {/* <TaskButton
-          onClick={() => setToggleModal(!toggleModal)}
-          text='Edit'
-          idOverride='innerTaskButton'
-        /> */}
         <TaskButton
           onClick={(e) => handleInputChange(e)}
           text='Edit'

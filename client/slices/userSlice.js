@@ -3,15 +3,8 @@ import { createSlice, current } from '@reduxjs/toolkit';
 
 const initialState = {
   username: '',
-  projects: {
-    project1: {
-      columns: [
-        {
-        },
-      ],
-    },
-  },
-  numOfProjects: 1,
+  projects: {},
+  numOfProjects: 0,
   currentProject: ''
 };
 
@@ -19,15 +12,23 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setState: (state, action) => {
+    setUserState: (state, action) => {
       return action.payload;
+    },
+    setUserName: (state, action) => {
+      try {
+        const username = action.payload;
+        state.username = username;
+      } catch (error) {
+        console.error('Error in setUserName reducer: ', error);
+      }
     },
     createTask: (state, action) => {
       try {
         const { findColumnName, task } = action.payload;
         const currentProject = state.currentProject;
         console.log(task);
-        state.projects[currentProject].columns = state.projects[currentProject].columns.map(el => {
+        state.projects[currentProject].columns = state.projects[currentProject].columns.map((el) => {
           if (el.columnName === findColumnName) {
             el.tasks.push({ taskName: task, taskComments: [] });
           }
@@ -125,16 +126,13 @@ export const userSlice = createSlice({
     deleteTask: (state, action) => {
       try {
         console.log('deleteTask reducer triggered');
-        let outerIndx = 0;
-        const { findColumnName, taskToDelete } = action.payload;
+        // let outerIndx = 0;
+        const { taskId, columnId } = action.payload;
         const currentProject = state.currentProject;
 
         console.log('state', current(state.projects[currentProject].columns));
         const column = state.projects[currentProject].columns.find(
-          (col, indx) => {
-            col.columnName === findColumnName
-            outerIndx = indx;
-          }
+          (col) => (col._id === columnId)
         );
 
         //returning undefined but is selected in the DELETE method, why? 
@@ -143,16 +141,9 @@ export const userSlice = createSlice({
         if (column) {
           //find index of the task to delete
           const taskIndex = column.tasks.findIndex(
-            (task) => task.taskName === taskToDelete
+            (task) => task._id === taskId
           );
           console.log('Task index:', taskIndex);
-
-          //if the tasks exist, use that index to delete it from the arr using splice
-          // if (taskIndex !== -1) {
-          //   const spliced = column.tasks.toSpliced(taskIndex, 1);
-          //   const newColumn = { ...column, tasks: spliced };
-          //   state.projects[currentProject].columns[outerIndx] = newColumn;
-          // }
 
           if (taskIndex !== -1) {
             const spliced = column.tasks.slice();
@@ -161,12 +152,12 @@ export const userSlice = createSlice({
             console.log('Tasks after splice:', spliced);
 
             const newColumn = { ...column, tasks: spliced };
-            const newProjects = [...state.projects];
-            newProjects[currentProject].columns[outerIndx] = newColumn;
+            // const newProjects = [...state.projects];
+            state.projects[currentProject].columns[taskIndex] = newColumn;
 
-            console.log('New projects:', newProjects);
+            // console.log('New projects:', newProjects);
 
-            return { ...state, projects: newProjects };
+            // return { ...state, projects: newProjects };
           }
         }
         console.log('Task not found');
@@ -191,11 +182,21 @@ export const userSlice = createSlice({
       } catch (error) {
         console.error('Error in moveTask reducer: ', error);
       }
+    },
+    setCurrentProjectName: (state, action) => {
+      try {
+        const projectName = action.payload;
+        console.log(projectName)
+        state.currentProject = projectName;
+      } catch (error) {
+        console.error('Error in setCurrentProjectName reducer: ', error);
+      }
     }
   }
 });
 
 // Action creators are generated for each case reducer function
-export const { setState, createTask, createColumn, createProject, updateTask, deleteProject, deleteColumn, deleteTask, moveTask } =
+export const { setUserState, createTask, createColumn, createProject, updateTask, deleteProject, deleteColumn, deleteTask, moveTask, 
+  setCurrentProjectName, setUserName } =
   userSlice.actions;
 export default userSlice.reducer;

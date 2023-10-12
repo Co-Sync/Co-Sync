@@ -2,25 +2,81 @@
 
 .login {
   display: flex;
+  backdrop-filter: blur(10px);
+  box-shadow: 0px 0px 20px rgba(60, 222, 255, 0.5);
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
   width: 50vw;
   height: 75vh;
+  border: 2px solid white;
+  border-radius: 10px;
+  overflow: hidden;
+  .footer {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(75px, 1fr));
+    height: 20vh;
+    width: 100%;
+    gap: 2px;
+    margin: 5px;
+    padding: 0;
+    overflow: scroll;
+    div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      border-radius: 10px;
+      padding: 5px;
+      transition: all 0.2s ease-in-out;
+    }
+  }
+  a {
+    text-decoration: underline;
+    color: white;
+    font-size: 1.5rem;
+    margin: 0;
+    padding: 0;
+    border-radius: 10px;
+    transition: all 0.2s ease-in-out;
+    width: fit-content;
+    &:hover {
+      background-color: rgba(95, 95, 95, 0.232);
+      transform: scale(1.1);
+      color: #52baff;
+    }
+  }
+  .innerLogin {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    border: none;
+    border-radius: 10px;
+  }
   .header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     font-size: 1.5rem;
     margin: 0px;
-    padding: 0;
+    padding: 0px;
     width: 100%;
     color: white;
-    border-bottom: 1px solid white;
     background-color: $glass-blue;
-    border-radius: 10px 10px 0px 0px;
+    border-bottom: 2px solid white;
     h1, h2 {
       text-shadow: 0px 0px 10px rgba(60, 164, 255, 0.5);
-      margin: 4px 0px;
+      margin: 0px 0px;
       padding: 0;
+      width: fit-content;
+      height: fit-content;
     }
   }
   .formContainer {
@@ -28,11 +84,15 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 49.9vw;
-    height: 35vh;
-    border-top: 1px solid white;
-    border-bottom: 1px solid white;
-    backdrop-filter: blur(15px);
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    padding: 5px;
+    border-bottom: 2px solid white;
+  }
+  h3 {
+    height: fit-content;
+    margin: 0;
   }
 }
 
@@ -61,7 +121,7 @@
 
 .TextInput {
   height: 3rem;
-  width: 22rem;
+  width: 24vw;
   background-color: transparent;
   border: none;
   border-radius: 5px;
@@ -102,6 +162,10 @@
   border: 1.5px solid white;
   border-radius: 8px;
   height: fit-content;
+  box-shadow: 0px 0px 10px rgba(36, 215, 255, 0.5);
+  &:focus-within {
+    border: 1.5px solid #52baff;
+  }
   input {
     padding: 0;
     margin: 0px 5px;
@@ -156,7 +220,8 @@
   border-radius: 5px;
   border: 1.5px solid white;
   transition: all 0.2s ease-in-out;
-  min-width: 8vw;
+  min-width: 12vw;
+  margin: 5px;
   &:hover {
     background-color: #4086ff;
     transform: scale(1.1);

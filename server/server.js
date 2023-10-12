@@ -34,6 +34,8 @@ app.use('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../build', 'index.html'));
 });
 
+app.use((req, res) => res.sendStatus(404));
+
 /**
  * express error handler
  * @see https://expressjs.com/en/guide/error-handling.html#writing-error-handlers

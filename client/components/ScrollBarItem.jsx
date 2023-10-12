@@ -11,7 +11,7 @@ const ScrollBarItem = ({ setterFunction, onClick, placeholder, type, title }) =>
       {isOpen && type === 'text' ? 
         <TextModal placeholder={placeholder} setterFunction={setterFunction} onClick={onClick} setIsOpen={setIsOpen} title={title} /> : 
         isOpen && type === 'view' ? 
-          <ProjectsViewModal setIsOpen={setIsOpen} title={title} /> :
+          <ProjectsViewModal setIsOpen={setIsOpen} title={title} onClick={onClick} /> :
           null}
     </li>
   )
