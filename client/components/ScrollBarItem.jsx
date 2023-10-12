@@ -3,15 +3,15 @@ import Button from './Button.jsx';
 import TextModal from './TextModal.jsx';
 import ProjectsViewModal from './ProjectsViewModal.jsx';
 
-const ScrollBarItem = ({ setterFunction, onClick, placeholder, type, title }) => {
+const ScrollBarItem = ({ setterFunction, saveFunc, placeholder, type, title }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <li className='scrollBarListItem'>
-      <Button onClick={() => setIsOpen(!isOpen)} text={placeholder} />
+      <Button saveFunc={() => setIsOpen(!isOpen)} text={placeholder} />
       {isOpen && type === 'text' ? 
-        <TextModal placeholder={placeholder} setterFunction={setterFunction} saveFunc={onClick} setIsOpen={setIsOpen} title={title} /> : 
+        <TextModal placeholder={placeholder} setterFunction={setterFunction} saveFunc={saveFunc} setIsOpen={setIsOpen} title={title} /> : 
         isOpen && type === 'view' ? 
-          <ProjectsViewModal setIsOpen={setIsOpen} title={title} saveFunc={onClick} /> :
+          <ProjectsViewModal setIsOpen={setIsOpen} title={title} saveFunc={saveFunc} /> :
           null}
     </li>
   )

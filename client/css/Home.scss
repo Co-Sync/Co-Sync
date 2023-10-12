@@ -19,6 +19,7 @@
   width: 100vw;
   margin: 0;
   padding: 0;
+  border: none;
 }
 
 .mainContainer {
@@ -118,7 +119,6 @@
   background-color: #68697318;
   min-width: 15vw;
   height: 40vh;
-  height: fit-content;
   display: flex;
   flex-direction: column;
   align-items: center;

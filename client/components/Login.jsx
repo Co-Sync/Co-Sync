@@ -49,7 +49,7 @@ const Login = () => {
           <form className='formContainer'>
             <TextInput placeholder='Username' setterFunction={setUsername} value={username} />
             <TextInput placeholder='Password' setterFunction={setPassword} type='password' value={password}/>
-            <Button onClick={handleSubmit} text='Login' />
+            <Button saveFunc={handleSubmit} text='Login' />
           </form>
           <div className='footer'>
             <div>

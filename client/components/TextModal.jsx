@@ -2,7 +2,7 @@ import React from 'react';
 import TextInput from './TextInput.jsx';
 import Button from './Button.jsx';
 
-const TextModal = ({ placeholder, setterFunction, onClick, setIsOpen, title }) => {
+const TextModal = ({ placeholder, setterFunction, saveFunc, setIsOpen, title }) => {
   return (
     <div id='modal' className='textModalVisible'>
       <form className='textModalInner'>
@@ -16,7 +16,7 @@ const TextModal = ({ placeholder, setterFunction, onClick, setIsOpen, title }) =
             className='closeModalButton'>x</button>
         </div>
         <TextInput placeholder={placeholder} setterFunction={setterFunction} />
-        <Button onClick={onClick} text='Save' />
+        <Button saveFunc={saveFunc} text='Save' setIsOpen={setIsOpen} />
       </form>
     </div>
   );

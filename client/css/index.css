@@ -29,11 +29,12 @@ html {
   box-sizing: border-box;
   font-family: JetBrainsMono-Regular;
   color: white;
-  text-shadow: 0rem 0rem 0.3rem rgba(255, 255, 255, 0.5);
+  text-shadow: 0rem 0rem 0.35rem rgba(255, 255, 255, 0.5);
 }
 
 body {
   margin: 0;
+  padding: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

@@ -34,7 +34,6 @@ const TableColumn = ({ column, currentProject }) => {
       console.log(error);
     }
   };
-
   return (
     <div className="container" id="tableColumnMain">
       {isOpen ? <TaskTextModal columnName={column.columnName} placeholder={'Task Name'} setIsOpen={setIsOpen} title='Enter Task Name' /> : null}
@@ -49,9 +48,9 @@ const TableColumn = ({ column, currentProject }) => {
           text='Delete'
         />
       </div>
-      {column.tasks?.map((task, index) => {
+      {column.tasks.length ? column.tasks.map((task, index) => {
         return <TableTask key={index} task={task} column={column} currentProject={currentProject} />;
-      })}
+      }) : <h1>No Tasks Yet</h1>}
     </div>
   );
 };

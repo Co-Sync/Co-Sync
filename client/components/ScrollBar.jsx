@@ -15,11 +15,10 @@ const ScrollBar = ({ currentProject }) => {
   const handleAddColumnClick = async (e) => {
     e.preventDefault();
     const body = {
-      // projectId,
       columnName: column,
-      // tasks: [],
       projectId: currentProject._id
     }
+    setColumn('');
     try {
       const res = await addColumnMutation(body);
       if (res.error) throw new Error(res.error.message);
@@ -31,7 +30,6 @@ const ScrollBar = ({ currentProject }) => {
   };
 
   const handleSetProjectName = (e) => {
-    console.log(e);
     e.preventDefault();
     dispatch(setCurrentProjectName(e.target.value));
   }
@@ -41,13 +39,12 @@ const ScrollBar = ({ currentProject }) => {
     const body = {
       projectName: project, // Corrected the property name to projectName
     };
-    console.log(body)
+    setProject('');
     try {
       const res = await addProjectMutation(body);
-      // console.log(res)
       if (res.error) throw new Error(res.error.message);
-
       dispatch(createProject(res.data));
+      setCurrentProjectName(res.data.projectName);
     } catch (error) {
       console.log(error);
     }
@@ -57,7 +54,7 @@ const ScrollBar = ({ currentProject }) => {
       <ul className='scrollBarInner'>
         <ScrollBarItem
           setterFunction={setColumn}
-          onClick={handleAddColumnClick}
+          saveFunc={handleAddColumnClick}
           placeholder='Add Column'
           type='text'
           title='Column Name'
@@ -67,13 +64,13 @@ const ScrollBar = ({ currentProject }) => {
           type='text'
           title='Project Name'
           setterFunction={setProject}
-          onClick={handleSetProject}
+          saveFunc={handleSetProject}
         />
         <ScrollBarItem
           placeholder='My Projects'
           type='view'
           title='Projects'
-          onClick={handleSetProjectName}
+          saveFunc={handleSetProjectName}
         />
       </ul>
     </div>
