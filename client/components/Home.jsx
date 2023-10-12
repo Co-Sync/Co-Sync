@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import TableDisplay from './TableDisplay.jsx';
 import NavBar from './NavBar.jsx';
 import '../css/Home.scss';
@@ -12,24 +12,29 @@ const Home = () => {
   // a way to use query of getting user -- maybe considering useEffect for less re-rendering ? 
   const { data, isError, isLoading, isSuccess, error } = useGetProjectQuery();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (isSuccess) {
+      const userData = data;
+      const projects = {}
+      for (const project of userData) {
+        projects[project.projectName] = project;
+      }
+      const transformedData = {
+        projects,
+        currentProject: '',
+      };
+      dispatch(setState(transformedData));
+    }
+  }, [dispatch, isSuccess, data]);
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
   if (isError) {
     return <div>Error: {error}</div>;
   }
-  if (isSuccess) {
-    const userData = data;
-    const projects = {}
-    for (const project of userData) {
-      projects[project.projectName] = project;
-    }
-    const transformedData = {
-      projects,
-      currentProject: '',
-    };
-    dispatch(setState(transformedData));
-  }
+
   return (
     <div className='homeMain'>
       <NavBar />
