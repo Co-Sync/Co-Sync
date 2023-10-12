@@ -12,7 +12,6 @@ const ScrollBar = ({ currentProject }) => {
   const dispatch = useDispatch();
 
   // console.log(`Current project is: ${currentProject}`);
-
   const handleAddColumnClick = async (e) => {
     e.preventDefault();
     const body = {

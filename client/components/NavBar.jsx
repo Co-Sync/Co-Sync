@@ -29,10 +29,10 @@ const NavBar = () => {
       <h1><a href='https://github.com/Co-Sync/Co-Sync'>Co-Sync</a></h1>
       <ul>
         <Link className='routerLink' to='/'>Home</Link>
-        <Link className='routerLink' to='/'>Profile</Link>
+        <Link className='routerLink' to='/profile'>Profile</Link>
       </ul>
       <ul>
-        <Link className='routerLink' to='/'>Settings</Link>
+        <Link className='routerLink' to='/settings'>Settings</Link>
         <button className='routerLink' onClick={handleLogout}>Logout</button>
       </ul>
     </nav>
