@@ -25,14 +25,16 @@ userController.getAllUsers = (req, res, next) => {
 userController.createUser = async (req, res, next) => {
   // write code here
   // add logic to handle signup using existing username
- try{ if(req.body.username !== null && req.body.password !== null && req.body.email !== null){
-   await User.create({username: req.body.username, password: req.body.password, email: req.body.email})
-    // console.log('newUser is: ', newUser);
-    // console.log(`User list is ${res.locals.users}`)
-    res.locals.verifyUser = true;
-    return next();
-  }}
-  catch (err){
+  try {
+    if (req.body.username !== null && req.body.password !== null && req.body.email !== null) {
+      await User.create({username: req.body.username, password: req.body.password, email: req.body.email})
+      // console.log('newUser is: ', newUser);
+      // console.log(`User list is ${res.locals.users}`)
+      res.locals.verifyUser = true;
+      return next();
+    }
+  }
+  catch (err) {
     // return next(err);
     return next({
       log: 'Failed to create user: ' + err,
@@ -75,33 +77,37 @@ userController.createUser = async (req, res, next) => {
 */
 userController.verifyUser = async (req, res, next) => {
   // write code here
-  // console.log("111");
   const {username, password} = req.body;
-
-  if(!username || !password)({
-    log: 'Please enter a username and password',
-    status: 400,
-    message: { err: 'Error: No username or password'}
-  })
+  if (!username || !password) {
+    return next({
+      log: 'Please enter a username and password',
+      status: 400,
+      message: { err: 'Error: No username or password'}
+    });
+  }
 
   User.findOne({username})
     .then((user) => {
       if(user === null){
         console.log('error in verify user')
         res.redirect('/signup');
-      };
+      }
       console.log('made it to Bcrypt')
-      bcrypt
-        .compare(password, user.password)
-        .then((result) => {
-          if(result === false) res.redirect('/signup')
-          if(result === true) {
-            console.log('Bcrypt compare confirmed');
-            res.locals.verifyUser = true;
-            return next()
-          }
-      })
-    })  
+      try {
+        bcrypt
+          .compare(password, user.password)
+          .then((result) => {
+            if(result === false) res.redirect('/signup')
+            if(result === true) {
+              console.log('Bcrypt compare confirmed');
+              res.locals.verifyUser = true;
+              return next()
+            }
+          })
+      } catch (err) {
+        return next(err);
+      }
+    });
 };
 // userController.verifyUser = (req, res, next) => {
 //   //store the req.body (which should be an object) in a new constant, then use User.find
@@ -110,7 +116,7 @@ userController.verifyUser = async (req, res, next) => {
 //   console.log(credentials);
  
 
-  //User.find expects an object as an argument. Code breaks if it is not an object
+//User.find expects an object as an argument. Code breaks if it is not an object
 //   User.findOne({ username: credentials.username })
 //     .then ((user) => {
 //       if (user.username === null || user.password === null){

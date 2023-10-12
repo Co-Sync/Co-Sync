@@ -14,11 +14,11 @@ SessionController.isLoggedIn = async (req, res, next) => {
     return next();
   } else {
     // res.redirect('/login')
-     return next({
+    return next({
       log: 'Session is over ',
       message: { err: 'Session is over' }
     })
-}
+  }
 };
 
 /**

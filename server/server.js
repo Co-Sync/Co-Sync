@@ -30,6 +30,11 @@ app.use('/api/user', userRouter);
 
 // these two must be in the end
 app.use(express.static(path.resolve(__dirname, '../build')));
+app.use('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../build', 'index.html'));
+});
+
+app.use((req, res) => res.sendStatus(404));
 
 /**
  * express error handler

@@ -20,7 +20,7 @@ const TableDisplay = () => {
       <ScrollBar currentProject={currentProject} />
       <div id='tableDisplayInner'>
         {currentProject.columns.map((column, index) => {
-          return <TableColumn key={index} column={column} currentProject={currentProject} />;
+          return <TableColumn key={index} column={column} currentProject={currentProject._id} />;
         })}
       </div>
     </div>

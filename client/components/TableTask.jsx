@@ -6,7 +6,6 @@ import TextModal from './TextModal.jsx';
 import { useDeleteTaskMutation, useUpdateTaskMutation, useMoveTaskMutation } from '../utils/userApi.js';
 
 const TableTask = ({ task, column, currentProject }) => {
-  //instead of task, might need to pass down props to access props.task.taskId / props.projects.projectId
   const [incomingData, setIncomingData] = useState('');
   const [toggleModal, setToggleModal] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
