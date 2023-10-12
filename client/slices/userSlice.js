@@ -13,8 +13,12 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setUserState: (state, action) => {
-      return action.payload;
+      // console.log("Overwritten the entire state to: ", action.payload);
+      // return action.payload;
+      state.projects = action.payload.projects;
+      state.numOfProjects = action.payload.numOfProjects;
     },
+    resetState: () => initialState,
     setUserName: (state, action) => {
       try {
         const username = action.payload;
@@ -40,13 +44,15 @@ export const userSlice = createSlice({
     },
     createColumn: (state, action) => {
       try {
-        const addColumnName = action.payload;
-        console.log(addColumnName)
+        const {columnName, _id} = action.payload;
+        console.log(columnName)
+        console.log('current project is:', current(state.currentProject));
         const currentProject = state.currentProject;
-        if (!state.projects[currentProject].columns.find((col) => col.columnName === addColumnName)) {
+        if (!state.projects[currentProject].columns.find((col) => col.columnName === columnName)) {
           state.projects[currentProject].columns.push({
-            addColumnName,
+            columnName,
             tasks: [],
+            _id: _id
           });
         }
       } catch (error) {
@@ -70,6 +76,7 @@ export const userSlice = createSlice({
     },
     updateTask: (state, action) => {
       try {
+        console.log('current project is in updateTask: ', state.currentProject);
         const { updatedTask, columnId } = action.payload;
         const currentProject = state.currentProject;
         // Find the column whose _id is columnId.
@@ -168,17 +175,19 @@ export const userSlice = createSlice({
     },
     moveTask: (state, action) => {
       try {
-        const { findColumnName, taskToMove, newColumn } = action.payload;
+        const { oldColumnId, newColumnId, taskId } = action.payload;
         const currentProject = state.currentProject;
-        state.projects[currentProject].columns = state.projects[currentProject].columns.map(el => {
-          if (el.columnName === findColumnName) {
-            el.tasks = el.tasks.filter(task => task.taskName !== taskToMove);
+        const project = state.projects[currentProject];
+        let oldColumn = project.columns.find(column => column._id === oldColumnId);
+        let newColumn = project.columns.find(column => column._id === newColumnId);
+        if (oldColumn && newColumn) {
+          let taskIndex = oldColumn.tasks.findIndex(task => task._id === taskId);
+          if (taskIndex >= 0) {
+            let task = oldColumn.tasks[taskIndex];
+            oldColumn.tasks.splice(taskIndex, 1);
+            newColumn.tasks.push(task);
           }
-          if (el.columnName === newColumn) {
-            el.tasks.push({ taskName: taskToMove, taskComments: [] });
-          }
-          return el;
-        })
+        }
       } catch (error) {
         console.error('Error in moveTask reducer: ', error);
       }
@@ -186,17 +195,16 @@ export const userSlice = createSlice({
     setCurrentProjectName: (state, action) => {
       try {
         const projectName = action.payload;
-        console.log(projectName)
         state.currentProject = projectName;
       } catch (error) {
         console.error('Error in setCurrentProjectName reducer: ', error);
       }
-    }
+    },
   }
 });
 
 // Action creators are generated for each case reducer function
 export const { setUserState, createTask, createColumn, createProject, updateTask, deleteProject, deleteColumn, deleteTask, moveTask, 
-  setCurrentProjectName, setUserName } =
+  setCurrentProjectName, setUserName, resetState } =
   userSlice.actions;
 export default userSlice.reducer;

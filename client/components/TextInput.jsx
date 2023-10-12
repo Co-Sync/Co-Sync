@@ -8,7 +8,10 @@ const TextInput = ({ placeholder, setterFunction, value, type }) => {
           className='TextInput'
           type={type ? type : 'text'}
           value={value}
-          onChange={(e) => setterFunction(e.target.value)}
+          onChange={(e) => {
+            e.preventDefault();
+            setterFunction(e.target.value)
+          }}
           placeholder=''
         />
         <legend>

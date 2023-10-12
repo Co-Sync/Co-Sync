@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 const Home = () => {
   const navigate = useNavigate();
   const { isError: userInvalid, isLoading } = useValidateUserQuery();
-  
+
   const { data, isError, isLoading: isProjectsLoading, isSuccess, error } = useGetProjectQuery();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -25,7 +25,7 @@ const Home = () => {
         }
         const transformedData = {
           projects,
-          currentProject: '',
+          numOfProjects: userData.length,
         };
         dispatch(setUserState(transformedData));
       }

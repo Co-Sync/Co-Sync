@@ -20,12 +20,16 @@ userRouter.post('/signup', userController.createUser , cookieController.setSSIDC
   res.status(200).end();
 });
 
-
 /**
 * login
 */
 userRouter.post('/login', userController.verifyUser, cookieController.setSSIDCookie, sessionController.startSession, (req, res) => {
   // what should happen here on successful log in?
+  res.status(200).end();
+});
+
+userRouter.get('/logout', sessionController.isLoggedIn, sessionController.endSession, (req, res) => {
+  // what should happen here on successful log out?
   res.status(200).end();
 });
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-const ProjectsViewModal = ({ setIsOpen, title, onClick }) => {
+const ProjectsViewModal = ({ setIsOpen, title, saveFunc }) => {
   const projects = useSelector(state => state.user.projects);
   console.log(projects)
   const projectsList = Object.keys(projects).map(project => project);
@@ -20,7 +20,11 @@ const ProjectsViewModal = ({ setIsOpen, title, onClick }) => {
         </div>
         <div className='projectsList'>          
           {projectsList.map((project, index) => {
-            return <button value={project} onClick={onClick} className='projectsListButton' key={index}>{project}</button>
+            return <button value={project} onClick={(e) => {
+              console.log(e);
+              e.preventDefault();
+              saveFunc(e);
+            }} className='projectsListButton' key={index}>{project}</button>
           })}
         </div>
       </form>

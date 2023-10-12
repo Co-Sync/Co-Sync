@@ -50,7 +50,7 @@ const TableColumn = ({ column, currentProject }) => {
         />
       </div>
       {column.tasks?.map((task, index) => {
-        return <TableTask key={index} task={task} column={column._id} currentProject={currentProject._id} />;
+        return <TableTask key={index} task={task} column={column} currentProject={currentProject} />;
       })}
     </div>
   );

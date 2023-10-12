@@ -35,9 +35,9 @@ export const userApi = createApi({
       query: (body) => ({ url: '/project/task/comment', method: 'POST', body }),
       invalidatesTags: ['Projects'],
     }),
-    // Body: { projectId, columnId, taskId, taskName, taskComments}
+    // Body: { projectId, oldColumnId, newColumnId, taskId}
     moveTask: builder.mutation({
-      query: (body) => ({ url: '/project/', method: 'PATCH', body }),
+      query: (body) => ({ url: '/project/column/', method: 'PATCH', body }),
       invalidatesTags: ['Projects'],
     }),
     updateTask: builder.mutation({
