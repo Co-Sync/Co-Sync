@@ -1,33 +1,38 @@
 import React, { useState } from 'react';
 import ScrollBarItem from './ScrollBarItem.jsx';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useAddColumnMutation, useAddProjectMutation } from '../utils/userApi.js';
 import { createColumn, createProject, setCurrentProjectName } from '../slices/userSlice.js';
 
-const ScrollBar = () => {
+const ScrollBar = ({currentProject}) => {
   const [project, setProject] = useState('');
   const [column, setColumn] = useState('');
   const [addColumnMutation] = useAddColumnMutation();
   const [addProjectMutation] = useAddProjectMutation();
   const dispatch = useDispatch();
 
+  console.log(`Current project is: ${currentProject}`);
+
   const handleAddColumnClick = async (e) => {
     e.preventDefault();
     const body = {
       // projectId,
       columnName: column,
-      tasks: [],
+      // tasks: [],
+      projectId: currentProject._id
     }
     try {
       const res = await addColumnMutation(body);
       if (res.error) throw new Error(res.error.message);
-      dispatch(createColumn(res));
+      console.log(`res is ${res}`);
+      dispatch(createColumn(res.data));
     } catch (error) {
       console.log(error);
     }
   };
 
   const handleSetProjectName = (e) => {
+    console.log(e);
     e.preventDefault();
     dispatch(setCurrentProjectName(e.target.value));
   }
@@ -67,7 +72,7 @@ const ScrollBar = () => {
         />
         <ScrollBarItem 
           placeholder='My Projects' 
-          type='view' 
+          type='view'
           title='Projects' 
           onClick={handleSetProjectName}
         />
