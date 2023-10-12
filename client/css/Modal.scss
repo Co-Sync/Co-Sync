@@ -10,8 +10,10 @@
   justify-content: center;
   border-radius: 8px;
   align-items: center;
+  width: fit-content;
   .projectsList {
-    overflow: scroll;
+    overflow-y: scroll;
+    width: 100%;
   }
   .textModalInner {
     display: flex;
@@ -28,7 +30,7 @@
     justify-content: center;
     align-items: center;
     height: fit-content;
-    width: fit-content;
+    width: 100%;
     border-radius: 8px;
     background-color: #6fcdff00;
     transition: all 0.2s ease-in-out;
