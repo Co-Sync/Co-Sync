@@ -31,10 +31,10 @@ export const userApi = createApi({
       query: (body) => ({ url: '/project/task', method: 'POST', body }),
       invalidatesTags: ['Projects'],
     }),
-    addComment: builder.mutation({
-      query: (body) => ({ url: '/project/task/comment', method: 'POST', body }),
-      invalidatesTags: ['Projects'],
-    }),
+    // addComment: builder.mutation({
+    //   query: (body) => ({ url: '/project/task/comment', method: 'POST', body }),
+    //   invalidatesTags: ['Projects'],
+    // }),
     // Body: { projectId, columnId, taskId, taskName, taskComments}
     moveTask: builder.mutation({
       query: (body) => ({ url: '/project/', method: 'PATCH', body }),

@@ -34,7 +34,7 @@ const TableTask = ({ task, column, currentProject }) => {
       const res = await updateTaskMutation(body);
       if (res.error) throw new Error(res.error.message);
       // Update state in redux store.
-      dispatch(updateTask({ updatedTask : res.data, columnId: column._id }));
+      dispatch(updateTask({ updatedTask: res.data, columnId: column._id }));
       // Update isOpen state to close the "edit task" window.
       setIsOpen(false);
     } catch (error) {
@@ -88,8 +88,7 @@ const TableTask = ({ task, column, currentProject }) => {
    - columnId
    - taskId*/
 
-  const handleDeleteClick = async () => {
-    // e.preventDefault();
+  const handleDeleteTaskClick = async () => {
     const body = {
       taskId: task._id,
       columnId: column._id,
@@ -118,7 +117,7 @@ const TableTask = ({ task, column, currentProject }) => {
       <p>{task.taskName}</p>
       <div id='tableTaskButtons'>
         <TaskButton
-          onClick={() => handleDeleteClick(task.taskName, column.columnName)}
+          onClick={() => handleDeleteTaskClick(task.taskName, column.columnName)}
           text='Delete'
           idOverride='innerTaskButton' />
         <TaskButton

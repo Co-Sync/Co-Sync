@@ -25,14 +25,18 @@ export const userSlice = createSlice({
     },
     createTask: (state, action) => {
       try {
-        const { findColumnName, task } = action.payload;
+        console.log('createTask reducer triggered');
+        const { columnId, task } = action.payload;
+        console.log('task', task, 'columnId', columnId);
+        console.log(state.projects)
         const currentProject = state.currentProject;
-        console.log(task);
+        // console.log('reducer', currentProject);
         state.projects[currentProject].columns = state.projects[currentProject].columns.map((el) => {
-          if (el.columnName === findColumnName) {
-            el.tasks.push({ taskName: task, taskComments: [] });
+          if (el._id === columnId) {
+            console.log('working or not working')
+            el.tasks.push({ taskName: task, taskComments: '' });
           }
-          return el;
+          // return el;
         });
       } catch (error) {
         console.error('Error in createTask reducer: ', error);
@@ -106,15 +110,16 @@ export const userSlice = createSlice({
     },
     deleteColumn: (state, action) => {
       try {
+        console.log('deleteColumn reducer triggered');
         let outerIndx = 0;
-        const { findColumnName } = action.payload;
+        const { columnId } = action.payload;
         const currentProject = state.currentProject;
         const column = state.projects[currentProject].columns.find(
-          (col, indx) => {
-            col.columnName === findColumnName;
-            outerIndx = indx;
+          (col) => {
+            col._id === columnId;
           }
         );
+        console.log('col', column);
 
         if (column) {
           delete state.projects[currentProject].columns[outerIndx];
@@ -196,7 +201,7 @@ export const userSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setUserState, createTask, createColumn, createProject, updateTask, deleteProject, deleteColumn, deleteTask, moveTask, 
+export const { setUserState, createTask, createColumn, createProject, updateTask, deleteProject, deleteColumn, deleteTask, moveTask,
   setCurrentProjectName, setUserName } =
   userSlice.actions;
 export default userSlice.reducer;
