@@ -22,7 +22,7 @@ const Home = () => {
       }
       const transformedData = {
         projects,
-        currentProject: 'Hi',
+        currentProject: '',
       };
       dispatch(setState(transformedData));
     }
