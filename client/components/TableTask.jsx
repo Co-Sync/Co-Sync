@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { deleteTask, updateTask, moveTask } from '../slices/userSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import TaskButton from './TaskButton.jsx';
 import TextModal from './TextModal.jsx';
+import ColumnViewModal from './ColumnViewModal.jsx';
 import { useDeleteTaskMutation, useUpdateTaskMutation, useMoveTaskMutation } from '../utils/userApi.js';
 
 const TableTask = ({ task, column, currentProject }) => {
   const [incomingData, setIncomingData] = useState('');
-  const [toggleModal, setToggleModal] = useState(false);
+  const [comment, setComment] = useState('');
   const [isOpen, setIsOpen] = useState(false);
-  // const comment = useSelector((state) => state.user.projects[state.user.currentProject]?.columns[task]?.[0]?.taskComment);
+  const [isMoveOpen, setIsMoveOpen] = useState(false);
   const [deleteTaskMutation] = useDeleteTaskMutation();
   const [updateTaskMutation] = useUpdateTaskMutation();
   const [moveTaskMutation] = useMoveTaskMutation();
@@ -20,7 +21,6 @@ const TableTask = ({ task, column, currentProject }) => {
     setIsOpen(prev => !prev);
   };
 
-  //NEEDS FOCUS
   const handleEditClick = async (e) => {
     e.preventDefault();
     const body = {
@@ -28,7 +28,7 @@ const TableTask = ({ task, column, currentProject }) => {
       columnId: column._id,
       taskId: task._id,
       taskName: incomingData,
-      taskComments: "",
+      taskComments: task.taskComments,
     };
     try {
       const res = await updateTaskMutation(body);
@@ -48,47 +48,46 @@ const TableTask = ({ task, column, currentProject }) => {
    - columnId
    - taskName
 */
-  // const handleAddComment = async (e) => {
-  //   e.preventDefault();
-  //   const body = {
-  //     projectId: currentProject._id,
-  //     columnId: column._id,
-  //     taskId: task._id,
-  //     taskComments: incomingData,
-  //   };
-  //   try {
-  //     const res = await 
-  //   } catch (error) {
-
-  //   }
-  // }
-
-
-  //NEEDS FOCUS 
-  const handleMoveTask = async (columnName, taskToMove, newColumn) => {
-    // e.preventDefault();
+  const handleAddComment = async (e) => {
+    e.preventDefault();
     const body = {
-      columnName,
-      taskToMove,
-      newColumn
+      projectId: currentProject._id,
+      columnId: column._id,
+      taskId: task._id,
+      taskName: task.taskName,
+      taskComments: comment,
     };
+    try {
+      const res = await updateTaskMutation(body);
+      if (res.error) throw new Error(res.error.message);
+      dispatch(updateTask({ updatedTask: res.data, columnId: column._id }));
+      setIsOpen(false);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const handleMoveTask = async (e) => {
+    e.preventDefault();
+    console.log("new id is: ", e.target.value);
+    const body = {
+      projectId: currentProject._id,
+      oldColumnId: column._id,
+      newColumnId: e.target.value,
+      taskId: task._id,
+    };
+    console.log("body is: ", body);
 
     try {
       const res = await moveTaskMutation(body);
       if (res.error) throw new Error(res.error.message);
-      dispatch(moveTask(res.data));
+      dispatch(moveTask(body));
     } catch (error) {
       console.log(error);
     }
   };
 
-  /* for delete task
-   req.params:
-   - projectId
-   - columnId
-   - taskId*/
-
-  const handleDeleteTaskClick = async () => {
+  const handleDeleteTask = async () => {
     const body = {
       taskId: task._id,
       columnId: column._id,
@@ -115,9 +114,14 @@ const TableTask = ({ task, column, currentProject }) => {
   return (
     <div className="container" id="tableTaskMain">
       <p>{task.taskName}</p>
+      {task.taskComments !== '' &&
+        <h6>
+          Comments:
+          <p id='comments'>{task.taskComments}</p>
+        </h6>}
       <div id='tableTaskButtons'>
         <TaskButton
-          onClick={() => handleDeleteTaskClick(task.taskName, column.columnName)}
+          onClick={() => handleDeleteTask(task.taskName, column.columnName)}
           text='Delete'
           idOverride='innerTaskButton' />
         <TaskButton
@@ -126,12 +130,13 @@ const TableTask = ({ task, column, currentProject }) => {
           idOverride='innerTaskButton'
         />
         <TaskButton
-          onClick={() => setToggleModal(!toggleModal)}
-          text='Comment'
+          onClick={(e) => handleInputChange(e)}
+          imgSrc='../assets/messages.svg'
+          alt='comment'
           idOverride='innerTaskButton'
         />
         <TaskButton
-          onClick={() => handleMoveTask()}
+          onClick={() => { setIsMoveOpen(!isMoveOpen); }}
           text='Move'
           idOverride='innerTaskButton'
         />
@@ -141,6 +146,19 @@ const TableTask = ({ task, column, currentProject }) => {
           onClick={(e) => handleEditClick(e)}
           setIsOpen={setIsOpen}
           title='Edit Task'
+        /> : null}
+        {isMoveOpen ? <ColumnViewModal
+          setIsOpen={setIsMoveOpen}
+          title='Select Column to Move to'
+          onClick={handleMoveTask}
+          currentProject={currentProject}
+        /> : null}
+        {isOpen ? <TextModal
+          placeholder={'Task Comment'}
+          setterFunction={setComment}
+          onClick={(e) => handleAddComment(e)}
+          setIsOpen={setIsOpen}
+          title='Add Comment'
         /> : null}
       </div>
     </div>

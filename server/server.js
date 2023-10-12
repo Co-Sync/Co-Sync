@@ -28,6 +28,17 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/project', projectRouter);
 app.use('/api/user', userRouter);
 
+app.use('/assets', (req, res, next) => {
+  const filePath = path.resolve(__dirname, '../assets', req.url.slice(1));
+  if (path.extname(filePath) === '.svg') {
+    res.header('Content-Type', 'image/svg+xml');
+  }
+  next();
+});
+
+// serve the 'assets' directory
+app.use('/assets', express.static(path.resolve(__dirname, '../assets')));
+
 // these two must be in the end
 app.use(express.static(path.resolve(__dirname, '../build')));
 app.use('*', (req, res) => {

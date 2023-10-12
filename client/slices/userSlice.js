@@ -13,7 +13,9 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setUserState: (state, action) => {
-      return action.payload;
+      // console.log("Overwritten the entire state to: ", action.payload);
+      // return action.payload;
+      state.projects = action.payload.projects;
     },
     setUserName: (state, action) => {
       try {
@@ -27,16 +29,12 @@ export const userSlice = createSlice({
       try {
         console.log('createTask reducer triggered');
         const { columnId, task } = action.payload;
-        console.log('task', task, 'columnId', columnId);
-        console.log(state.projects)
         const currentProject = state.currentProject;
-        // console.log('reducer', currentProject);
         state.projects[currentProject].columns = state.projects[currentProject].columns.map((el) => {
           if (el._id === columnId) {
-            console.log('working or not working')
             el.tasks.push({ taskName: task, taskComments: '' });
           }
-          // return el;
+          return el;
         });
       } catch (error) {
         console.error('Error in createTask reducer: ', error);
@@ -44,13 +42,15 @@ export const userSlice = createSlice({
     },
     createColumn: (state, action) => {
       try {
-        const addColumnName = action.payload;
-        console.log(addColumnName)
+        const { columnName, _id } = action.payload;
+        console.log(columnName)
+        console.log('current project is:', current(state.currentProject));
         const currentProject = state.currentProject;
-        if (!state.projects[currentProject].columns.find((col) => col.columnName === addColumnName)) {
+        if (!state.projects[currentProject].columns.find((col) => col.columnName === columnName)) {
           state.projects[currentProject].columns.push({
-            addColumnName,
+            columnName,
             tasks: [],
+            _id: _id
           });
         }
       } catch (error) {
@@ -74,6 +74,7 @@ export const userSlice = createSlice({
     },
     updateTask: (state, action) => {
       try {
+        console.log("current project is in updateTask: ", state.currentProject);
         const { updatedTask, columnId } = action.payload;
         const currentProject = state.currentProject;
         // Find the column whose _id is columnId.
@@ -111,9 +112,10 @@ export const userSlice = createSlice({
     deleteColumn: (state, action) => {
       try {
         console.log('deleteColumn reducer triggered');
-        let outerIndx = 0;
+        // let outerIndx = 0;
         const { columnId } = action.payload;
         const currentProject = state.currentProject;
+
         const column = state.projects[currentProject].columns.find(
           (col) => {
             col._id === columnId;
@@ -122,7 +124,7 @@ export const userSlice = createSlice({
         console.log('col', column);
 
         if (column) {
-          delete state.projects[currentProject].columns[outerIndx];
+          delete state.projects[currentProject].columns[column];
         }
       } catch (error) {
         console.error('Error in deleteColumn reducer: ', error);
@@ -131,20 +133,16 @@ export const userSlice = createSlice({
     deleteTask: (state, action) => {
       try {
         console.log('deleteTask reducer triggered');
-        // let outerIndx = 0;
         const { taskId, columnId } = action.payload;
         const currentProject = state.currentProject;
 
-        console.log('state', current(state.projects[currentProject].columns));
         const column = state.projects[currentProject].columns.find(
           (col) => (col._id === columnId)
         );
 
-        //returning undefined but is selected in the DELETE method, why? 
         console.log('Found column:', column);
 
         if (column) {
-          //find index of the task to delete
           const taskIndex = column.tasks.findIndex(
             (task) => task._id === taskId
           );
@@ -160,8 +158,6 @@ export const userSlice = createSlice({
             // const newProjects = [...state.projects];
             state.projects[currentProject].columns[taskIndex] = newColumn;
 
-            // console.log('New projects:', newProjects);
-
             // return { ...state, projects: newProjects };
           }
         }
@@ -173,17 +169,19 @@ export const userSlice = createSlice({
     },
     moveTask: (state, action) => {
       try {
-        const { findColumnName, taskToMove, newColumn } = action.payload;
+        const { oldColumnId, newColumnId, taskId } = action.payload;
         const currentProject = state.currentProject;
-        state.projects[currentProject].columns = state.projects[currentProject].columns.map(el => {
-          if (el.columnName === findColumnName) {
-            el.tasks = el.tasks.filter(task => task.taskName !== taskToMove);
+        const project = state.projects[currentProject];
+        let oldColumn = project.columns.find(column => column._id === oldColumnId);
+        let newColumn = project.columns.find(column => column._id === newColumnId);
+        if (oldColumn && newColumn) {
+          let taskIndex = oldColumn.tasks.findIndex(task => task._id === taskId);
+          if (taskIndex >= 0) {
+            let task = oldColumn.tasks[taskIndex];
+            oldColumn.tasks.splice(taskIndex, 1);
+            newColumn.tasks.push(task);
           }
-          if (el.columnName === newColumn) {
-            el.tasks.push({ taskName: taskToMove, taskComments: [] });
-          }
-          return el;
-        })
+        }
       } catch (error) {
         console.error('Error in moveTask reducer: ', error);
       }
@@ -191,7 +189,6 @@ export const userSlice = createSlice({
     setCurrentProjectName: (state, action) => {
       try {
         const projectName = action.payload;
-        console.log(projectName)
         state.currentProject = projectName;
       } catch (error) {
         console.error('Error in setCurrentProjectName reducer: ', error);

@@ -13,6 +13,7 @@
   border: 2px solid white;
   border-radius: 10px;
   overflow: hidden;
+
   .footer {
     display: grid;
     grid-template-columns: repeat(3, minmax(75px, 1fr));
@@ -22,6 +23,7 @@
     margin: 5px;
     padding: 0;
     overflow: scroll;
+
     div {
       display: flex;
       justify-content: center;
@@ -32,6 +34,7 @@
       transition: all 0.2s ease-in-out;
     }
   }
+
   a {
     text-decoration: underline;
     color: white;
@@ -41,12 +44,14 @@
     border-radius: 10px;
     transition: all 0.2s ease-in-out;
     width: fit-content;
+
     &:hover {
       background-color: rgba(95, 95, 95, 0.232);
       transform: scale(1.1);
       color: #52baff;
     }
   }
+
   .innerLogin {
     display: flex;
     flex-direction: column;
@@ -59,6 +64,7 @@
     border: none;
     border-radius: 10px;
   }
+
   .header {
     display: flex;
     flex-direction: column;
@@ -71,7 +77,9 @@
     color: white;
     background-color: $glass-blue;
     border-bottom: 2px solid white;
-    h1, h2 {
+
+    h1,
+    h2 {
       text-shadow: 0px 0px 10px rgba(60, 164, 255, 0.5);
       margin: 0px 0px;
       padding: 0;
@@ -79,6 +87,7 @@
       height: fit-content;
     }
   }
+
   .formContainer {
     display: flex;
     flex-direction: column;
@@ -90,6 +99,7 @@
     padding: 5px;
     border-bottom: 2px solid white;
   }
+
   h3 {
     height: fit-content;
     margin: 0;
@@ -129,22 +139,27 @@
   z-index: 1;
   padding: 5px;
   height: fit-content;
-  &:not(:placeholder-shown) + legend + .TextInputHighlight {
+
+  &:not(:placeholder-shown)+legend+.TextInputHighlight {
     transform-origin: left top 0px;
     transform: translate(0.8rem, -1rem) scale(0.5);
   }
-  &:not(:placeholder-shown) + legend {
+
+  &:not(:placeholder-shown)+legend {
     position: relative;
     max-width: 100%;
   }
+
   &:focus {
     border: none;
     outline: none;
-    & + legend {
+
+    &+legend {
       position: relative;
       max-width: 100%;
     }
-    & + legend + .TextInputHighlight {
+
+    &+legend+.TextInputHighlight {
       transform-origin: left top 0px;
       transform: translate(0.8rem, -1rem) scale(0.5);
     }
@@ -163,15 +178,18 @@
   border-radius: 8px;
   height: fit-content;
   box-shadow: 0px 0px 10px rgba(36, 215, 255, 0.5);
+
   &:focus-within {
     border: 1.5px solid #52baff;
   }
+
   input {
     padding: 0;
     margin: 0px 5px;
     height: 2.5rem;
     font-size: 1.5rem;
   }
+
   legend {
     max-width: 0.01px;
     white-space: nowrap;
@@ -180,6 +198,7 @@
     padding: 0;
     transition: max-width 0.2s ease-in-out;
     overflow: hidden;
+
     span {
       visibility: visible;
       opacity: 0;
@@ -206,9 +225,10 @@
 }
 
 .buttonMain {
-  width: fit-content;
+  width: 100%;
   height: fit-content;
   position: relative;
+  text-align: center;
 }
 
 .buttonInput {
@@ -222,10 +242,13 @@
   transition: all 0.2s ease-in-out;
   min-width: 12vw;
   margin: 5px;
+  font-size: 3.2vmin;
+
   &:hover {
     background-color: #4086ff;
     transform: scale(1.1);
   }
+
   &:active {
     background-color: #4086ff;
     border: 1px solid rgb(0, 157, 255);

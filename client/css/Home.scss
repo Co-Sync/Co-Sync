@@ -35,12 +35,14 @@
   background-color: rgba(255, 255, 255, 0.01);
   border-bottom: 1px solid rgb(255, 255, 255);
   font-size: 3vh;
+
   ul {
     height: fit-content;
     margin: 0;
     width: fit-content;
     padding: 0;
     list-style: none;
+
     .routerLink {
       display: flex;
       align-items: center;
@@ -50,12 +52,14 @@
       cursor: pointer;
       border-radius: 10px;
       transition: all 0.2s ease-in-out;
+
       &:hover {
         scale: 1.1;
         background-color: rgba(255, 255, 255, 0.1);
       }
     }
   }
+
   h1 {
     margin: 0;
     padding: 1px 10px;
@@ -69,6 +73,7 @@
     width: fit-content;
     -webkit-text-fill-color: transparent;
     transition: all 0.2s ease-in-out;
+
     &:hover {
       transform: translateX(5px);
       border-left: 1px solid rgba(255, 255, 255, 0.1);
@@ -108,7 +113,8 @@
   flex-direction: column;
   align-items: center;
   z-index: 1;
-  h1 {
+
+  h2 {
     margin: 0px 5px;
     padding: 0;
     font-size: 1.6rem;
@@ -123,13 +129,19 @@
   border-bottom: 2px solid rgba(255, 255, 255, 0.5);
   display: grid;
   padding: 5px;
-  max-width: 18vw;
+  width: 100px;
+  max-width: 18.7em;
   background-color: $glass-blue;
   width: 100%;
   border-radius: 1px;
   overflow: visible;
-  overflow: visible;
   overflow-wrap: anywhere;
+  display: grid;
+  grid-template-rows: auto;
+  // grid-gap: .1rem;
+  margin: .15rem 0;
+
+
   #messagesButton {
     position: relative;
     justify-self: end;
@@ -143,11 +155,13 @@
     background-image: url(../../assets/messages.svg);
     background-size: cover;
     transition: all 0.2s ease-in-out;
+
     &:hover {
       scale: 1.1;
       background-color: rgba(255, 255, 255, 0.1);
     }
   }
+
   #moveTaskButton {
     position: relative;
     justify-self: end;
@@ -161,11 +175,13 @@
     background-image: url(../../assets/three-dots.svg);
     background-size: cover;
     transition: all 0.2s ease-in-out;
+
     &:hover {
       scale: 1.1;
       background-color: rgba(255, 255, 255, 0.1);
     }
   }
+
   p {
     font-size: large;
     margin: 2px;
@@ -198,7 +214,9 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 5px;
   width: 100%;
+
   button {
     position: relative;
     justify-self: end;
@@ -210,9 +228,10 @@
     font-size: 15px;
     height: 1.5rem;
     width: fit-content;
-    color:rgb(44, 210, 222);
+    color: rgb(44, 210, 222);
     background-size: cover;
     transition: all 0.2s ease-in-out;
+
     &:hover {
       scale: 1.1;
       background-color: rgba(255, 255, 255, 0.1);
@@ -232,11 +251,13 @@
   cursor: pointer;
   margin: 0.1rem;
   transition: all 0.2s ease-in-out;
+
   &:hover {
     transform: scale(1.1);
     background-color: rgba(255, 255, 255, 0.1);
   }
 }
+
 .scrollBarOuter {
   position: relative;
 }
@@ -247,4 +268,17 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+#comments {
+  border-radius: 5px;
+  border: #38495a 1px solid;
+  padding: 4px;
+  text-align: left;
+  width: fit-content;
+  font-size: 12px !important;
+}
+
+h6 {
+  margin: 6px;
 }
