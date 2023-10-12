@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import ScrollBarItem from './ScrollBarItem.jsx';
 import { useDispatch } from 'react-redux';
-import { useAddColumnMutation } from '../utils/userApi.js';
-import { createColumn, setCurrentProjectName } from '../slices/userSlice.js';
+import { useAddColumnMutation, useAddProjectMutation } from '../utils/userApi.js';
+import { createColumn, createProject, setCurrentProjectName } from '../slices/userSlice.js';
 
 const ScrollBar = () => {
+  const [project, setProject] = useState('');
   const [column, setColumn] = useState('');
-  const dispatch = useDispatch();
-  //tested this - 404 err: 'project does not exist' => projectcontroler.js - createcolumn, NEEDS PROJECT ID IN REQ BODY
   const [addColumnMutation] = useAddColumnMutation();
+  const [addProjectMutation] = useAddProjectMutation();
+  const dispatch = useDispatch();
+
   const handleAddColumnClick = async (e) => {
     e.preventDefault();
     const body = {
@@ -24,11 +26,28 @@ const ScrollBar = () => {
       console.log(error);
     }
   };
+
   const handleSetProjectName = (e) => {
     e.preventDefault();
-    console.log(e.target.value);
     dispatch(setCurrentProjectName(e.target.value));
   }
+
+  const handleSetProject = async (e) => {
+    e.preventDefault();
+    const body = {
+      projectName: project, // Corrected the property name to projectName
+    };
+    console.log(body)
+    try {
+      const res = await addProjectMutation(body);
+      console.log(res)
+      if (res.error) throw new Error(res.error.message);
+
+      dispatch(createProject(res.data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className='scrollBarOuter'>
       <ul className='scrollBarInner'>
@@ -42,7 +61,9 @@ const ScrollBar = () => {
         <ScrollBarItem 
           placeholder='Create Project' 
           type='text' 
-          title='Project Name' 
+          title='Project Name'
+          setterFunction={setProject}
+          onClick={handleSetProject}
         />
         <ScrollBarItem 
           placeholder='My Projects' 
