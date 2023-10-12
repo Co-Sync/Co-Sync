@@ -3,7 +3,7 @@ import NavBar from './NavBar.jsx';
 
 const Settings = () => {
   return (
-    <div className="mainContainer">
+    <div className="homeMain">
       <NavBar />
       <h1>Settings</h1>
     </div>
