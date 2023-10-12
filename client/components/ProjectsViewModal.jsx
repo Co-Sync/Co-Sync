@@ -25,7 +25,7 @@ const ProjectsViewModal = ({ setIsOpen, title, onClick }) => {
         </div>
       </form>
     </div>
-  )
+  );
 }
 
 export default ProjectsViewModal;

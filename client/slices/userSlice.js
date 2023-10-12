@@ -15,6 +15,14 @@ export const userSlice = createSlice({
     setUserState: (state, action) => {
       return action.payload;
     },
+    setUserName: (state, action) => {
+      try {
+        const username = action.payload;
+        state.username = username;
+      } catch (error) {
+        console.error('Error in setUserName reducer: ', error);
+      }
+    },
     createTask: (state, action) => {
       try {
         const { findColumnName, task } = action.payload;
@@ -204,6 +212,7 @@ export const userSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setUserState, createTask, createColumn, createProject, updateTask, deleteProject, deleteColumn, deleteTask, moveTask, setCurrentProjectName } =
+export const { setUserState, createTask, createColumn, createProject, updateTask, deleteProject, deleteColumn, deleteTask, moveTask, 
+  setCurrentProjectName, setUserName } =
   userSlice.actions;
 export default userSlice.reducer;

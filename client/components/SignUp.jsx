@@ -3,20 +3,22 @@ import Button from './Button.jsx';
 import TextInput from './TextInput.jsx';
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
-// import { useSignupUserMutation } from '../utils/userApi.js';
+import { useDispatch } from 'react-redux';
+import { setUserName } from '../slices/userSlice.js';
 
 const SignUp = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  // const [email, setEmail] = useState('');
   const navigate = useNavigate();
-  // const [signUpUserMutation] = useSignupUserMutation();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Sign up clicked');
+    const user = username;
+    const body = { password, username };
+    setUsername('');
+    setPassword('');
     try {
-      const body = { password, username };
       const res = await fetch('/api/user/signup', {
         method: 'POST',
         headers: {
@@ -24,8 +26,8 @@ const SignUp = () => {
         },
         body: JSON.stringify(body)
       });
-
       if (res.status === 200) {
+        dispatch(setUserName(user));
         navigate('/login');
       } else {
         console.error('Registration failed');
@@ -44,8 +46,8 @@ const SignUp = () => {
         </div>
         <div className='innerLogin'>
           <form className='formContainer'>
-            <TextInput placeholder='Username' setterFunction={setUsername} />
-            <TextInput placeholder='Password' setterFunction={setPassword} />
+            <TextInput placeholder='Username' setterFunction={setUsername} value={username} />
+            <TextInput placeholder='Password' setterFunction={setPassword} value={password} />
             <Button onClick={handleSubmit} text='Sign Up' />
           </form>
           <div className='footer'>

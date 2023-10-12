@@ -17,6 +17,8 @@ const projectRouter = require('./routes/project');
 const userRouter = require('./routes/user');
 
 app.use(cookieParser());
+// const mongoURI = 'mongodb://localhost/coSyncTest';
+// mongoose.connect(mongoURI);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -28,9 +30,11 @@ app.use('/api/user', userRouter);
 
 // these two must be in the end
 app.use(express.static(path.resolve(__dirname, '../build')));
-app.get('/', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../index.html'));
+app.use('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../build', 'index.html'));
 });
+
+app.use((req, res) => res.sendStatus(404));
 
 /**
  * express error handler
