@@ -2,7 +2,6 @@
 
 .textModalVisible {
   position: absolute;
-  display: flex;
   z-index: 50;
   top: -1rem;
   background-color: rgba(42, 65, 93, 0.936);
@@ -11,8 +10,8 @@
   border-radius: 8px;
   align-items: center;
   width: fit-content;
+  border: 2px solid white;
   .projectsList {
-    overflow-y: scroll;
     width: 100%;
   }
   .textModalInner {
@@ -20,16 +19,14 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 1px solid white;
     border-radius: 10px;
     padding: 5px;
-    width: fit-content;
+    margin: 5px;
   }
   .projectsListButton {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: fit-content;
     width: 100%;
     border-radius: 8px;
     background-color: #6fcdff00;
@@ -46,9 +43,8 @@
     border: 0px transparent;
     border-radius: 5px;
     background-color: #6fcdff00;
-    margin: 0px 5px;
     height: 1.5rem;
-    width: 1.5rem;
+    width: 1rem;
     min-width: fit-content;
     color:rgb(44, 210, 222);
     background-size: cover;
