@@ -10,6 +10,7 @@ const TableTask = ({ task, column, currentProject }) => {
   const [incomingData, setIncomingData] = useState('');
   const [comment, setComment] = useState('');
   const [isOpen, setIsOpen] = useState(false);
+  const [isCommentOpen, setIsCommentOpen] = useState(false);
   const [isMoveOpen, setIsMoveOpen] = useState(false);
   const [deleteTaskMutation] = useDeleteTaskMutation();
   const [updateTaskMutation] = useUpdateTaskMutation();
@@ -19,6 +20,11 @@ const TableTask = ({ task, column, currentProject }) => {
   const handleInputChange = (e) => {
     e.preventDefault();
     setIsOpen(prev => !prev);
+  };
+
+  const handleInputCommentChange = (e) => {
+    e.preventDefault();
+    setIsCommentOpen(prev => !prev);
   };
 
   const handleEditClick = async (e) => {
@@ -61,7 +67,7 @@ const TableTask = ({ task, column, currentProject }) => {
       const res = await updateTaskMutation(body);
       if (res.error) throw new Error(res.error.message);
       dispatch(updateTask({ updatedTask: res.data, columnId: column._id }));
-      setIsOpen(false);
+      setIsCommentOpen(false);
     } catch (error) {
       console.log(error);
     }
@@ -130,7 +136,7 @@ const TableTask = ({ task, column, currentProject }) => {
           idOverride='innerTaskButton'
         />
         <TaskButton
-          onClick={(e) => handleInputChange(e)}
+          onClick={(e) => handleInputCommentChange(e)}
           imgSrc='../assets/messages.svg'
           alt='comment'
           idOverride='innerTaskButton'
@@ -153,11 +159,11 @@ const TableTask = ({ task, column, currentProject }) => {
           onClick={handleMoveTask}
           currentProject={currentProject}
         /> : null}
-        {isOpen ? <TextModal
+        {isCommentOpen ? <TextModal
           placeholder={'Task Comment'}
           setterFunction={setComment}
           onClick={(e) => handleAddComment(e)}
-          setIsOpen={setIsOpen}
+          setIsOpen={setIsCommentOpen}
           title='Add Comment'
         /> : null}
       </div>
