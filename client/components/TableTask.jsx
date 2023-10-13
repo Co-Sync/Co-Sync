@@ -75,14 +75,14 @@ const TableTask = ({ task, column, currentProject }) => {
 
   const handleMoveTask = async (e) => {
     e.preventDefault();
-    console.log("new id is: ", e.target.value);
+    console.log('new id is: ', e.target.value);
     const body = {
       projectId: currentProject._id,
       oldColumnId: column._id,
       newColumnId: e.target.value,
       taskId: task._id,
     };
-    console.log("body is: ", body);
+    console.log('body is: ', body);
 
     try {
       const res = await moveTaskMutation(body);
@@ -149,20 +149,20 @@ const TableTask = ({ task, column, currentProject }) => {
         {isOpen ? <TextModal
           placeholder={'Task Name'}
           setterFunction={setIncomingData}
-          onClick={(e) => handleEditClick(e)}
+          saveFunc={(e) => handleEditClick(e)}
           setIsOpen={setIsOpen}
           title='Edit Task'
         /> : null}
         {isMoveOpen ? <ColumnViewModal
           setIsOpen={setIsMoveOpen}
           title='Select Column to Move to'
-          onClick={handleMoveTask}
+          saveFunc={handleMoveTask}
           currentProject={currentProject}
         /> : null}
         {isCommentOpen ? <TextModal
           placeholder={'Task Comment'}
           setterFunction={setComment}
-          onClick={(e) => handleAddComment(e)}
+          saveFunc={(e) => handleAddComment(e)}
           setIsOpen={setIsCommentOpen}
           title='Add Comment'
         /> : null}

@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 
 const ProjectsViewModal = ({ setIsOpen, title, saveFunc }) => {
   const projects = useSelector(state => state.user.projects);
-  console.log(projects)
   const projectsList = Object.keys(projects).map(project => project);
   return (
     <div id='modal' className='textModalVisible'>
@@ -13,7 +12,6 @@ const ProjectsViewModal = ({ setIsOpen, title, saveFunc }) => {
           <button 
             onClick={(e) => {
               e.preventDefault();
-              console.log(setIsOpen)
               setIsOpen(prev => !prev)
             }} 
             className='closeModalButton'>x</button>
@@ -21,10 +19,10 @@ const ProjectsViewModal = ({ setIsOpen, title, saveFunc }) => {
         <div className='projectsList'>          
           {projectsList.map((project, index) => {
             return <button value={project} onClick={(e) => {
-              console.log(e);
               e.preventDefault();
+              setIsOpen(prev => !prev);
               saveFunc(e);
-            }} className='projectsListButton' key={index}>{project}</button>
+            }} className='projectsListButton' key={index}>{index} - {project}</button>
           })}
         </div>
       </form>

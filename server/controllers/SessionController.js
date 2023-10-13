@@ -9,11 +9,9 @@ const SessionController = {};
 SessionController.isLoggedIn = async (req, res, next) => {
   // write code here
   const session = await Session.find({});
-  console.log('session is: ', session);
   if ('ssid' in req.cookies && session.length !== 0) {
     return next();
   } else {
-    // res.redirect('/login')
     return next({
       log: 'Session is over ',
       message: { err: 'Session is over' }
@@ -33,12 +31,28 @@ SessionController.startSession = async (req, res, next) => {
   if (session) {
     return next();
   } else {
-    const newSession = await Session.create({cookieId: res.locals.ssid})
+    await Session.create({cookieId: res.locals.ssid})
     console.log('session cookie', res.locals.ssid)
     console.log('session created');
-    // console.log(newSession);
     return next();
   }
 };
+
+SessionController.endSession = async (req, res, next) => {
+  //write code here
+  console.log('made it to endSession middleware');
+  const session = await Session.findOne({cookieId: req.cookies?.ssid});
+  if (session) {
+    await Session.deleteOne({cookieId: res.locals.ssid});
+    console.log('session deleted');
+    res.clearCookie('ssid');
+    return next();
+  } else {
+    return next({
+      log: 'Session does not exist',
+      message: { err: 'Session does not exist' }
+    })
+  }
+}
 
 module.exports = SessionController;

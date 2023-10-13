@@ -13,24 +13,25 @@
   display: flex;
   position: relative;
   flex-direction: column;
-  justify-content: center;
+  // justify-content: center;
   align-items: center;
   height: 100vh;
   width: 100vw;
   margin: 0;
   padding: 0;
+  border: none;
 }
 
 .NavBar {
   display: grid;
   height: 10vh;
   align-items: center;
-  position: fixed;
-  width: 100vw;
+  position: relative;
+  width: 100%;
   grid-template-columns: 1fr 1fr auto;
   top: 0;
   left: 0;
-  padding: .5rem .5rem;
+  padding: 0rem 1rem;
   backdrop-filter: blur(10px);
   background-color: rgba(255, 255, 255, 0.01);
   border-bottom: 1px solid rgb(255, 255, 255);
@@ -49,10 +50,12 @@
       justify-content: center;
       height: fit-content;
       padding: 0;
+      border: 0px solid transparent;
+      background-color: transparent;
       cursor: pointer;
       border-radius: 10px;
       transition: all 0.2s ease-in-out;
-
+      font-size: 1.5vw;
       &:hover {
         scale: 1.1;
         background-color: rgba(255, 255, 255, 0.1);
@@ -83,38 +86,38 @@
 
 #tableDisplayOuter {
   position: relative;
-  top: 10vh;
   width: 100vw;
   border-radius: 0px;
   border: none;
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
+  height: 90vh;
 }
 
 #tableDisplayInner {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(325px, 1fr));
   width: 100%;
+  gap: 20px;
   height: 100%;
-  overflow: scroll;
+  padding: 10px;
 }
 
 #tableColumnMain {
   box-shadow: 2px 2px 12px rgba(44, 210, 222, 0.545);
-  margin: 20px;
   min-height: 10vh;
   background-color: #68697318;
   min-width: 15vw;
   height: 40vh;
-  height: 40vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
   z-index: 1;
-
-  h2 {
+  overflow-x: hidden;
+  padding: 5px 0px;
+  h1 {
     margin: 0px 5px;
     padding: 0;
     font-size: 1.6rem;
@@ -123,8 +126,8 @@
 }
 
 #tableTaskMain {
-  border-left: 2px transparent;
-  border-right: 2px transparent;
+  border-left: 0px transparent;
+  border-right: 0px transparent;
   border-top: 2px solid rgba(255, 255, 255, 0.5);
   border-bottom: 2px solid rgba(255, 255, 255, 0.5);
   display: grid;
@@ -191,12 +194,12 @@
 .scrollBarOuter {
   background-color: $glass-blue;
   display: flex;
+  position: relative;
   align-items: center;
   justify-content: center;
   width: 100%;
   border-bottom: 1px solid white;
   height: 8vh;
-  overflow-x: visible;
   font-size: 3vh;
   padding: 0px 10px;
 }

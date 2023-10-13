@@ -16,7 +16,9 @@ export const userSlice = createSlice({
       // console.log("Overwritten the entire state to: ", action.payload);
       // return action.payload;
       state.projects = action.payload.projects;
+      state.numOfProjects = action.payload.numOfProjects;
     },
+    resetState: () => initialState,
     setUserName: (state, action) => {
       try {
         const username = action.payload;
@@ -193,12 +195,12 @@ export const userSlice = createSlice({
       } catch (error) {
         console.error('Error in setCurrentProjectName reducer: ', error);
       }
-    }
+    },
   }
 });
 
 // Action creators are generated for each case reducer function
-export const { setUserState, createTask, createColumn, createProject, updateTask, deleteProject, deleteColumn, deleteTask, moveTask,
-  setCurrentProjectName, setUserName } =
+export const { setUserState, createTask, createColumn, createProject, updateTask, deleteProject, deleteColumn, deleteTask, moveTask, 
+  setCurrentProjectName, setUserName, resetState } =
   userSlice.actions;
 export default userSlice.reducer;

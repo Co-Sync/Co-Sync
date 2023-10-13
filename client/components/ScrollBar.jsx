@@ -1,30 +1,28 @@
 import React, { useState } from 'react';
 import ScrollBarItem from './ScrollBarItem.jsx';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useAddColumnMutation, useAddProjectMutation } from '../utils/userApi.js';
 import { createColumn, createProject, setCurrentProjectName } from '../slices/userSlice.js';
 
-const ScrollBar = ({currentProject}) => {
+const ScrollBar = ({ currentProject }) => {
   const [project, setProject] = useState('');
   const [column, setColumn] = useState('');
   const [addColumnMutation] = useAddColumnMutation();
   const [addProjectMutation] = useAddProjectMutation();
   const dispatch = useDispatch();
 
-  console.log(`Current project is: ${currentProject}`);
-
+  // console.log(`Current project is: ${currentProject}`);
   const handleAddColumnClick = async (e) => {
     e.preventDefault();
     const body = {
-      // projectId,
       columnName: column,
-      // tasks: [],
       projectId: currentProject._id
     }
+    setColumn('');
     try {
       const res = await addColumnMutation(body);
       if (res.error) throw new Error(res.error.message);
-      console.log(`res is ${res}`);
+      // console.log(`res is ${res}`);
       dispatch(createColumn(res.data));
     } catch (error) {
       console.log(error);
@@ -42,13 +40,12 @@ const ScrollBar = ({currentProject}) => {
     const body = {
       projectName: project, // Corrected the property name to projectName
     };
-    console.log(body)
+    setProject('');
     try {
       const res = await addProjectMutation(body);
-      console.log(res)
       if (res.error) throw new Error(res.error.message);
-
       dispatch(createProject(res.data));
+      setCurrentProjectName(res.data.projectName);
     } catch (error) {
       console.log(error);
     }
@@ -56,25 +53,25 @@ const ScrollBar = ({currentProject}) => {
   return (
     <div className='scrollBarOuter'>
       <ul className='scrollBarInner'>
-        <ScrollBarItem 
-          setterFunction={setColumn} 
-          onClick={handleAddColumnClick} 
-          placeholder='Add Column' 
-          type='text' 
-          title='Column Name' 
+        <ScrollBarItem
+          setterFunction={setColumn}
+          saveFunc={handleAddColumnClick}
+          placeholder='Add Column'
+          type='text'
+          title='Column Name'
         />
-        <ScrollBarItem 
-          placeholder='Create Project' 
-          type='text' 
+        <ScrollBarItem
+          placeholder='Create Project'
+          type='text'
           title='Project Name'
           setterFunction={setProject}
-          onClick={handleSetProject}
+          saveFunc={handleSetProject}
         />
-        <ScrollBarItem 
-          placeholder='My Projects' 
+        <ScrollBarItem
+          placeholder='My Projects'
           type='view'
-          title='Projects' 
-          onClick={handleSetProjectName}
+          title='Projects'
+          saveFunc={handleSetProjectName}
         />
       </ul>
     </div>

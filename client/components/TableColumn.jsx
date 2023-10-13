@@ -63,7 +63,6 @@ const TableColumn = ({ column, currentProject }) => {
       console.log('Error in handleDeleteColumn: ', error);
     }
   };
-
   return (
     <div className="container" id="tableColumnMain">
       {isOpen ? <TextModal
@@ -87,9 +86,9 @@ const TableColumn = ({ column, currentProject }) => {
           text='Delete'
         />
       </div>
-      {column.tasks?.map((task, index) => {
+      {column.tasks.length ? column.tasks.map((task, index) => {
         return <TableTask key={index} task={task} column={column} currentProject={currentProject} />;
-      })}
+      }) : <h1>No Tasks Yet</h1>}
     </div>
   );
 };
