@@ -20,7 +20,10 @@ const TableDisplay = () => {
       <ScrollBar currentProject={currentProject} />
       <div id='tableDisplayInner'>
         {currentProject.columns.map((column, index) => {
-          return <TableColumn key={index} column={column} currentProject={currentProject} />;
+          if (column && column.columnName) {
+            // console.log(`Rendering TableColumn for column at index ${index}:`, column);
+            return <TableColumn key={index} column={column} currentProject={currentProject} />;
+          }
         })}
       </div>
     </div>

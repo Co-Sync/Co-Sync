@@ -30,6 +30,7 @@ const ScrollBar = ({ currentProject }) => {
   };
 
   const handleSetProjectName = (e) => {
+    console.log(e);
     e.preventDefault();
     dispatch(setCurrentProjectName(e.target.value));
   }

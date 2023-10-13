@@ -29,12 +29,12 @@ export const userSlice = createSlice({
     },
     createTask: (state, action) => {
       try {
-        const { findColumnName, task } = action.payload;
+        console.log('createTask reducer triggered');
+        const { columnId, task } = action.payload;
         const currentProject = state.currentProject;
-        console.log(task);
         state.projects[currentProject].columns = state.projects[currentProject].columns.map((el) => {
-          if (el.columnName === findColumnName) {
-            el.tasks.push({ taskName: task, taskComments: [] });
+          if (el._id === columnId) {
+            el.tasks.push({ taskName: task, taskComments: '' });
           }
           return el;
         });
@@ -44,7 +44,7 @@ export const userSlice = createSlice({
     },
     createColumn: (state, action) => {
       try {
-        const {columnName, _id} = action.payload;
+        const { columnName, _id } = action.payload;
         console.log(columnName)
         console.log('current project is:', current(state.currentProject));
         const currentProject = state.currentProject;
@@ -76,7 +76,7 @@ export const userSlice = createSlice({
     },
     updateTask: (state, action) => {
       try {
-        console.log('current project is in updateTask: ', state.currentProject);
+        console.log("current project is in updateTask: ", state.currentProject);
         const { updatedTask, columnId } = action.payload;
         const currentProject = state.currentProject;
         // Find the column whose _id is columnId.
@@ -113,18 +113,20 @@ export const userSlice = createSlice({
     },
     deleteColumn: (state, action) => {
       try {
-        let outerIndx = 0;
-        const { findColumnName } = action.payload;
+        console.log('deleteColumn reducer triggered');
+        // let outerIndx = 0;
+        const { columnId } = action.payload;
         const currentProject = state.currentProject;
+
         const column = state.projects[currentProject].columns.find(
-          (col, indx) => {
-            col.columnName === findColumnName;
-            outerIndx = indx;
+          (col) => {
+            col._id === columnId;
           }
         );
+        console.log('col', column);
 
         if (column) {
-          delete state.projects[currentProject].columns[outerIndx];
+          delete state.projects[currentProject].columns[column];
         }
       } catch (error) {
         console.error('Error in deleteColumn reducer: ', error);
@@ -133,20 +135,16 @@ export const userSlice = createSlice({
     deleteTask: (state, action) => {
       try {
         console.log('deleteTask reducer triggered');
-        // let outerIndx = 0;
         const { taskId, columnId } = action.payload;
         const currentProject = state.currentProject;
 
-        console.log('state', current(state.projects[currentProject].columns));
         const column = state.projects[currentProject].columns.find(
           (col) => (col._id === columnId)
         );
 
-        //returning undefined but is selected in the DELETE method, why? 
         console.log('Found column:', column);
 
         if (column) {
-          //find index of the task to delete
           const taskIndex = column.tasks.findIndex(
             (task) => task._id === taskId
           );
@@ -161,8 +159,6 @@ export const userSlice = createSlice({
             const newColumn = { ...column, tasks: spliced };
             // const newProjects = [...state.projects];
             state.projects[currentProject].columns[taskIndex] = newColumn;
-
-            // console.log('New projects:', newProjects);
 
             // return { ...state, projects: newProjects };
           }

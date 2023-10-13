@@ -31,10 +31,10 @@ export const userApi = createApi({
       query: (body) => ({ url: '/project/task', method: 'POST', body }),
       invalidatesTags: ['Projects'],
     }),
-    addComment: builder.mutation({
-      query: (body) => ({ url: '/project/task/comment', method: 'POST', body }),
-      invalidatesTags: ['Projects'],
-    }),
+    // addComment: builder.mutation({
+    //   query: (body) => ({ url: '/project/task/comment', method: 'POST', body }),
+    //   invalidatesTags: ['Projects'],
+    // }),
     // Body: { projectId, oldColumnId, newColumnId, taskId}
     moveTask: builder.mutation({
       query: (body) => ({ url: '/project/column/', method: 'PATCH', body }),
@@ -52,11 +52,11 @@ export const userApi = createApi({
       invalidatesTags: ['Projects'],
     }),
     deleteColumn: builder.mutation({
-      query: (body, projectId, columnId) => ({ url: `/project/column/${projectId}/${columnId}`, method: 'DELETE', body }),
+      query: ({ projectId, columnId }) => ({ url: `/project/column/${projectId}/${columnId}`, method: 'DELETE' }),
       invalidatesTags: ['Projects'],
     }),
     deleteProject: builder.mutation({
-      query: (body, projectId) => ({ url: `/project/${projectId}`, method: 'DELETE', body }),
+      query: ({ projectId }) => ({ url: `/project/${projectId}`, method: 'DELETE' }),
       invalidatesTags: ['Projects'],
     }),
     validateUser: builder.query({

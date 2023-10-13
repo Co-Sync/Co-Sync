@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ColumnViewModal = ({ setIsOpen, title, onClick, currentProject }) => {
+const ColumnViewModal = ({ setIsOpen, title, saveFunc, currentProject }) => {
   console.log(currentProject)
   return (
     <div id='modal' className='textModalVisible'>
@@ -17,7 +17,7 @@ const ColumnViewModal = ({ setIsOpen, title, onClick, currentProject }) => {
         </div>
         <div className='projectsList'>
           {currentProject.columns.map((column, index) => {
-            return <button value={column._id} onClick={onClick} className='projectsListButton' key={index}>{column.columnName}</button>
+            return <button value={column._id} onClick={saveFunc} className='projectsListButton' key={index}>{column.columnName}</button>
           })}
         </div>
       </form>
