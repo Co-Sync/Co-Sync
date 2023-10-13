@@ -11,29 +11,37 @@ import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const navigate = useNavigate();
-  const { isError: userInvalid, isLoading } = useValidateUserQuery();
   const { data, isError, isLoading: isProjectsLoading, isSuccess, error } = useGetUserProjectsQuery();
   // clear cache for this data on logout
   const dispatch = useDispatch();
   useEffect(() => {
-    if (!userInvalid) {
-      if (isSuccess) {
-        const userData = data;
-        const projects = {}
-        for (const project of userData) {
-          projects[project.projectName] = project;
+    (async () => {
+      fetch('/api/user/validate', {
+        method: 'GET',
+        credentials: 'include',
+      }).then(res => {
+        if (res.status === 200) {
+          if (isSuccess) {
+            const userData = data;
+            const projects = {}
+            for (const project of userData) {
+              projects[project.projectName] = project;
+            }
+            const transformedData = {
+              projects,
+              numOfProjects: userData.length,
+            };
+            dispatch(setUserState(transformedData));
+          }
+        } else {
+          navigate('/login');
         }
-        const transformedData = {
-          projects,
-          numOfProjects: userData.length,
-        };
-        dispatch(setUserState(transformedData));
-      }
-    } else if (userInvalid && !isLoading) {
-      navigate('/login');
-    }
+      }).catch(err => {
+        console.log('Error while validating user: ', err);
+      });
+    })();
   });
-  if (isProjectsLoading || isLoading) return (<div>Loading...</div>);
+  if (isProjectsLoading) return (<div>Loading...</div>);
   if (isError) return (<div>{error.message}</div>);
   return (
     <div className='homeMain'>

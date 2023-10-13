@@ -85,7 +85,6 @@ userController.verifyUser = async (req, res, next) => {
       message: { err: 'Error: No username or password'}
     });
   }
-
   User.findOne({username})
     .then((user) => {
       if(user === null){
@@ -97,7 +96,11 @@ userController.verifyUser = async (req, res, next) => {
         bcrypt
           .compare(password, user.password)
           .then((result) => {
-            if(result === false) res.redirect('/signup')
+            if(result === false) return next({
+              log: 'Incorrect username or password',
+              status: 400,
+              message: { err: 'Error: Incorrect username or password'}
+            });
             if(result === true) {
               console.log('Bcrypt compare confirmed');
               res.locals.verifyUser = true;

@@ -17,25 +17,23 @@ const Login = () => {
     const data = { username, password };
     setUsername('');
     setPassword('');
-    setTimeout(() => {
-      fetch('/api/user/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-        credentials: 'include',
-      }).then(res => {
-        if (res.status === 200) {
-          dispatch(setUserName(user));
-          navigate('/');
-        } else {
-          console.log('Login failed');
-        }
-      }).catch(err => {
-        console.log('Login failed with error: ', err);
-      });
-    }, 1000);
+    fetch('/api/user/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+      credentials: 'include',
+    }).then(res => {
+      if (res.status === 200) {
+        dispatch(setUserName(user));
+        navigate('/');
+      } else {
+        console.log('Login failed');
+      }
+    }).catch(err => {
+      console.log('Login failed with error: ', err);
+    });
   };
 
   return (
