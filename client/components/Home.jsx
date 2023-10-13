@@ -13,6 +13,7 @@ const Home = () => {
   const navigate = useNavigate();
   const { isError: userInvalid, isLoading } = useValidateUserQuery();
   const { data, isError, isLoading: isProjectsLoading, isSuccess, error } = useGetUserProjectsQuery();
+  // clear cache for this data on logout
   const dispatch = useDispatch();
   useEffect(() => {
     if (!userInvalid) {

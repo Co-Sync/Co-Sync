@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { resetState } from '../slices/userSlice.js';
+import { userApi } from '../utils/userApi.js';
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ const NavBar = () => {
       });
       if (res.error) throw new Error(res.error.message);
       if (res.status === 200) {
+        dispatch(userApi.util.resetApiState());
         dispatch(resetState());
         navigate('/login');
       } else {
