@@ -109,6 +109,20 @@ userController.verifyUser = async (req, res, next) => {
       }
     });
 };
+
+userController.getUserProjects = (req, res, next) => {
+  const userID = req.cookies.ssid;
+  User.findOne({_id: userID})
+    .populate('projects')
+    .then((user) => {
+      res.locals.projects = user.projects;
+      return next();
+    })
+    .catch((err) => {
+      return next(err);
+    })
+}
+
 // userController.verifyUser = (req, res, next) => {
 //   //store the req.body (which should be an object) in a new constant, then use User.find
 //   //to compare the username in the req.body to usernames stored in the database.

@@ -9,6 +9,9 @@ const bcrypt = require('bcryptjs');
 const userSchema = new Schema({
   username: {type: String, required: true, unique: true},
   password: {type: String, required: true},
+  projects: [
+    {type: Schema.Types.ObjectId, ref: 'Project'}
+  ],
   email:    {type: String},
 });
 

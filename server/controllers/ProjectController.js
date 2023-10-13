@@ -1,4 +1,5 @@
 const Project = require('../models/projectModel');
+const User = require('../models/userModel');
 
 // get all projects
 const getProjects = async (req, res, next) => {
@@ -18,13 +19,16 @@ const getProjects = async (req, res, next) => {
 
 // Create a new project
 const createProject = async (req, res, next) => {
+  const userID = req.cookies.ssid;
   try {
     const project = {
       projectName: req.body.projectName,
+      owner: userID,
       columns: []
     };
     const savedProject = await Project.create(project);
-    console.log(savedProject);
+    const savedProjectID = savedProject._id;
+    await User.findByIdAndUpdate(userID, { $push: { projects: savedProjectID } }, { new: true });
     res.locals.project = savedProject;
     return next();
   } catch (error) {

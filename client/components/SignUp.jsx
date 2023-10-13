@@ -48,7 +48,7 @@ const SignUp = () => {
           <form className='formContainer'>
             <TextInput placeholder='Username' setterFunction={setUsername} value={username} />
             <TextInput placeholder='Password' setterFunction={setPassword} value={password} />
-            <Button onClick={handleSubmit} text='Sign Up' />
+            <Button saveFunc={handleSubmit} text='Sign Up' />
           </form>
           <div className='footer'>
             <div>

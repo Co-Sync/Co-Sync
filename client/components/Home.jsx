@@ -5,15 +5,14 @@ import '../css/Home.scss';
 import '../css/Modal.scss'
 import { useDispatch } from 'react-redux';
 import { setUserState } from '../slices/userSlice.js';
-import { useGetProjectQuery, useValidateUserQuery } from '../utils/userApi.js';
+import { useGetUserProjectsQuery, useValidateUserQuery } from '../utils/userApi.js';
 import { useNavigate } from 'react-router-dom';
 
 
 const Home = () => {
   const navigate = useNavigate();
   const { isError: userInvalid, isLoading } = useValidateUserQuery();
-
-  const { data, isError, isLoading: isProjectsLoading, isSuccess, error } = useGetProjectQuery();
+  const { data, isError, isLoading: isProjectsLoading, isSuccess, error } = useGetUserProjectsQuery();
   const dispatch = useDispatch();
   useEffect(() => {
     if (!userInvalid) {

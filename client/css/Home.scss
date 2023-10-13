@@ -117,6 +117,7 @@
   position: relative;
   z-index: 1;
   overflow-x: hidden;
+  overflow-y: scroll;
   padding: 5px 0px;
   h1 {
     margin: 0px 5px;
@@ -144,7 +145,7 @@
   grid-template-rows: auto;
   // grid-gap: .1rem;
   margin: .15rem 0;
-
+  z-index: 1;
 
   #messagesButton {
     position: relative;

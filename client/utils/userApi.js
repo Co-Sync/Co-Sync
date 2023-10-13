@@ -9,6 +9,10 @@ export const userApi = createApi({
       query: () => ({ url: '/project/', method: 'GET' }),
       providesTags: ['Projects'],
     }),
+    getUserProjects: builder.query({
+      query: () => ({ url: '/user/projects', method: 'GET', credentials: 'include' }),
+      providesTags: ['Projects'],
+    }),
     sendUserCreds: builder.mutation({
       query: (body) => ({ url: '/user/login', method: 'POST', body, credentials: 'include' }),
       providesTags: ['User'],
@@ -66,4 +70,4 @@ export const userApi = createApi({
   }),
 });
 
-export const { useGetProjectQuery, useSendUserCredsMutation, useSignupUserMutation, useAddProjectMutation, useAddColumnMutation, useAddTaskMutation, useMoveTaskMutation, useUpdateTaskMutation, useDeleteTaskMutation, useDeleteColumnMutation, useDeleteProjectMutation, useValidateUserQuery } = userApi;
+export const { useGetProjectQuery, useSendUserCredsMutation, useSignupUserMutation, useAddProjectMutation, useAddColumnMutation, useAddTaskMutation, useMoveTaskMutation, useUpdateTaskMutation, useDeleteTaskMutation, useDeleteColumnMutation, useDeleteProjectMutation, useValidateUserQuery, useGetUserProjectsQuery } = userApi;
