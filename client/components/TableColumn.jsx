@@ -68,7 +68,7 @@ const TableColumn = ({ column, currentProject }) => {
       {isOpen ? <TextModal
         placeholder={'Task Name'}
         setterFunction={setTask}
-        onClick={(e) => handleAddTask(e)}
+        saveFunc={(e) => handleAddTask(e)}
         setIsOpen={setIsOpen}
         title='Add Task'
         column={column._id}
