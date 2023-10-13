@@ -1,7 +1,6 @@
 import React from 'react';
 
 const ColumnViewModal = ({ setIsOpen, title, saveFunc, currentProject }) => {
-  console.log(currentProject)
   return (
     <div id='modal' className='textModalVisible'>
       <form className='textModalInner'>
