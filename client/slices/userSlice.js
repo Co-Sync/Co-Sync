@@ -5,7 +5,8 @@ const initialState = {
   username: '',
   projects: {},
   numOfProjects: 0,
-  currentProject: ''
+  currentProject: '',
+  isAuth: false,
 };
 
 export const userSlice = createSlice({
@@ -22,6 +23,7 @@ export const userSlice = createSlice({
     setUserName: (state, action) => {
       try {
         const username = action.payload;
+        state.isAuth = true;
         state.username = username;
       } catch (error) {
         console.error('Error in setUserName reducer: ', error);
@@ -76,7 +78,7 @@ export const userSlice = createSlice({
     },
     updateTask: (state, action) => {
       try {
-        console.log("current project is in updateTask: ", state.currentProject);
+        console.log('current project is in updateTask: ', state.currentProject);
         const { updatedTask, columnId } = action.payload;
         const currentProject = state.currentProject;
         // Find the column whose _id is columnId.

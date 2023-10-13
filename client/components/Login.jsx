@@ -27,6 +27,7 @@ const Login = () => {
     }).then(res => {
       if (res.status === 200) {
         dispatch(setUserName(user));
+        console.log('Login successful')
         navigate('/');
       } else {
         console.log('Login failed');

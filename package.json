@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.jsx",
   "scripts": {
-    "start": "nodemon ./server/server.js",
+    "start": "node ./server/server.js",
     "build": "webpack --mode production",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "concurrently --kill-others \"set NODE_ENV=development && node server/server.js\" \"webpack serve --config webpack.config.js --open\""
+    "dev": "concurrently --kill-others \"set NODE_ENV=development && nodemon server/server.js\" \"webpack serve --config webpack.config.js --open\""
   },
   "author": "",
   "license": "ISC",

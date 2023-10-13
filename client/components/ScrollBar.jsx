@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import ScrollBarItem from './ScrollBarItem.jsx';
 import { useDispatch } from 'react-redux';
-import { useAddColumnMutation, useAddProjectMutation } from '../utils/userApi.js';
+import { useAddColumnMutation, useAddProjectMutation, useInviteUserMutation } from '../utils/userApi.js';
 import { createColumn, createProject, setCurrentProjectName } from '../slices/userSlice.js';
 
 const ScrollBar = ({ currentProject }) => {
   const [project, setProject] = useState('');
   const [column, setColumn] = useState('');
+  const [invite, setInvite] = useState('');
   const [addColumnMutation] = useAddColumnMutation();
   const [addProjectMutation] = useAddProjectMutation();
+  const [inviteUserMutation] = useInviteUserMutation();
   const dispatch = useDispatch();
 
   // console.log(`Current project is: ${currentProject}`);
@@ -30,7 +32,6 @@ const ScrollBar = ({ currentProject }) => {
   };
 
   const handleSetProjectName = (e) => {
-    console.log(e);
     e.preventDefault();
     dispatch(setCurrentProjectName(e.target.value));
   }
@@ -50,9 +51,32 @@ const ScrollBar = ({ currentProject }) => {
       console.log(error);
     }
   };
+
+  const handleInviteUser = async (e) => {
+    e.preventDefault();
+    if (!currentProject) return console.log('No current project');
+    const body = {
+      username: invite,
+      projectID: currentProject?._id,
+    };
+    setInvite('');
+    try {
+      const res = await inviteUserMutation(body);
+      if (res.error) throw new Error(res.error.message);
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <div className='scrollBarOuter'>
       <ul className='scrollBarInner'>
+        <ScrollBarItem
+          setterFunction={setInvite}
+          saveFunc={handleInviteUser}
+          placeholder='Invite User'
+          type='text'
+          title='Invite a User'
+        />
         <ScrollBarItem
           setterFunction={setColumn}
           saveFunc={handleAddColumnClick}
