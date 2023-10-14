@@ -3,9 +3,8 @@ import NavBar from './NavBar.jsx';
 
 const Settings = () => {
   return (
-    <div className="homeMain">
+    <div className="homeMain container">
       <NavBar />
-      <h1>Settings</h1>
     </div>
   );
 }

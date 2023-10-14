@@ -161,7 +161,7 @@ userController.getUserProjects = (req, res, next) => {
   User.findOne({_id: userID})
     .populate('projects')
     .then((user) => {
-      res.locals.projects = user.projects;
+      res.locals.user = {projects: user.projects, username: user.username};
       return next();
     })
     .catch((err) => {

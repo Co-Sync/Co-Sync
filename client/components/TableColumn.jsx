@@ -8,13 +8,12 @@ import { useDeleteColumnMutation, useAddTaskMutation } from '../utils/userApi.js
 
 const TableColumn = ({ column, currentProject }) => {
   const [isOpen, setIsOpen] = useState(false);
-
   const [task, setTask] = useState('');
   const [deleteColumnMutation] = useDeleteColumnMutation();
   const [addTaskMutation] = useAddTaskMutation();
-
   const dispatch = useDispatch();
 
+  console.log(currentProject)
   const handleInputChange = (e) => {
     e.preventDefault();
     setIsOpen(prev => !prev);
@@ -87,7 +86,7 @@ const TableColumn = ({ column, currentProject }) => {
         />
       </div>
       {column.tasks.length ? column.tasks.map((task, index) => {
-        return <TableTask key={index} task={task} column={column} currentProject={currentProject} />;
+        return <TableTask index={index} key={index} task={task} column={column} currentProject={currentProject} />;
       }) : <h1>No Tasks Yet</h1>}
     </div>
   );

@@ -6,7 +6,7 @@ import TextModal from './TextModal.jsx';
 import ColumnViewModal from './ColumnViewModal.jsx';
 import { useDeleteTaskMutation, useUpdateTaskMutation, useMoveTaskMutation } from '../utils/userApi.js';
 
-const TableTask = ({ task, column, currentProject }) => {
+const TableTask = ({ task, column, currentProject, index }) => {
   const [incomingData, setIncomingData] = useState('');
   const [comment, setComment] = useState('');
   const [isOpen, setIsOpen] = useState(false);
@@ -118,7 +118,7 @@ const TableTask = ({ task, column, currentProject }) => {
 
 
   return (
-    <div className="container" id="tableTaskMain">
+    <div style={{ zIndex: -index }} className="container" id="tableTaskMain">{ /* zIndex is used to make sure the task buttons are always on top of the task and the tasks below in the list */}
       <p>{task.taskName}</p>
       {task.taskComments !== '' &&
         <h6>

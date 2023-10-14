@@ -3,26 +3,30 @@ import TableDisplay from './TableDisplay.jsx';
 import NavBar from './NavBar.jsx';
 import '../css/Home.scss';
 import '../css/Modal.scss'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setUserState } from '../slices/userSlice.js';
 import { useGetUserProjectsQuery } from '../utils/userApi.js';
 import { useNavigate } from 'react-router-dom';
 const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const isAuth = useSelector(state => state.user.isAuth);
+  const isAuth = localStorage.getItem('isAuth');
   const { data, isError, isLoading: isProjectsLoading, isSuccess, error } = useGetUserProjectsQuery();
-  if (!isAuth) navigate('/login');
+  if (!isAuth) {
+    console.log('User is not authenticated');
+    navigate('/login');
+  }
   useEffect(() => {
     if (isSuccess && data) {
       const userData = data;
       const projects = {}
-      for (const project of userData) {
+      for (const project of userData.projects) {
         projects[project.projectName] = project;
       }
       const transformedData = {
         projects,
-        numOfProjects: userData.length,
+        numOfProjects: userData.projects.length,
+        username: userData.username,
       };
       dispatch(setUserState(transformedData));
     }

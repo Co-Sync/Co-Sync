@@ -17,6 +17,7 @@ const NavBar = () => {
       if (res.status === 200) {
         console.log('Logout successful');
         userApi.util.resetApiState();
+        localStorage.removeItem('isAuth');
         navigate('/login');
         dispatch(resetState());
       } else {

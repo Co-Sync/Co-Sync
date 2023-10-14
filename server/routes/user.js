@@ -6,7 +6,7 @@ const sessionController = require('../controllers/SessionController');
 const userRouter = express.Router();
 
 userRouter.get('/projects', userController.getUserProjects, (req, res) => {
-  res.status(200).json(res.locals.projects);
+  res.status(200).json(res.locals.user);
 });
 
 /**

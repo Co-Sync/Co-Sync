@@ -6,7 +6,6 @@ const initialState = {
   projects: {},
   numOfProjects: 0,
   currentProject: '',
-  isAuth: false,
 };
 
 export const userSlice = createSlice({
@@ -18,12 +17,12 @@ export const userSlice = createSlice({
       // return action.payload;
       state.projects = action.payload.projects;
       state.numOfProjects = action.payload.numOfProjects;
+      state.username = action.payload.username;
     },
     resetState: () => initialState,
     setUserName: (state, action) => {
       try {
         const username = action.payload;
-        state.isAuth = true;
         state.username = username;
       } catch (error) {
         console.error('Error in setUserName reducer: ', error);

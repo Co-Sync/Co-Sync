@@ -15,7 +15,7 @@ const ColumnViewModal = ({ setIsOpen, title, saveFunc, currentProject }) => {
             className='closeModalButton'>x</button>
         </div>
         <div className='projectsList'>
-          {currentProject.columns.map((column, index) => {
+          {currentProject?.columns.map((column, index) => {
             return <button value={column._id} onClick={saveFunc} className='projectsListButton' key={index}>{column.columnName}</button>
           })}
         </div>

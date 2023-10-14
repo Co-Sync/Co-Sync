@@ -3,17 +3,12 @@ import TextInput from './TextInput.jsx';
 import '../css/Login.scss';
 import Button from './Button.jsx';
 import { useNavigate, Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { setUserName } from '../slices/userSlice.js';
-
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const handleSubmit = (e) => {
     e.preventDefault();
-    const user = username;
     const data = { username, password };
     setUsername('');
     setPassword('');
@@ -26,9 +21,9 @@ const Login = () => {
       credentials: 'include',
     }).then(res => {
       if (res.status === 200) {
-        dispatch(setUserName(user));
+        localStorage.setItem('isAuth', true);
         console.log('Login successful')
-        navigate('/');
+        navigate('/', { state: { loggedIn: true } });
       } else {
         console.log('Login failed');
       }
@@ -36,7 +31,6 @@ const Login = () => {
       console.log('Login failed with error: ', err);
     });
   };
-
   return (
     <div className='outerContainer'>
       <div className="login container">
@@ -70,5 +64,4 @@ const Login = () => {
     </div>
   );
 };
-
 export default Login;
