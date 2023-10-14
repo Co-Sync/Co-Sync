@@ -1,38 +1,42 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TextInput from './TextInput.jsx';
 import '../css/Login.scss';
 import Button from './Button.jsx';
-import { useNavigate } from 'react-router-dom';
-
+import { useNavigate, Link } from 'react-router-dom';
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [authenticated, setAuthenticated] = useState(false);
   const navigate = useNavigate();
-
+  useEffect(() => {
+    if (authenticated) {
+      navigate('/');
+    }
+  }, [authenticated]);
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Login clicked');
     const data = { username, password };
-    setTimeout(() => {
-      fetch('/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-        credentials: 'include',
-      }).then(res => {
-        if(res.status === 200) {
-          navigate('/');
-        } else {
-          console.log('Login failed');
-        }
-      }).catch(err => {
-        console.log('Login failed with error: ', err);
-      });
-    }, 1000);
+    setUsername('');
+    setPassword('');
+    fetch('/api/user/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+      credentials: 'include',
+    }).then(res => {
+      if (res.status === 200) {
+        console.log('Login successful');
+        localStorage.setItem('isAuth', true);
+        setAuthenticated(true);
+      } else {
+        console.log('Login failed');
+      }
+    }).catch(err => {
+      console.log('Login failed with error: ', err);
+    });
   };
-
   return (
     <div className='outerContainer'>
       <div className="login container">
@@ -40,16 +44,32 @@ const Login = () => {
           <h1>Co-Sync</h1>
           <h2>Login</h2>
         </div>
-        <div className='login'>
+        <div className='innerLogin'>
           <form className='formContainer'>
-            <TextInput placeholder='Username' onChange={ setUsername } />
-            <TextInput placeholder='Password' onChange={ setPassword } />
-            <Button onClick={ handleSubmit } text='Login' />
+            <hr />
+            <TextInput placeholder='Username' setterFunction={setUsername} value={username} />
+            <TextInput placeholder='Password' setterFunction={setPassword} type='password' value={password}/>
+            <Button saveFunc={handleSubmit} text='Login' />
+            <hr />
           </form>
+          <div className='footer'>
+            <div>
+              <p>Don&apos;t have an account?</p>
+              <Link to='/signup'>Sign Up</Link>
+            </div>
+            <div>
+              <a href='https://github.com/Co-Sync/Co-Sync'>Checkout the project</a>
+            </div>
+            <div>
+              <p>
+                Forgot your password?
+              </p>
+              <Link to='/reset'>Reset Password</Link>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   );
 };
-
 export default Login;

@@ -1,24 +1,17 @@
-import React, { useRef } from 'react';
+import React from 'react';
 
-const Button = ({ onClick, text }) => {
-  const spanRef = useRef(null);
-  const addAnimation = () => {
-    spanRef.current.classList.add('buttonOverlayAnimation');
-    setTimeout(() => {
-      spanRef.current.classList.remove('buttonOverlayAnimation');
-    }, 500);
-  }
+const Button = ({ saveFunc, text, setIsOpen, idOverride, }) => {
   return (
-    <div className='buttonMain'>
-      <button 
-        className='buttonInput' 
+    <div id={`${idOverride ? idOverride : ''}`} className='buttonMain'>
+      <button
+        className='buttonInput'
         onClick={(e) => {
-          if (onClick) onClick(e); 
-          addAnimation();
+          e.preventDefault();
+          if (setIsOpen) setIsOpen(prev => !prev);
+          if (saveFunc) saveFunc(e); 
         }}>
         {text}
       </button>
-      <span ref={spanRef} className='buttonOverlay'></span>
     </div>
   );
 }

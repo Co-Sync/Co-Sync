@@ -13,52 +13,58 @@
   display: flex;
   position: relative;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   height: 100vh;
   width: 100vw;
   margin: 0;
   padding: 0;
+  border: none;
+  overflow: hidden;
 }
 
 .NavBar {
   display: grid;
   height: 10vh;
   align-items: center;
-  position: fixed;
-  width: 100vw;
+  position: relative;
+  width: 100%;
   grid-template-columns: 1fr 1fr auto;
   top: 0;
   left: 0;
-  padding: .5rem .5rem;
+  padding: 0rem 1rem;
   backdrop-filter: blur(10px);
   background-color: rgba(255, 255, 255, 0.01);
   border-bottom: 1px solid rgb(255, 255, 255);
   font-size: 3vh;
+  animation: slideInFromTop 1s;
+  animation-delay: 0.5s;
+  animation-fill-mode: both;
   ul {
     height: fit-content;
     margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: row;
-    gap: 15px;
-    list-style: none;
     width: fit-content;
+    padding: 0;
+    list-style: none;
+
     .routerLink {
       display: flex;
       align-items: center;
       justify-content: center;
       height: fit-content;
       padding: 0;
+      border: 0px solid transparent;
+      background-color: transparent;
       cursor: pointer;
       border-radius: 10px;
       transition: all 0.2s ease-in-out;
+      font-size: 1.5vw;
       &:hover {
         scale: 1.1;
         background-color: rgba(255, 255, 255, 0.1);
       }
     }
   }
+
   h1 {
     margin: 0;
     padding: 1px 10px;
@@ -72,6 +78,7 @@
     width: fit-content;
     -webkit-text-fill-color: transparent;
     transition: all 0.2s ease-in-out;
+
     &:hover {
       transform: translateX(5px);
       border-left: 1px solid rgba(255, 255, 255, 0.1);
@@ -81,34 +88,42 @@
 
 #tableDisplayOuter {
   position: relative;
-  top: 10vh;
   width: 100vw;
   border-radius: 0px;
   border: none;
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
+  height: 90vh;
+  animation: slideInFromBottom 1.5s;
+  animation-delay: 0.5s;
+  animation-fill-mode: both;
 }
 
 #tableDisplayInner {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(325px, 1fr));
   width: 100%;
+  gap: 20px;
   height: 100%;
+  padding: 10px;
   overflow: scroll;
 }
 
 #tableColumnMain {
   box-shadow: 2px 2px 12px rgba(44, 210, 222, 0.545);
-  margin: 20px;
   min-height: 10vh;
   background-color: #68697318;
-  min-width: 10vw;
-  height: 35vh;
+  min-width: 19vw;
+  height: 40vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  z-index: 1;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  padding: 5px 0px;
   h1 {
     margin: 0px 5px;
     padding: 0;
@@ -118,19 +133,32 @@
 }
 
 #tableTaskMain {
-  border-left: 2px transparent;
-  border-right: 2px transparent;
+  border-left: 0px transparent;
+  border-right: 0px transparent;
   border-top: 2px solid rgba(255, 255, 255, 0.5);
   border-bottom: 2px solid rgba(255, 255, 255, 0.5);
   display: grid;
   padding: 5px;
-  max-width: 15vw;
-  background-color: #aeaeb641;
+  width: 100px;
+  max-width: 17vw;
+  background-color: $glass-blue;
   width: 100%;
   border-radius: 1px;
-  overflow: hidden;
+  overflow: visible;
   overflow-wrap: anywhere;
-  button {
+  display: grid;
+  grid-template-rows: auto;
+  // grid-gap: .1rem;
+  margin: .15rem 0;
+  z-index: 1;
+  .taskText {
+    padding: 0;
+    margin: 0.2rem;
+    text-decoration: underline;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  #messagesButton {
     position: relative;
     justify-self: end;
     cursor: pointer;
@@ -143,26 +171,43 @@
     background-image: url(../../assets/messages.svg);
     background-size: cover;
     transition: all 0.2s ease-in-out;
+
     &:hover {
       scale: 1.1;
       background-color: rgba(255, 255, 255, 0.1);
     }
   }
-  p {
-    font-size: large;
-    margin: 2px;
+
+  #moveTaskButton {
+    position: relative;
+    justify-self: end;
+    cursor: pointer;
+    border: 0px transparent;
+    border-radius: 5px;
+    background-color: #6fcdff00;
+    margin: 0px 5px;
+    height: 1.5rem;
+    width: 1.5rem;
+    background-image: url(../../assets/three-dots.svg);
+    background-size: cover;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      scale: 1.1;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
   }
 }
 
 .scrollBarOuter {
   background-color: $glass-blue;
   display: flex;
+  position: relative;
   align-items: center;
   justify-content: center;
   width: 100%;
   border-bottom: 1px solid white;
   height: 8vh;
-  overflow-x: scroll;
   font-size: 3vh;
   padding: 0px 10px;
 }
@@ -173,4 +218,81 @@
   list-style: none;
   display: flex;
   gap: 10px;
+}
+
+#tableColumnHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+  width: 100%;
+  h2 {
+    padding: 0rem .5rem;
+    margin: 0;
+  }
+  button {
+    position: relative;
+    justify-self: end;
+    cursor: pointer;
+    border: 0px transparent;
+    border-radius: 5px;
+    background-color: #6fcdff00;
+    margin: 0px 5px;
+    font-size: 15px;
+    height: 1.5rem;
+    width: fit-content;
+    color: rgb(44, 210, 222);
+    background-size: cover;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      scale: 1.1;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+}
+
+#tableTaskButtons {
+  display: flex;
+}
+
+#innerTaskButton {
+  background-color: #38495a;
+  border: 1px solid transparent;
+  position: relative;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0.1rem;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    transform: scale(1.1);
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.scrollBarOuter {
+  position: relative;
+}
+
+.scrollBarListItem {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#comments {
+  border-radius: 5px;
+  border: #38495a 1px solid;
+  padding: 4px;
+  text-align: left;
+  width: fit-content;
+  font-size: 12px !important;
+}
+
+h6 {
+  margin: 6px;
 }

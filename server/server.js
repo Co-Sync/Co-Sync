@@ -1,48 +1,43 @@
+require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
-require('dotenv').config();
-
+const cookieParser = require('cookie-parser');
 const app = express();
 
 const projectRouter = require('./routes/project');
-// const userRouter = require('./routes/user');
+const userRouter = require('./routes/user');
 
-
-const PORT = 3000;
-
-// const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/cosync';
-// mongoose.connect(mongoURI);
-/**
- * handle parsing request body
- */
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-/**
- * handle requests for static files
- */
-app.use(express.static(path.resolve(__dirname, '../client')));
-
-
-
 // /**
 //  * define route handlers
 //  */
 app.use('/api/project', projectRouter);
-// app.use('/api/user', userRouter);
-
-
-
-
-// these two must be in the end
-app.use('/build', express.static(path.resolve(__dirname, '../build')));
-app.use('/', (req, res) => {
-  res.status(200).sendFile(path.resolve(__dirname, '../index.html'));
+app.use('/api/user', userRouter);
+app.use('/favicon.ico', (req, res) => {
+  res.status(200).sendFile(path.resolve(__dirname, '../assets', 'favicon.ico'));
 });
 
-// catch-all route handler for any requests to an unknown route
-app.use((req, res) => res.status(404).send('This is not the page you\'re looking for...'));
+app.use('/assets', (req, res, next) => {
+  const filePath = path.resolve(__dirname, '../assets', req.url.slice(1));
+  if (path.extname(filePath) === '.svg') {
+    res.header('Content-Type', 'image/svg+xml');
+  }
+  next();
+});
+
+// serve the 'assets' directory
+app.use('/assets', express.static(path.resolve(__dirname, '../assets')));
+
+// these two must be in the end
+app.use(express.static(path.resolve(__dirname, '../build')));
+app.use('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../build', 'index.html'));
+});
+
+app.use((req, res) => res.sendStatus(404));
 
 /**
  * express error handler
@@ -59,12 +54,17 @@ app.use((err, req, res, next) => {
   console.log(errorObj.log);
   return res.status(errorObj.status).json(errorObj.message);
 });
-
 /**
  * start server
  */
-app.listen(PORT, () => {
-  console.log(`Server listening on port: ${PORT}...`);
-});
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => {
+    app.listen(process.env.PORT, () => {
+      console.log(`Connected to db & Server listening on port: ${process.env.PORT}...`);
+    });
+  })
+  .catch((error) => {
+    console.log(error);
+  });
 
 module.exports = app;

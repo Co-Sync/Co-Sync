@@ -8,32 +8,55 @@
   src: url(https://raw.githubusercontent.com/JetBrains/JetBrainsMono/master/fonts/ttf/JetBrainsMono-Regular.ttf);
 }
 
+@keyframes slideInFromTop {
+  0% {
+    transform: translateY(-120%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
 html {
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   margin: 0;
   padding: 0;
   /* background: radial-gradient(ellipse at bottom, #1B2735 0%, transparent), radial-gradient(ellipse at top, #090A0F 100%, transparent); */
-  background-image: url(https://img.freepik.com/free-vector/gradient-dark-dynamic-lines-background_23-2148995950.jpg?w=1800&t=st=1696659036~exp=1696659636~hmac=ef295fc7f4f6967e2906684c6ed085d4b41c734134cba29cb72b3218f3546083);
+  background-image: url(https://images.pexels.com/photos/176851/pexels-photo-176851.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  overflow: hidden;
+}
+
+*::selection {
+  background: #3baaffae;
+  color: white;
 }
 
 * {
   box-sizing: border-box;
   font-family: JetBrainsMono-Regular;
   color: white;
-  text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.5);
+  text-shadow: 0rem 0rem 0.35rem rgba(255, 255, 255, 0.5);
 }
 
 body {
   margin: 0;
+  padding: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* position: absolute; */
 }
+
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+.App {
+  display: flex;
+  /* justify-content: center;
+  align-items: center; */
+  height: 100vh;
 }

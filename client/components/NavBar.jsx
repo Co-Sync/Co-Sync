@@ -1,17 +1,42 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { resetState } from '../slices/userSlice.js';
+import { userApi } from '../utils/userApi.js';
 
 const NavBar = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch('/api/user/logout', {
+        method: 'GET',
+        credentials: 'include',
+      });
+      if (res.status === 200) {
+        console.log('Logout successful');
+        userApi.util.resetApiState();
+        localStorage.removeItem('isAuth');
+        navigate('/login');
+        dispatch(resetState());
+      } else {
+        console.log('Logout failed');
+      }
+    } catch (error) {
+      console.log('Logout failed with error: ', error);
+    }
+  }
   return (
     <nav className='NavBar'>
-      <h1>Co-Sync</h1>
+      <h1><a href='https://github.com/Co-Sync/Co-Sync'>Co-Sync</a></h1>
       <ul>
         <Link className='routerLink' to='/'>Home</Link>
-        <Link className='routerLink' to='/'>Profile</Link>
+        <Link className='routerLink' to='/profile'>Profile</Link>
       </ul>
       <ul>
-        <Link className='routerLink' to='/'>Settings</Link>
-        <Link className='routerLink' to='/login'>Logout</Link>
+        <Link className='routerLink' to='/settings'>Settings</Link>
+        <button className='routerLink' onClick={handleLogout}>Logout</button>
       </ul>
     </nav>
   )

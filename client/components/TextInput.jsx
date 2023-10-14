@@ -1,19 +1,27 @@
 import React from 'react';
 
-const TextInput = ({ placeholder, onChange, value }) => {
-  const legendWidth = `${placeholder.length * 0.32}em`;
+const TextInput = ({ placeholder, setterFunction, value, type }) => {
   return (
     <div className='TextInputOuter'>
-      <fieldset className='TextField' style={{ '--legend-width': legendWidth }}>
+      <fieldset className='TextField'>
         <input
           className='TextInput'
-          type="text"
+          type={type ? type : 'text'}
           value={value}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={(e) => {
+            e.preventDefault();
+            setterFunction(e.target.value)
+          }}
           placeholder=''
         />
-        <legend></legend>
-        <span className={'TextInputHighlight'}>{ placeholder }</span>
+        <legend>
+          <span>
+            {placeholder}
+          </span>
+        </legend>
+        <span className={'TextInputHighlight'}>
+          { placeholder }
+        </span>
       </fieldset>
     </div>
   )

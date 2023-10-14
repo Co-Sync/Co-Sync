@@ -2,12 +2,12 @@
   "name": "scratch",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.jsx",
   "scripts": {
-    "start": "nodemon ./server/server.js",
-    "build": "webpack --mode production",
+    "start": "node ./server/server.js",
+    "build": "concurrently \"set NODE_ENV=production && webpack --mode production\"",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "concurrently --kill-others \"SET NODE_ENV=development && node server/server.js\" \"webpack serve --config webpack.config.js --open\""
+    "dev": "concurrently --kill-others \"set NODE_ENV=development && nodemon server/server.js\" \"set NODE_ENV=development && webpack serve --open --mode development\""
   },
   "author": "",
   "license": "ISC",
@@ -15,8 +15,9 @@
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.11",
     "@reduxjs/toolkit": "^1.9.6",
     "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
     "express": "^4.18.2",
-    "mongoose": "^7.5.4",
+    "mongoose": "^7.6.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.1.3",
