@@ -3,6 +3,10 @@ import TableColumn from './TableColumn.jsx';
 import ScrollBar from './ScrollBar.jsx';
 import { useSelector } from 'react-redux';
 
+/*
+  This component renders the ScrollBar and TableColumn components.
+*/
+
 const TableDisplay = () => {
   const currentProject = useSelector((state) => state.user.projects[state.user.currentProject]);
   if (!currentProject) {

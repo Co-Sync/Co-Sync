@@ -4,6 +4,12 @@ import '../css/Profile.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import ScrollBarItem from './ScrollBarItem.jsx';
 
+/*
+  W.I.P.
+  This component renders the profile page which displays the users stats and basic info.
+  It also renders the NavBar component.
+*/
+
 const Profile = () => {
   /**
    * TODO:

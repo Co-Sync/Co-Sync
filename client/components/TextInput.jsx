@@ -1,5 +1,9 @@
 import React from 'react';
 
+/*
+  This component renders the custom text input component.
+*/
+
 const TextInput = ({ placeholder, setterFunction, value, type }) => {
   return (
     <div className='TextInputOuter'>

@@ -12,11 +12,11 @@
   width: 16vw;
   height: 30vh;
   border: 2px solid white;
-  overflow: scroll;
+  overflow: auto;
   .projectsList {
     width: fit-content;
     height: 30vh;
-    overflow: scroll;
+    overflow: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -74,7 +74,7 @@
   }
   input {
     width: 10rem;
-    overflow: hidden;
+    overflow: auto;
     font-size: 1rem;
     &:not(:placeholder-shown) + legend + .TextInputHighlight {
       transform-origin: left top 0px;
@@ -127,7 +127,7 @@
     text-decoration: underline;
     word-wrap: break-word;
     white-space: nowrap;
-    overflow: scroll;
+    overflow: auto;
   }
   button {
     color: red;

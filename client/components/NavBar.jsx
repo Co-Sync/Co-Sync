@@ -4,6 +4,11 @@ import { useDispatch } from 'react-redux';
 import { resetState } from '../slices/userSlice.js';
 import { userApi } from '../utils/userApi.js';
 
+/*
+  This component is the navbar. It contains the links to the home, profile, settings, and logout pages.
+  And should exist everywhere except the login and signup pages.
+*/
+
 const NavBar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();

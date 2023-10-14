@@ -1,5 +1,7 @@
 # Co-Sync
-Co-Sync is a SCRUM app
+
+- Co-Sync is a SCRUM app
+
 -It's main focus is to help teams manage their projects and tasks
 
 Credits:

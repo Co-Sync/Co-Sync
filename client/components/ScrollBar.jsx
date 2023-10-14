@@ -4,6 +4,12 @@ import { useDispatch } from 'react-redux';
 import { useAddColumnMutation, useAddProjectMutation, useInviteUserMutation } from '../utils/userApi.js';
 import { createColumn, createProject, setCurrentProjectName } from '../slices/userSlice.js';
 
+/*
+  This component is the bar below the navbar. It contains the input fields for adding a column, creating a project, and inviting a user.
+  It also contains the dropdown menu for selecting a project.
+  It's also responsible for dispatching ScrollBar actions to the redux store.
+*/
+
 const ScrollBar = ({ currentProject }) => {
   const [project, setProject] = useState('');
   const [column, setColumn] = useState('');

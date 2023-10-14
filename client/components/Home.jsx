@@ -7,6 +7,10 @@ import { useDispatch } from 'react-redux';
 import { setUserState } from '../slices/userSlice.js';
 import { useGetUserProjectsQuery } from '../utils/userApi.js';
 import { useNavigate } from 'react-router-dom';
+/*
+  This is the main component for the home page. It renders the NavBar and TableDisplay components.
+  It also checks for authentication and redirects to the login page if the user is not authenticated.
+*/
 const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();

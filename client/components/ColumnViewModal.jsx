@@ -1,7 +1,10 @@
 import React from 'react';
 
-// this component serves the functionality for MOVE TASK - renders a drop down menu for each of the columns in the current project
-// used in TableTask
+/*
+  This component renders the column view modal, view meaning no text input field.
+  it serves the functionality for MOVE TASK - renders a drop down menu for each of the columns in the current project
+  used in TableTask
+*/
 
 const ColumnViewModal = ({ setIsOpen, title, saveFunc, currentProject }) => {
   return (

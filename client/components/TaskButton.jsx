@@ -1,5 +1,9 @@
 import React from 'react';
 
+/*
+  This component renders a button for the task modal e.g move/edit.
+*/
+
 const TaskButton = ({ onClick, text, idOverride, imgSrc }) => {
   return (
     <div className={'TaskButton'}>
