@@ -4,10 +4,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  // justify-content: center;
   height: 100%;
   width: 100%;
   border: none;
+  animation: slideInFromBottom 1s;
+  animation-delay: 0.5s;
+  animation-fill-mode: both;
 }
 
 .profileHeader {

@@ -8,6 +8,15 @@
   src: url(https://raw.githubusercontent.com/JetBrains/JetBrainsMono/master/fonts/ttf/JetBrainsMono-Regular.ttf);
 }
 
+@keyframes slideInFromTop {
+  0% {
+    transform: translateY(-120%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
 html {
   height: 100%;
   width: 100%;

@@ -46,9 +46,11 @@ const Login = () => {
         </div>
         <div className='innerLogin'>
           <form className='formContainer'>
+            <hr />
             <TextInput placeholder='Username' setterFunction={setUsername} value={username} />
             <TextInput placeholder='Password' setterFunction={setPassword} type='password' value={password}/>
             <Button saveFunc={handleSubmit} text='Login' />
+            <hr />
           </form>
           <div className='footer'>
             <div>

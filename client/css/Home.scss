@@ -13,13 +13,13 @@
   display: flex;
   position: relative;
   flex-direction: column;
-  // justify-content: center;
   align-items: center;
   height: 100vh;
   width: 100vw;
   margin: 0;
   padding: 0;
   border: none;
+  overflow: hidden;
 }
 
 .NavBar {
@@ -36,7 +36,9 @@
   background-color: rgba(255, 255, 255, 0.01);
   border-bottom: 1px solid rgb(255, 255, 255);
   font-size: 3vh;
-
+  animation: slideInFromTop 1s;
+  animation-delay: 0.5s;
+  animation-fill-mode: both;
   ul {
     height: fit-content;
     margin: 0;
@@ -93,6 +95,9 @@
   flex-direction: column;
   align-items: center;
   height: 90vh;
+  animation: slideInFromBottom 1.5s;
+  animation-delay: 0.5s;
+  animation-fill-mode: both;
 }
 
 #tableDisplayInner {
@@ -102,14 +107,14 @@
   gap: 20px;
   height: 100%;
   padding: 10px;
-  overflow: auto;
+  overflow: scroll;
 }
 
 #tableColumnMain {
   box-shadow: 2px 2px 12px rgba(44, 210, 222, 0.545);
   min-height: 10vh;
   background-color: #68697318;
-  min-width: 15vw;
+  min-width: 19vw;
   height: 40vh;
   display: flex;
   flex-direction: column;
@@ -135,7 +140,7 @@
   display: grid;
   padding: 5px;
   width: 100px;
-  max-width: 18.7em;
+  max-width: 17vw;
   background-color: $glass-blue;
   width: 100%;
   border-radius: 1px;

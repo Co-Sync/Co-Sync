@@ -1,6 +1,48 @@
 @import 'Variables.scss';
 
 .login {
+  @keyframes slideInFromBottom {
+    0% {
+      transform: translateY(200%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  @keyframes slideInFromLeft {
+    0% {
+      transform: translateX(-200%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+  @keyframes slideInFromRight {
+    0% {
+      transform: translateX(200%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+  @keyframes expand-out {
+    0% {
+      opacity: 0;
+      width: 0%;
+    }
+    100% {
+      opacity: 1;
+      width: 100%;
+    }
+  }
+  @keyframes opacity {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
   display: flex;
   backdrop-filter: blur(10px);
   box-shadow: 0px 0px 20px rgba(60, 222, 255, 0.5);
@@ -13,17 +55,21 @@
   border: 2px solid white;
   border-radius: 10px;
   overflow: hidden;
-
+  animation: 1s slideInFromTop;
+  animation-fill-mode: both;
   .footer {
     display: grid;
     grid-template-columns: repeat(3, minmax(75px, 1fr));
     height: 20vh;
     width: 100%;
     gap: 2px;
-    margin: 5px;
+    margin: 0px;
     padding: 0;
     overflow: scroll;
-
+    border-top: 2px solid white;
+    animation: 1s slideInFromBottom;
+    animation-delay: 1s;
+    animation-fill-mode: both;
     div {
       display: flex;
       justify-content: center;
@@ -77,7 +123,6 @@
     color: white;
     background-color: $glass-blue;
     border-bottom: 2px solid white;
-
     h1,
     h2 {
       text-shadow: 0px 0px 10px rgba(60, 164, 255, 0.5);
@@ -97,7 +142,28 @@
     width: 100%;
     height: 100%;
     padding: 5px;
-    border-bottom: 2px solid white;
+    div:nth-child(2) {
+      animation: 1s slideInFromLeft;
+      animation-delay: 0.5s;
+      animation-fill-mode: both;
+    }
+    div:nth-child(3) {
+      animation: 1s slideInFromRight;
+      animation-delay: 0.5s;
+      animation-fill-mode: both;
+    }
+    div:nth-child(4) {
+      animation: 1s opacity;
+      animation-delay: 1.5s;
+      animation-fill-mode: both;
+    }
+    hr {
+      margin: 2rem;
+      opacity: 0;
+      animation: expand-out 1s;
+      animation-delay: 0.5s;
+      animation-fill-mode: both;
+    }
   }
 
   h3 {
