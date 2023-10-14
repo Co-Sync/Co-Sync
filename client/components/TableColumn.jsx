@@ -12,9 +12,11 @@ import { useDeleteColumnMutation, useAddTaskMutation } from '../utils/userApi.js
   to the redux store.
 */
 
+// the functionality heres operates similarly to TableTask.jsx of using mutations from userApi.jsx, textmodals, and taskbuttons
 const TableColumn = ({ column, currentProject }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [task, setTask] = useState('');
+  // must call mutations in a destructered array to then call later 
   const [deleteColumnMutation] = useDeleteColumnMutation();
   const [addTaskMutation] = useAddTaskMutation();
   const dispatch = useDispatch();
@@ -68,6 +70,8 @@ const TableColumn = ({ column, currentProject }) => {
       console.log('Error in handleDeleteColumn: ', error);
     }
   };
+
+  // for return statement, we use conditional rendering for the components and pass in their actions created in this component for textmodal and taskbutton
   return (
     <div className="container" id="tableColumnMain">
       {isOpen ? <TextModal

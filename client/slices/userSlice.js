@@ -1,5 +1,7 @@
 import { createSlice, current } from '@reduxjs/toolkit';
 // see more at https://redux-toolkit.js.org/tutorials/quick-start
+// using rtk with createSlice instead of original redux 
+// in majority of the actions, we find the column/project/task by their matching ID or name to then perform a specific action on that column/task/project
 
 const initialState = {
   username: '',
@@ -13,8 +15,6 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setUserState: (state, action) => {
-      // console.log("Overwritten the entire state to: ", action.payload);
-      // return action.payload;
       state.projects = action.payload.projects;
       state.numOfProjects = action.payload.numOfProjects;
       state.username = action.payload.username;
@@ -91,7 +91,6 @@ export const userSlice = createSlice({
             (task) => task._id === updatedTask._id
           );
           if (taskIndex !== -1) {
-            // Update state.
             column[taskIndex] = updatedTask;
           }
         }
@@ -115,7 +114,6 @@ export const userSlice = createSlice({
     deleteColumn: (state, action) => {
       try {
         console.log('deleteColumn reducer triggered');
-        // let outerIndx = 0;
         const { columnId } = action.payload;
         const currentProject = state.currentProject;
 
@@ -158,10 +156,7 @@ export const userSlice = createSlice({
             console.log('Tasks after splice:', spliced);
 
             const newColumn = { ...column, tasks: spliced };
-            // const newProjects = [...state.projects];
             state.projects[currentProject].columns[taskIndex] = newColumn;
-
-            // return { ...state, projects: newProjects };
           }
         }
         console.log('Task not found');
@@ -201,7 +196,7 @@ export const userSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setUserState, createTask, createColumn, createProject, updateTask, deleteProject, deleteColumn, deleteTask, moveTask, 
+export const { setUserState, createTask, createColumn, createProject, updateTask, deleteProject, deleteColumn, deleteTask, moveTask,
   setCurrentProjectName, setUserName, resetState } =
   userSlice.actions;
 export default userSlice.reducer;

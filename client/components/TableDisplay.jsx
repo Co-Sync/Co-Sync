@@ -24,8 +24,8 @@ const TableDisplay = () => {
       <ScrollBar currentProject={currentProject} />
       <div id='tableDisplayInner'>
         {currentProject.columns.map((column, index) => {
+          // the column and columnName must exist to render each column -- or else will be undefined when trying to render the child component 
           if (column && column.columnName) {
-            // console.log(`Rendering TableColumn for column at index ${index}:`, column);
             return <TableColumn key={index} column={column} currentProject={currentProject} />;
           }
         })}
