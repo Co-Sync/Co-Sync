@@ -42,29 +42,35 @@ const Login = () => {
       <div className="login container">
         <div className='header'>
           <h1>Co-Sync</h1>
-          <h2>Login</h2>
+          <h2>Project Management</h2>
         </div>
+        <div className='headerSecondary'>
+          <h1>Login</h1>
+        </div>
+        <hr />
         <div className='innerLogin'>
           <form className='formContainer'>
-            <hr />
             <TextInput placeholder='Username' setterFunction={setUsername} value={username} />
             <TextInput placeholder='Password' setterFunction={setPassword} type='password' value={password}/>
             <Button saveFunc={handleSubmit} text='Login' />
-            <hr />
           </form>
           <div className='footer'>
-            <div>
-              <p>Don&apos;t have an account?</p>
-              <Link to='/signup'>Sign Up</Link>
-            </div>
-            <div>
-              <a href='https://github.com/Co-Sync/Co-Sync'>Checkout the project</a>
-            </div>
-            <div>
-              <p>
+            <hr />
+            <div className='innerFooter'>
+              <div>
+                <p>Don&apos;t have an account?</p>
+                <Link to='/signup'>Sign Up</Link>
+              </div>
+              <div>
+                <p>Checkout the project</p>
+                <a href='https://github.com/Co-Sync/Co-Sync'>Here</a>
+              </div>
+              <div>
+                <p>
                 Forgot your password?
-              </p>
-              <Link to='/reset'>Reset Password</Link>
+                </p>
+                <Link to='/reset'>Reset Password</Link>
+              </div>
             </div>
           </div>
         </div>
