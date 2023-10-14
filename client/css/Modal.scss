@@ -70,15 +70,19 @@
   }
   span {
     font-size: 1rem;
-    top: 0.6rem;
+    top: 0.4rem;
+  }
+  div {
+    height: fit-content !important;
   }
   input {
     width: 10rem;
+    height: 2vh !important;
     overflow: auto;
-    font-size: 1rem;
+    font-size: 0.5rem;
     &:not(:placeholder-shown) + legend + .TextInputHighlight {
       transform-origin: left top 0px;
-      transform: translate(0.8rem, -0.99rem) scale(0.5);
+      transform: translate(0.5rem, -1rem) scale(0.5);
     }
     &:not(:placeholder-shown) + legend {
       position: relative;
@@ -93,13 +97,13 @@
       }
       & + legend + .TextInputHighlight {
         transform-origin: left top 0px;
-      transform: translate(0.8rem, -0.99rem) scale(0.5);
+        transform: translate(0.5rem, -1rem) scale(0.5);
       }
     }
   }
   fieldset {
     padding-left: 0.7rem;
-    height: 2.5rem;
+    height: fit-content;
   }
   legend {
     height: 0;

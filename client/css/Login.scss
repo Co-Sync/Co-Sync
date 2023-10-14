@@ -68,7 +68,7 @@
   .headerSecondary {
     background-color: $glass-blue;
     width: 100%;
-    height: 10vh;
+    height: 14vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -106,6 +106,8 @@
       transition: all 0.2s ease-in-out;
     }
     .innerFooter {
+      padding: 0;
+      margin: 0;
       width: 100%;
       display: flex;
       justify-content: space-around;
@@ -161,19 +163,21 @@
   .formContainer {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    // justify-content: center;
     align-items: center;
     overflow: hidden;
     width: 100%;
-    height: 100%;
-    padding: 0px;
+    height: 50%;
+    padding: 5px;
     margin: 0px;
-    div:nth-child(1) {
+    overflow-x: hidden;
+    overflow-y: auto;
+    .TextInputOuter:nth-child(1) {
       animation: 1s slideInFromLeft;
       animation-delay: 0.5s;
       animation-fill-mode: both;
     }
-    div:nth-child(2) {
+    .TextInputOuter:nth-child(2)  {
       animation: 1s slideInFromRight;
       animation-delay: 0.5s;
       animation-fill-mode: both;
@@ -210,7 +214,7 @@
   align-items: center;
   width: fit-content;
   height: fit-content;
-  margin: 5px;
+  margin: 10px;
   padding: 0;
   border: none;
   background-color: transparent;
@@ -229,7 +233,7 @@
   height: fit-content;
   &:not(:placeholder-shown)+legend+.TextInputHighlight {
     transform-origin: left top 0px;
-    transform: translate(0.8rem, -1rem) scale(0.5);
+    transform: translate(0.5rem, -1.4rem) scale(0.5); // Adjust this to scale and position span
   }
 
   &:not(:placeholder-shown)+legend {
@@ -248,7 +252,7 @@
 
     &+legend+.TextInputHighlight {
       transform-origin: left top 0px;
-      transform: translate(0.8rem, -1rem) scale(0.5);
+      transform: translate(0.5rem, -1.4rem) scale(0.5); // Adjust this to scale and position span
     }
   }
 }
@@ -259,26 +263,31 @@
   margin: 0;
   padding: 0px 10px;
   width: fit-content;
-  background-color: transparent;
+  // background-color: transparent; this is for the notched outline
+  background-color: rgba(23, 23, 23, 0.503);
   z-index: 2;
-  border: 1.5px solid white;
+  // border: 1.5px solid white;
+  border-bottom: 1.5px solid white;
   border-radius: 8px;
+  // border-radius: 0px;
   height: fit-content;
   box-shadow: 0px 0px 10px rgba(36, 215, 255, 0.5);
   inset: 0px 0px 0px;
   transform: scale(1.1);
   &:focus-within {
-    border: 1.5px solid #52baff;
+    // border: 1.5px solid #52baff;
+    border-bottom: 1.5px solid #52baff;
   }
 
   input {
     padding: 0;
     margin: 0px 5px;
-    height: 3rem;
+    height: calc(5.5vh);
     font-size: 1.5rem;
   }
 
   legend {
+    display: none; // Hide legend
     max-width: 0.01px;
     white-space: nowrap;
     visibility: hidden;
@@ -286,7 +295,7 @@
     padding: 0;
     transition: all 0.2s ease-in-out;
     overflow: hidden;
-    margin-left: -9.4rem;
+    margin-left: -8.4vw;
     height: 0px;
     @-moz-document url-prefix() {
       margin-left: 0; /* Reset margin for Firefox */
