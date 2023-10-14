@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TextInput from './TextInput.jsx';
 import '../css/Login.scss';
 import Button from './Button.jsx';
@@ -6,7 +6,13 @@ import { useNavigate, Link } from 'react-router-dom';
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [authenticated, setAuthenticated] = useState(false);
   const navigate = useNavigate();
+  useEffect(() => {
+    if (authenticated) {
+      navigate('/');
+    }
+  }, [authenticated]);
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = { username, password };
@@ -21,9 +27,9 @@ const Login = () => {
       credentials: 'include',
     }).then(res => {
       if (res.status === 200) {
+        console.log('Login successful');
         localStorage.setItem('isAuth', true);
-        console.log('Login successful')
-        navigate('/', { state: { loggedIn: true } });
+        setAuthenticated(true);
       } else {
         console.log('Login failed');
       }

@@ -11,12 +11,12 @@ const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isAuth = localStorage.getItem('isAuth');
-  const { data, isError, isLoading: isProjectsLoading, isSuccess, error } = useGetUserProjectsQuery();
-  if (!isAuth) {
-    console.log('User is not authenticated');
-    navigate('/login');
-  }
+  const { data, isError, isLoading: isProjectsLoading, isSuccess, error } = useGetUserProjectsQuery(undefined, { skip: !isAuth });
   useEffect(() => {
+    if (!isAuth) {
+      console.log('User is not authenticated');
+      navigate('/login');
+    }
     if (isSuccess && data) {
       const userData = data;
       const projects = {}

@@ -6,11 +6,8 @@ import { store } from './utils/store.js';
 import './css/index.css';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-
 if (module.hot) module.hot.accept();
-
-root.render(
+ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     <Router>
       <App />

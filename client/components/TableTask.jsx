@@ -119,7 +119,7 @@ const TableTask = ({ task, column, currentProject, index }) => {
 
   return (
     <div style={{ zIndex: -index }} className="container" id="tableTaskMain">{ /* zIndex is used to make sure the task buttons are always on top of the task and the tasks below in the list */}
-      <p>{task.taskName}</p>
+      <p className='taskText'>{task.taskName}</p>
       {task.taskComments !== '' &&
         <h6>
           Comments:

@@ -13,6 +13,7 @@ import './css/index.css';
 const App = () => {
   const dispatch = useDispatch();
   const isAuth = localStorage.getItem('isAuth');
+  // console.log(isAuth)
   const { data, isSuccess } = useGetUserProjectsQuery(undefined, { skip: !isAuth });
   useEffect(() => {
     if (isAuth) {

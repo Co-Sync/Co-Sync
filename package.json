@@ -5,9 +5,9 @@
   "main": "index.jsx",
   "scripts": {
     "start": "node ./server/server.js",
-    "build": "webpack --mode production",
+    "build": "concurrently \"set NODE_ENV=production && webpack --mode production\"",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "concurrently --kill-others \"set NODE_ENV=development && nodemon server/server.js\" \"webpack serve --config webpack.config.js --open\""
+    "dev": "concurrently --kill-others \"set NODE_ENV=development && nodemon server/server.js\" \"set NODE_ENV=development && webpack serve --open --mode development\""
   },
   "author": "",
   "license": "ISC",

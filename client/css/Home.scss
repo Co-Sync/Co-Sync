@@ -97,7 +97,7 @@
 
 #tableDisplayInner {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(325px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(325px, 1fr));
   width: 100%;
   gap: 20px;
   height: 100%;
@@ -146,7 +146,13 @@
   // grid-gap: .1rem;
   margin: .15rem 0;
   z-index: 1;
-
+  .taskText {
+    padding: 0;
+    margin: 0.2rem;
+    text-decoration: underline;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
   #messagesButton {
     position: relative;
     justify-self: end;
@@ -185,11 +191,6 @@
       scale: 1.1;
       background-color: rgba(255, 255, 255, 0.1);
     }
-  }
-
-  p {
-    font-size: large;
-    margin: 2px;
   }
 }
 
