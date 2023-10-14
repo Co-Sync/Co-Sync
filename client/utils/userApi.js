@@ -1,5 +1,13 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
+// RTK query is a data fetching and caching tool -- eliminates the need to hand-write data fetching and cachce logic yourself
+
+// works similary like fetch() with passed in url and method
+
+// Provided tags are used to determine whether cached data returned by an endpoint should be invalidated and either be refetched or removed from the cache - auto-refetch data
+
+// @https://redux-toolkit.js.org/rtk-query/overview
+
 export const userApi = createApi({
   reducerPath: 'userApi',
   baseQuery: fetchBaseQuery({ baseUrl: '/api' }),
@@ -35,11 +43,6 @@ export const userApi = createApi({
       query: (body) => ({ url: '/project/task', method: 'POST', body }),
       invalidatesTags: ['Projects'],
     }),
-    // addComment: builder.mutation({
-    //   query: (body) => ({ url: '/project/task/comment', method: 'POST', body }),
-    //   invalidatesTags: ['Projects'],
-    // }),
-    // Body: { projectId, oldColumnId, newColumnId, taskId}
     moveTask: builder.mutation({
       query: (body) => ({ url: '/project/column/', method: 'PATCH', body }),
       invalidatesTags: ['Projects'],
@@ -69,5 +72,7 @@ export const userApi = createApi({
     }),
   }),
 });
+
+// naming convention for exported functions can be written to your liking - we practiced adding 'Mutation' or 'Query' at the end of each endpoint function
 
 export const { useGetProjectQuery, useSendUserCredsMutation, useSignupUserMutation, useAddProjectMutation, useAddColumnMutation, useAddTaskMutation, useMoveTaskMutation, useUpdateTaskMutation, useDeleteTaskMutation, useDeleteColumnMutation, useDeleteProjectMutation, useGetUserProjectsQuery, useInviteUserMutation } = userApi;
