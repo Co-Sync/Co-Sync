@@ -7,6 +7,7 @@ import { createColumn, createProject, setCurrentProjectName } from '../slices/us
 /*
   This component is the bar below the navbar. It contains the input fields for adding a column, creating a project, and inviting a user.
   It also contains the dropdown menu for selecting a project.
+  It's also responsible for dispatching ScrollBar actions to the redux store.
 */
 
 const ScrollBar = ({ currentProject }) => {

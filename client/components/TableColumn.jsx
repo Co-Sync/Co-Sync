@@ -6,6 +6,12 @@ import TextModal from './TextModal.jsx';
 import { deleteColumn, createTask } from '../slices/userSlice.js';
 import { useDeleteColumnMutation, useAddTaskMutation } from '../utils/userApi.js';
 
+/*
+  This component renders the individual columns in the table.
+  It also renders the TableTask components, and is responsible for dispatching the actions column actions
+  to the redux store.
+*/
+
 const TableColumn = ({ column, currentProject }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [task, setTask] = useState('');
@@ -13,7 +19,7 @@ const TableColumn = ({ column, currentProject }) => {
   const [addTaskMutation] = useAddTaskMutation();
   const dispatch = useDispatch();
 
-  console.log(currentProject)
+  // console.log(currentProject)
   const handleInputChange = (e) => {
     e.preventDefault();
     setIsOpen(prev => !prev);

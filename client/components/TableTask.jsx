@@ -6,6 +6,11 @@ import TextModal from './TextModal.jsx';
 import ColumnViewModal from './ColumnViewModal.jsx';
 import { useDeleteTaskMutation, useUpdateTaskMutation, useMoveTaskMutation } from '../utils/userApi.js';
 
+/*
+  This component renders the individual tasks in the table columns.
+  It also renders the TaskButton, TextModal, and ColumnViewModal components.
+*/
+
 const TableTask = ({ task, column, currentProject, index }) => {
   const [incomingData, setIncomingData] = useState('');
   const [comment, setComment] = useState('');

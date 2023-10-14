@@ -1,5 +1,9 @@
 import React from 'react';
 
+/*
+  This component renders the column view modal, view meaning no text input field.
+*/
+
 const ColumnViewModal = ({ setIsOpen, title, saveFunc, currentProject }) => {
   return (
     <div id='modal' className='textModalVisible'>
