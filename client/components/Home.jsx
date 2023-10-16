@@ -6,21 +6,15 @@ import '../css/Modal.scss'
 import { useDispatch } from 'react-redux';
 import { setUserState } from '../slices/userSlice.js';
 import { useGetUserProjectsQuery } from '../utils/userApi.js';
-import { useNavigate } from 'react-router-dom';
 /*
   This is the main component for the home page. It renders the NavBar and TableDisplay components.
   It also checks for authentication and redirects to the login page if the user is not authenticated.
 */
 const Home = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const isAuth = localStorage.getItem('isAuth');
   const { data, isError, isLoading: isProjectsLoading, isSuccess, error } = useGetUserProjectsQuery(undefined, { skip: !isAuth });
   useEffect(() => {
-    if (!isAuth) {
-      console.log('User is not authenticated');
-      navigate('/login');
-    }
     if (isSuccess && data) {
       const userData = data;
       const projects = {}
@@ -33,6 +27,9 @@ const Home = () => {
         username: userData.username,
       };
       dispatch(setUserState(transformedData));
+    }
+    return () => {
+      console.log('unmounting')
     }
   });
   if (isProjectsLoading) return (<div>Loading...</div>);
