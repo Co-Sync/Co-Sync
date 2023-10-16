@@ -2,8 +2,8 @@ import React from 'react';
 
 const TextInput = ({ placeholder, setterFunction, value, type }) => {
   return (
-    <div className='TextInputOuter'>
-      <fieldset className='TextField'>
+    <div className='TextInputOuter'> {/* change this to a fieldset for the notched outline(UNSTABLE) */}
+      <div className='TextField'>
         <input
           className='TextInput'
           type={type ? type : 'text'}
@@ -22,7 +22,7 @@ const TextInput = ({ placeholder, setterFunction, value, type }) => {
         <span className={'TextInputHighlight'}>
           { placeholder }
         </span>
-      </fieldset>
+      </div>
     </div>
   )
 }

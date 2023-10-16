@@ -13,13 +13,13 @@
   display: flex;
   position: relative;
   flex-direction: column;
-  // justify-content: center;
   align-items: center;
   height: 100vh;
   width: 100vw;
   margin: 0;
   padding: 0;
   border: none;
+  overflow: auto;
 }
 
 .NavBar {
@@ -29,21 +29,20 @@
   position: relative;
   width: 100%;
   grid-template-columns: 1fr 1fr auto;
-  top: 0;
-  left: 0;
   padding: 0rem 1rem;
   backdrop-filter: blur(10px);
   background-color: rgba(255, 255, 255, 0.01);
   border-bottom: 1px solid rgb(255, 255, 255);
   font-size: 3vh;
-
+  animation: slideInFromTop 1s;
+  animation-delay: 0.5s;
+  animation-fill-mode: both;
   ul {
     height: fit-content;
     margin: 0;
     width: fit-content;
     padding: 0;
     list-style: none;
-
     .routerLink {
       display: flex;
       align-items: center;
@@ -93,15 +92,18 @@
   flex-direction: column;
   align-items: center;
   height: 90vh;
+  animation: slideInFromBottom 1.5s;
+  animation-delay: 0.5s;
+  animation-fill-mode: both;
 }
 
 #tableDisplayInner {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(325px, 1fr));
+  grid-template-columns: repeat(10, 1fr);
   width: 100%;
-  gap: 20px;
+  gap: 1vw;
   height: 100%;
-  padding: 10px;
+  padding: 0.3vh 0.5vw;
   overflow: auto;
 }
 
@@ -109,7 +111,7 @@
   box-shadow: 2px 2px 12px rgba(44, 210, 222, 0.545);
   min-height: 10vh;
   background-color: #68697318;
-  min-width: 15vw;
+  min-width: 19vw;
   height: 40vh;
   display: flex;
   flex-direction: column;
@@ -117,12 +119,15 @@
   position: relative;
   z-index: 1;
   overflow-x: hidden;
+  overflow-y: auto;
   padding: 5px 0px;
+  resize: both;
   h1 {
     margin: 0px 5px;
     padding: 0;
     font-size: 1.6rem;
     text-align: center;
+    white-space: nowrap;
   }
 }
 
@@ -133,8 +138,7 @@
   border-bottom: 2px solid rgba(255, 255, 255, 0.5);
   display: grid;
   padding: 5px;
-  width: 100px;
-  max-width: 18.7em;
+  max-width: 100%;
   background-color: $glass-blue;
   width: 100%;
   border-radius: 1px;
@@ -142,10 +146,15 @@
   overflow-wrap: anywhere;
   display: grid;
   grid-template-rows: auto;
-  // grid-gap: .1rem;
   margin: .15rem 0;
-
-
+  z-index: 1;
+  .taskText {
+    padding: 0;
+    margin: 0.2rem;
+    text-decoration: underline;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
   #messagesButton {
     position: relative;
     justify-self: end;
@@ -165,31 +174,18 @@
       background-color: rgba(255, 255, 255, 0.1);
     }
   }
+}
 
-  #moveTaskButton {
-    position: relative;
-    justify-self: end;
-    cursor: pointer;
-    border: 0px transparent;
-    border-radius: 5px;
-    background-color: #6fcdff00;
-    margin: 0px 5px;
-    height: 1.5rem;
-    width: 1.5rem;
-    background-image: url(../../assets/three-dots.svg);
-    background-size: cover;
-    transition: all 0.2s ease-in-out;
+.scrollBarOuter {
+  position: relative;
+}
 
-    &:hover {
-      scale: 1.1;
-      background-color: rgba(255, 255, 255, 0.1);
-    }
-  }
-
-  p {
-    font-size: large;
-    margin: 2px;
-  }
+.scrollBarListItem {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .scrollBarOuter {
@@ -203,6 +199,13 @@
   height: 8vh;
   font-size: 3vh;
   padding: 0px 10px;
+}
+
+.TaskButton {
+  display: inline-block;
+  button {
+    white-space: nowrap;
+  }
 }
 
 .scrollBarInner {
@@ -220,7 +223,13 @@
   align-items: center;
   margin-bottom: 5px;
   width: 100%;
-
+  h2 {
+    padding: 0rem .5rem;
+    margin: 0;
+    white-space: nowrap;
+    max-width: 10vw;
+    overflow: auto;
+  }
   button {
     position: relative;
     justify-self: end;
@@ -260,18 +269,6 @@
     transform: scale(1.1);
     background-color: rgba(255, 255, 255, 0.1);
   }
-}
-
-.scrollBarOuter {
-  position: relative;
-}
-
-.scrollBarListItem {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }
 
 #comments {

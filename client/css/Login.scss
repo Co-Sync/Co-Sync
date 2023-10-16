@@ -1,6 +1,48 @@
 @import 'Variables.scss';
 
 .login {
+  @keyframes slideInFromBottom {
+    0% {
+      transform: translateY(200%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  @keyframes slideInFromLeft {
+    0% {
+      transform: translateX(-200%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+  @keyframes slideInFromRight {
+    0% {
+      transform: translateX(200%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+  @keyframes expand-out {
+    0% {
+      opacity: 0;
+      width: 0%;
+    }
+    100% {
+      opacity: 1;
+      width: 100%;
+    }
+  }
+  @keyframes opacity {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
   display: flex;
   backdrop-filter: blur(10px);
   box-shadow: 0px 0px 20px rgba(60, 222, 255, 0.5);
@@ -9,21 +51,50 @@
   align-items: center;
   text-align: center;
   width: 50vw;
-  height: 75vh;
+  height: 85vh;
   border: 2px solid white;
   border-radius: 10px;
   overflow: hidden;
-
+  animation: 1s slideInFromTop;
+  animation-fill-mode: both;
+  h1,
+  h2 {
+    text-shadow: 0px 0px 10px rgba(60, 164, 255, 0.5);
+    margin: 0px 0px;
+    padding: 0;
+    width: fit-content;
+    height: fit-content;
+  }
+  .headerSecondary {
+    background-color: $glass-blue;
+    width: 100%;
+    height: 14vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 1.5rem;
+  }
+  hr {
+    margin: 0px;
+    opacity: 0;
+    animation: expand-out 1s;
+    animation-delay: 0.5s;
+    animation-fill-mode: both;
+  }
   .footer {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(75px, 1fr));
-    height: 20vh;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
     width: 100%;
     gap: 2px;
-    margin: 5px;
-    padding: 0;
-    overflow: scroll;
-
+    margin: 0px;
+    animation: 1s slideInFromBottom;
+    animation-delay: 1s;
+    animation-fill-mode: both;
     div {
       display: flex;
       justify-content: center;
@@ -32,6 +103,14 @@
       border-radius: 10px;
       padding: 5px;
       transition: all 0.2s ease-in-out;
+    }
+    .innerFooter {
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      flex-direction: row;
     }
   }
 
@@ -44,7 +123,7 @@
     border-radius: 10px;
     transition: all 0.2s ease-in-out;
     width: fit-content;
-
+    height: fit-content;
     &:hover {
       background-color: rgba(95, 95, 95, 0.232);
       transform: scale(1.1);
@@ -54,6 +133,7 @@
 
   .innerLogin {
     display: flex;
+    position: relative;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -63,6 +143,7 @@
     margin: 0;
     border: none;
     border-radius: 10px;
+    overflow: auto;
   }
 
   .header {
@@ -77,27 +158,46 @@
     color: white;
     background-color: $glass-blue;
     border-bottom: 2px solid white;
-
-    h1,
-    h2 {
-      text-shadow: 0px 0px 10px rgba(60, 164, 255, 0.5);
-      margin: 0px 0px;
-      padding: 0;
-      width: fit-content;
-      height: fit-content;
-    }
   }
-
-  .formContainer {
+  .outerForm {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
     width: 100%;
     height: 100%;
+  }
+  .formContainer {
+    display: flex;
+    flex-direction: column;
+    // justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    width: 100%;
+    margin-bottom: auto;
+    margin-top: auto;
     padding: 5px;
-    border-bottom: 2px solid white;
+    margin: 0px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    .TextInputOuter:nth-child(1) {
+      animation: 1s slideInFromLeft;
+      animation-delay: 0.5s;
+      animation-fill-mode: both;
+    }
+    .TextInputOuter:nth-child(2)  {
+      animation: 1s slideInFromRight;
+      animation-delay: 0.5s;
+      animation-fill-mode: both;
+    }
+    div:nth-child(3) {
+      animation: 1s opacity;
+      animation-delay: 1.5s;
+      animation-fill-mode: both;
+    }
+    hr {
+      margin: 0px 0px 10vh 0px;
+    }
   }
 
   h3 {
@@ -122,7 +222,7 @@
   align-items: center;
   width: fit-content;
   height: fit-content;
-  margin: 5px;
+  margin: 10px;
   padding: 0;
   border: none;
   background-color: transparent;
@@ -131,7 +231,7 @@
 
 .TextInput {
   height: 3rem;
-  width: 24vw;
+  width: 20vw;
   background-color: transparent;
   border: none;
   border-radius: 5px;
@@ -139,10 +239,9 @@
   z-index: 1;
   padding: 5px;
   height: fit-content;
-
   &:not(:placeholder-shown)+legend+.TextInputHighlight {
     transform-origin: left top 0px;
-    transform: translate(0.8rem, -1rem) scale(0.5);
+    transform: translate(0.5rem, -1.4rem) scale(0.5); // Adjust this to scale and position span
   }
 
   &:not(:placeholder-shown)+legend {
@@ -161,7 +260,7 @@
 
     &+legend+.TextInputHighlight {
       transform-origin: left top 0px;
-      transform: translate(0.8rem, -1rem) scale(0.5);
+      transform: translate(0.5rem, -1.4rem) scale(0.5); // Adjust this to scale and position span
     }
   }
 }
@@ -172,33 +271,43 @@
   margin: 0;
   padding: 0px 10px;
   width: fit-content;
-  background-color: transparent;
+  // background-color: transparent; this is for the notched outline
+  background-color: rgba(23, 23, 23, 0.503);
   z-index: 2;
-  border: 1.5px solid white;
+  // border: 1.5px solid white;
+  border-bottom: 1.5px solid white;
   border-radius: 8px;
+  // border-radius: 0px;
   height: fit-content;
   box-shadow: 0px 0px 10px rgba(36, 215, 255, 0.5);
-
+  inset: 0px 0px 0px;
+  transform: scale(1.1);
   &:focus-within {
-    border: 1.5px solid #52baff;
+    // border: 1.5px solid #52baff;
+    border-bottom: 1.5px solid #52baff;
   }
 
   input {
     padding: 0;
     margin: 0px 5px;
-    height: 2.5rem;
+    height: calc(5.5vh);
     font-size: 1.5rem;
   }
 
   legend {
+    display: none; // Hide legend
     max-width: 0.01px;
     white-space: nowrap;
     visibility: hidden;
     font-size: 0.8rem;
     padding: 0;
-    transition: max-width 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
     overflow: hidden;
-
+    margin-left: -8.4vw;
+    height: 0px;
+    @-moz-document url-prefix() {
+      margin-left: 0; /* Reset margin for Firefox */
+    }
     span {
       visibility: visible;
       opacity: 0;
@@ -215,7 +324,7 @@
   align-items: center;
   position: absolute;
   padding: 0px 5px;
-  top: 1rem;
+  top: 0.5rem;
   left: 0rem;
   transform: scale(1);
   transition: all 0.2s ease-in-out;
@@ -235,7 +344,7 @@
   cursor: pointer;
   font-size: 1.5rem;
   z-index: 1;
-  height: 2.5rem;
+  height: fit-content;
   background-color: #52baff;
   border-radius: 5px;
   border: 1.5px solid white;

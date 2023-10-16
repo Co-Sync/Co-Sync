@@ -8,6 +8,15 @@
   src: url(https://raw.githubusercontent.com/JetBrains/JetBrainsMono/master/fonts/ttf/JetBrainsMono-Regular.ttf);
 }
 
+@keyframes slideInFromTop {
+  0% {
+    transform: translateY(-120%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
 html {
   height: 100%;
   width: 100%;
@@ -30,6 +39,10 @@ html {
   font-family: JetBrainsMono-Regular;
   color: white;
   text-shadow: 0rem 0rem 0.35rem rgba(255, 255, 255, 0.5);
+  scrollbar-color: #2ee3ffae #1B2735;
+  scrollbar-width: auto;
+  scroll-behavior: smooth;
+  scrollbar-gutter: stable both-edges;
 }
 
 body {
@@ -37,7 +50,6 @@ body {
   padding: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* position: absolute; */
 }
 
 
@@ -47,7 +59,5 @@ code {
 
 .App {
   display: flex;
-  /* justify-content: center;
-  align-items: center; */
   height: 100vh;
 }

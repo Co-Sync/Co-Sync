@@ -5,35 +5,34 @@ import '../css/Home.scss';
 import '../css/Modal.scss'
 import { useDispatch } from 'react-redux';
 import { setUserState } from '../slices/userSlice.js';
-import { useGetProjectQuery, useValidateUserQuery } from '../utils/userApi.js';
-import { useNavigate } from 'react-router-dom';
-
-
+import { useGetUserProjectsQuery } from '../utils/userApi.js';
+/*
+  This is the main component for the home page. It renders the NavBar and TableDisplay components.
+  It also checks for authentication and redirects to the login page if the user is not authenticated.
+*/
 const Home = () => {
-  const navigate = useNavigate();
-  const { isError: userInvalid, isLoading } = useValidateUserQuery();
-
-  const { data, isError, isLoading: isProjectsLoading, isSuccess, error } = useGetProjectQuery();
   const dispatch = useDispatch();
+  const isAuth = localStorage.getItem('isAuth');
+  const { data, isError, isLoading: isProjectsLoading, isSuccess, error } = useGetUserProjectsQuery(undefined, { skip: !isAuth });
   useEffect(() => {
-    if (!userInvalid) {
-      if (isSuccess) {
-        const userData = data;
-        const projects = {}
-        for (const project of userData) {
-          projects[project.projectName] = project;
-        }
-        const transformedData = {
-          projects,
-          numOfProjects: userData.length,
-        };
-        dispatch(setUserState(transformedData));
+    if (isSuccess && data) {
+      const userData = data;
+      const projects = {}
+      for (const project of userData.projects) {
+        projects[project.projectName] = project;
       }
-    } else if (userInvalid && !isLoading) {
-      navigate('/login');
+      const transformedData = {
+        projects,
+        numOfProjects: userData.projects.length,
+        username: userData.username,
+      };
+      dispatch(setUserState(transformedData));
+    }
+    return () => {
+      console.log('unmounting')
     }
   });
-  if (isProjectsLoading || isLoading) return (<div>Loading...</div>);
+  if (isProjectsLoading) return (<div>Loading...</div>);
   if (isError) return (<div>{error.message}</div>);
   return (
     <div className='homeMain'>

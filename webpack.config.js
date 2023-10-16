@@ -5,8 +5,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
-const isDevelopment = process.env.NODE_ENV !== 'production';
-
+const mode = process.env.NODE_ENV;
+console.log('mode:', mode);
 // Create an array to hold the plugins
 const plugins = [
   new MiniCssExtractPlugin(),
@@ -17,7 +17,7 @@ const plugins = [
 ];
 
 // Conditionally add plugins based on development or production mode
-if (isDevelopment) {
+if (mode === 'development') {
   plugins.push(new webpack.HotModuleReplacementPlugin());
   plugins.push(new ReactRefreshWebpackPlugin());
 }
@@ -25,14 +25,12 @@ if (isDevelopment) {
 module.exports = {
   entry: [
     './client/index.jsx',
-    'webpack-dev-server/client?http://localhost:8080',
-    'webpack/hot/dev-server',
-  ],
+  ].concat(mode === 'development' ? ['webpack-dev-server/client?http://localhost:8080', 'webpack/hot/dev-server'] : []),
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'bundle.js',
   },
-  mode: isDevelopment ? 'development' : 'production',
+  mode: mode,
   module: {
     rules: [
       {
@@ -47,8 +45,7 @@ module.exports = {
             ],
             plugins: [
               'babel-plugin-styled-components',
-              'react-refresh/babel',
-            ].filter(Boolean),
+            ].concat(mode === 'development' ? 'react-refresh/babel' : []),
           },
         },
       },
@@ -73,10 +70,16 @@ module.exports = {
     },
     historyApiFallback: true,
     proxy: {
-      '/': 'http://localhost:3000',
+      // Proxy all requests except for the ones that start with /build
+      // This will allow the dev server to serve the built assets from the /build directory
+      '/!(build/**/*.*|index.html)': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false,
+      },
     },
     port: 8080,
   },
   plugins: plugins,
-  devtool: isDevelopment ? 'eval-source-map' : 'source-map',
+  devtool: mode === 'development' ? 'eval-source-map' : 'source-map',
 };

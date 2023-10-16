@@ -6,12 +6,20 @@ import TextModal from './TextModal.jsx';
 import ColumnViewModal from './ColumnViewModal.jsx';
 import { useDeleteTaskMutation, useUpdateTaskMutation, useMoveTaskMutation } from '../utils/userApi.js';
 
-const TableTask = ({ task, column, currentProject }) => {
+/*
+  This component renders the individual tasks in the table columns.
+  It also renders the TaskButton, TextModal, and ColumnViewModal components.
+*/
+
+const TableTask = ({ task, column, currentProject, index }) => {
+  // had to set multiple states for different functionality but similiar purpose of state
   const [incomingData, setIncomingData] = useState('');
   const [comment, setComment] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [isCommentOpen, setIsCommentOpen] = useState(false);
   const [isMoveOpen, setIsMoveOpen] = useState(false);
+
+  // must call mutations in a destructered array to then call later 
   const [deleteTaskMutation] = useDeleteTaskMutation();
   const [updateTaskMutation] = useUpdateTaskMutation();
   const [moveTaskMutation] = useMoveTaskMutation();
@@ -54,6 +62,7 @@ const TableTask = ({ task, column, currentProject }) => {
    - columnId
    - taskName
 */
+
   const handleAddComment = async (e) => {
     e.preventDefault();
     const body = {
@@ -64,6 +73,7 @@ const TableTask = ({ task, column, currentProject }) => {
       taskComments: comment,
     };
     try {
+      // along with calling the fetch mutation on the passed in req.body, we will call the dispatch on the specified action, passing in their parameters based in userSlice.js
       const res = await updateTaskMutation(body);
       if (res.error) throw new Error(res.error.message);
       dispatch(updateTask({ updatedTask: res.data, columnId: column._id }));
@@ -116,10 +126,13 @@ const TableTask = ({ task, column, currentProject }) => {
     }
   };
 
+  // in the return rendering statement, we have multiple conditional statements to render the modals specified to their action
+  // the taskbuttons corresponds with their textmodal for some functionality 
+  // each of the textmodals parameters is passed down from textmodal.jsx and passed in their action created in this component 
 
   return (
-    <div className="container" id="tableTaskMain">
-      <p>{task.taskName}</p>
+    <div style={{ zIndex: -index }} className="container" id="tableTaskMain">{ /* zIndex is used to make sure the task buttons are always on top of the task and the tasks below in the list */}
+      <p className='taskText'>{task.taskName}</p>
       {task.taskComments !== '' &&
         <h6>
           Comments:

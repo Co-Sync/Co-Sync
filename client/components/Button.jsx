@@ -1,5 +1,9 @@
 import React from 'react';
 
+/*
+  This component renders the custom button component.
+*/
+
 const Button = ({ saveFunc, text, setIsOpen, idOverride, }) => {
   return (
     <div id={`${idOverride ? idOverride : ''}`} className='buttonMain'>

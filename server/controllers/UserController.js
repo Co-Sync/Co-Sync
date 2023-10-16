@@ -20,6 +20,47 @@ userController.getAllUsers = (req, res, next) => {
 }
 
 /**
+ * inviteUser - add a user to a project
+ * req.body: { username, projectId }
+*/
+userController.inviteUser = (req, res, next) => {
+  const { username, projectID } = req.body;
+  User.findOne({ username })
+    .then((user) => {
+      if (!user) {
+        return next({
+          log: 'User not found',
+          status: 400,
+          message: { err: 'Error: User not found' }
+        });
+      } else if (user.projects.includes(projectID)) {
+        return next({
+          log: 'User already in project',
+          status: 400,
+          message: { err: 'Error: User already in project' }
+        });
+      } else {
+        User.findOneAndUpdate({ username }, { $push: { projects: projectID } })
+          .then(() => next())
+          .catch((err) => {
+            return next({
+              log: 'Error in userController.inviteUser: ' + JSON.stringify(err),
+              status: 400,
+              message: { err: 'Error: User not found' }
+            });
+          });
+      }
+    })
+    .catch((err) => {
+      return next({
+        log: 'Error in userController.inviteUser: ' + JSON.stringify(err),
+        status: 400,
+        message: { err: 'Error: User not found' }
+      });
+    });
+}
+
+/**
 * createUser - create and save a new User into the database.
 */
 userController.createUser = async (req, res, next) => {
@@ -85,7 +126,6 @@ userController.verifyUser = async (req, res, next) => {
       message: { err: 'Error: No username or password'}
     });
   }
-
   User.findOne({username})
     .then((user) => {
       if(user === null){
@@ -97,7 +137,11 @@ userController.verifyUser = async (req, res, next) => {
         bcrypt
           .compare(password, user.password)
           .then((result) => {
-            if(result === false) res.redirect('/signup')
+            if(result === false) return next({
+              log: 'Incorrect username or password',
+              status: 400,
+              message: { err: 'Error: Incorrect username or password'}
+            });
             if(result === true) {
               console.log('Bcrypt compare confirmed');
               res.locals.verifyUser = true;
@@ -109,6 +153,26 @@ userController.verifyUser = async (req, res, next) => {
       }
     });
 };
+
+userController.getUserProjects = (req, res, next) => {
+  const userID = req.cookies.ssid;
+  console.log('userID is: ', userID);
+  if (!userID) return next({ log: 'Error in userController.getUserProjects: No user ID found', status: 400, message: { err: 'Error: No user ID found' } });
+  User.findOne({_id: userID})
+    .populate('projects')
+    .then((user) => {
+      res.locals.user = {projects: user.projects, username: user.username};
+      return next();
+    })
+    .catch((err) => {
+      return next({
+        log: 'Failed to find user: ' + userID + ':' + err,
+        status : 400,
+        mesaage: {err: 'Failed to find user.'}
+      });
+    })
+}
+
 // userController.verifyUser = (req, res, next) => {
 //   //store the req.body (which should be an object) in a new constant, then use User.find
 //   //to compare the username in the req.body to usernames stored in the database.

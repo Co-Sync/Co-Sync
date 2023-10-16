@@ -1,6 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
+/*
+  This component renders the ProjectsViewModal component, view meaning no text input field.
+*/
+
 const ProjectsViewModal = ({ setIsOpen, title, saveFunc }) => {
   const projects = useSelector(state => state.user.projects);
   const projectsList = Object.keys(projects).map(project => project);

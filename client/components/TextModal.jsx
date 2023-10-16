@@ -2,6 +2,12 @@ import React from 'react';
 import TextInput from './TextInput.jsx';
 import Button from './Button.jsx';
 
+/*
+  This component renders the modal for a general purpose text based modal.
+  It uses the custom TextInput and Button components.
+*/
+// a component that renders a modal upon clicking and its designated setter func - this is exported in multiple files to render a pop-up modal throughout our project
+
 const TextModal = ({ placeholder, setterFunction, saveFunc, setIsOpen, title }) => {
   return (
     <div id='modal' className='textModalVisible'>
