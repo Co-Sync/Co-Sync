@@ -36,12 +36,16 @@ const NavBar = () => {
     <nav className='NavBar'>
       <h1><a href='https://github.com/Co-Sync/Co-Sync'>Co-Sync</a></h1>
       <ul>
-        <Link className='routerLink' to='/'>Home</Link>
-        <Link className='routerLink' to='/profile'>Profile</Link>
+        <li>
+          <Link className='routerLink' to='/'>Home</Link>
+          <Link className='routerLink' to='/profile'>Profile</Link>
+        </li>
       </ul>
       <ul>
-        <Link className='routerLink' to='/settings'>Settings</Link>
-        <button className='routerLink' onClick={handleLogout}>Logout</button>
+        <li>
+          <Link className='routerLink' to='/settings'>Settings</Link>
+          <button className='routerLink' onClick={handleLogout}>Logout</button>
+        </li>
       </ul>
     </nav>
   )

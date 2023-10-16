@@ -49,11 +49,13 @@ const Login = () => {
         </div>
         <hr />
         <div className='innerLogin'>
-          <form className='formContainer'>
-            <TextInput placeholder='Username' setterFunction={setUsername} value={username} />
-            <TextInput placeholder='Password' setterFunction={setPassword} type='password' value={password}/>
-            <Button saveFunc={handleSubmit} text='Login' />
-          </form>
+          <div className='outerForm'>
+            <form className='formContainer'>
+              <TextInput placeholder='Username' setterFunction={setUsername} value={username} />
+              <TextInput placeholder='Password' setterFunction={setPassword} type='password' value={password}/>
+              <Button saveFunc={handleSubmit} text='Login' />
+            </form>
+          </div>
           <div className='footer'>
             <hr />
             <div className='innerFooter'>
