@@ -4,7 +4,7 @@ import '../css/Login.scss';
 import Button from './Button.jsx';
 import { useSendUserCredsMutation } from '../utils/userApi.js';
 import { useNavigate, Link } from 'react-router-dom';
-import {useToast} from '@chakra-ui/react'
+import {useToast} from '@chakra-ui/react';
 const Login = () => {
   const [sendUserCreds] = useSendUserCredsMutation();
   const [username, setUsername] = useState('');
@@ -41,42 +41,43 @@ const Login = () => {
   //   }
   // }
 
-  // function showToast(message, status){
-  //   const toast = useToast();
-  //   console.log('toast')
-  //   toast({
-  //     title: message,
-  //     status: status,
-  //     duration: 2000,
-  //     isClosable: true
-  //   });
-  // }
-
-  // const handleOnClick = () => {
-  //   showToast('unable to log in', 'error')
-  // }
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = {username, password};
     setUsername('');
     setPassword('');
     try {
-      await sendUserCreds(data).unwrap();
+      const prom = sendUserCreds(data).unwrap()
+      toast.promise(prom, {
+        success: {
+          title: 'Promise Resolved',
+          description: 'Promise Resolved Description',
+          isClosable: true
+        },
+        error: {
+          title: 'Promise Rejected',
+          description: 'Promise Rejected Description',
+          isClosable: true,
+          duration: 3000,
+          containerStyle: {
+            backgroundColor: 'black'
+          }
+        },
+        loading: {
+          title: 'Promise Pending',
+          description: 'Promise Pending Description',
+          isClosable: true
+        }
+      })
+      // Handle the promise resolution
+      const result = await prom;
       localStorage.setItem('isAuth', true);
       setAuthenticated(true);
-    }
-    catch(err) {
-      console.log('Unable to login')
-      toast({
-        title: 'Bad login',
-        description: 'Incorrect login',
-        status: 'error',
-        duration: 8000,
-        isClosable: true
-      })
+    } catch (err) {
+      console.log('Unable to login');
     }
   }
+  
   
   return (
     // <ChakraBaseProvider>
