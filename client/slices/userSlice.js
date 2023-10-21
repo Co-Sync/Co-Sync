@@ -5,6 +5,8 @@ import { createSlice, current } from '@reduxjs/toolkit';
 
 const initialState = {
   username: '',
+  // temp solution: save the userId to global state
+  userId: '',
   projects: {},
   numOfProjects: 0,
   currentProject: '',
@@ -19,14 +21,32 @@ export const userSlice = createSlice({
       state.numOfProjects = action.payload.numOfProjects;
       state.username = action.payload.username;
     },
-    resetState: () => initialState,
+    resetState: (state) => {
+      state.projects = {};
+      state.numOfProjects = 0;
+      state.username = '';
+      state.userId = '';
+      state.currentProject = '';
+    },
     setUserName: (state, action) => {
       try {
         const username = action.payload;
-        state.username = username;
+        state.username = username
       } catch (error) {
         console.error('Error in setUserName reducer: ', error);
       }
+    },
+    setUser: (state, { payload }) => {
+      try {
+        console.log('setUser reducer triggered');
+        state.userId = payload._id;
+        state.username = payload.username;
+        console.log('state after setUser: ', state.userId);
+        
+      } catch (error) {
+        console.error('Error in setUserName reducer: ', error);
+      }
+
     },
     createTask: (state, action) => {
       try {
@@ -197,6 +217,6 @@ export const userSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const { setUserState, createTask, createColumn, createProject, updateTask, deleteProject, deleteColumn, deleteTask, moveTask,
-  setCurrentProjectName, setUserName, resetState } =
+  setCurrentProjectName, setUserName, setUser, resetState } =
   userSlice.actions;
 export default userSlice.reducer;

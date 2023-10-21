@@ -28,11 +28,11 @@ userRouter.post('/signup', userController.createUser , cookieController.setSSIDC
 * login
 */
 userRouter.post('/login', userController.verifyUser, cookieController.setSSIDCookie, sessionController.startSession, (req, res) => {
-  res.status(200).end();
+  res.status(200).json(res.locals.user);
 });
 
 userRouter.get('/logout', sessionController.isLoggedIn, sessionController.endSession, (req, res) => {
-  res.status(200).end();
+  res.status(200).json({ message: 'logged out' });
 });
 
 /**

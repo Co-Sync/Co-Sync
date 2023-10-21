@@ -129,8 +129,11 @@ userController.verifyUser = async (req, res, next) => {
   User.findOne({username})
     .then((user) => {
       if(user === null){
-        console.log('error in verify user')
-        res.redirect('/signup');
+        return next({
+          log: 'Error in userController.verifyUser: User Not Found',
+          status: 401,
+          message: { err: 'Incorrect Username/Password' }
+        });
       }
       console.log('made it to Bcrypt')
       try {
@@ -144,6 +147,11 @@ userController.verifyUser = async (req, res, next) => {
             });
             if(result === true) {
               console.log('Bcrypt compare confirmed');
+              res.locals.user = {
+                _id: user._id,
+                username: user.username,
+              }
+              console.log('Hi I am the User...', user)
               res.locals.verifyUser = true;
               return next()
             }

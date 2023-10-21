@@ -12,6 +12,7 @@ SessionController.isLoggedIn = async (req, res, next) => {
   if ('ssid' in req.cookies && session.length !== 0) {
     return next();
   } else {
+    console.log('ssid', req.cookies, 'session', session)
     return next({
       log: 'Session is over ',
       message: { err: 'Session is over' }
@@ -45,6 +46,8 @@ SessionController.endSession = async (req, res, next) => {
   if (session) {
     await Session.deleteOne({cookieId: res.locals.ssid});
     console.log('session deleted');
+    // to remove a cookie from the browser
+    // set expires to a date in the past
     res.clearCookie('ssid');
     return next();
   } else {

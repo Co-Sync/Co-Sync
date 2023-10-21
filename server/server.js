@@ -7,6 +7,7 @@ const app = express();
 
 const projectRouter = require('./routes/project');
 const userRouter = require('./routes/user');
+const friendRequestRouter = require('./routes/friendRequest');
 
 app.use(cookieParser());
 app.use(express.json());
@@ -16,6 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 //  */
 app.use('/api/project', projectRouter);
 app.use('/api/user', userRouter);
+app.use('/api/friend-requests', friendRequestRouter);
 app.use('/favicon.ico', (req, res) => {
   res.status(200).sendFile(path.resolve(__dirname, '../assets', 'favicon.ico'));
 });

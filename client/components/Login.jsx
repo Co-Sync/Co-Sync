@@ -3,11 +3,18 @@ import TextInput from './TextInput.jsx';
 import '../css/Login.scss';
 import Button from './Button.jsx';
 import { useNavigate, Link } from 'react-router-dom';
+import { useToast } from '@chakra-ui/react'
+import { setUserName, setUser } from '../slices/userSlice.js';
+import { useDispatch } from 'react-redux';
+
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [authenticated, setAuthenticated] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const toast = useToast();
+
   useEffect(() => {
     if (authenticated) {
       navigate('/');
@@ -26,13 +33,25 @@ const Login = () => {
       body: JSON.stringify(data),
       credentials: 'include',
     }).then(res => {
-      if (res.status === 200) {
-        console.log('Login successful');
-        localStorage.setItem('isAuth', true);
-        setAuthenticated(true);
-      } else {
+      if (!res.ok) {
         console.log('Login failed');
+        return res.json().then((err) => {
+          return toast({
+            title: 'Error',
+            description: `${err.err}`,
+            status: 'error',
+            duration: 9000,
+            isClosable: true,
+          });
+        })
       }
+      return res.json();
+    }).then((data) => {
+      localStorage.setItem('isAuth', true);
+      setAuthenticated(true);
+      dispatch(setUser(data));
+      navigate('/')
+      console.log('received data from login', data);
     }).catch(err => {
       console.log('Login failed with error: ', err);
     });

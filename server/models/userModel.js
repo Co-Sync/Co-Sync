@@ -12,7 +12,7 @@ const userSchema = new Schema({
   projects: [
     {type: Schema.Types.ObjectId, ref: 'Project'}
   ],
-  email:    {type: String},
+  email: {type: String},
 });
 
 userSchema.pre('save', function (next) {

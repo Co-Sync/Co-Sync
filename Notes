@@ -1,0 +1,3 @@
+Added UserId to Redux global state.
+Added useDispatch to Login.jsx; dispatch returned User info to Global state on successful login
+Modified UserController.js, verifyUser method, returns the UserId on the res.locals 

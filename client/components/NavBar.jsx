@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { resetState } from '../slices/userSlice.js';
-import { userApi } from '../utils/userApi.js';
+import { userApi, useLogoutUserMutation } from '../utils/userApi.js';
 
 /*
   This component is the navbar. It contains the links to the home, profile, settings, and logout pages.
@@ -12,22 +12,15 @@ import { userApi } from '../utils/userApi.js';
 const NavBar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [logout] = useLogoutUserMutation();
   const handleLogout = async (e) => {
-    e.preventDefault();
     try {
-      const res = await fetch('/api/user/logout', {
-        method: 'GET',
-        credentials: 'include',
-      });
-      if (res.status === 200) {
-        console.log('Logout successful');
-        userApi.util.resetApiState();
-        localStorage.removeItem('isAuth');
-        navigate('/login');
-        dispatch(resetState());
-      } else {
-        console.log('Logout failed');
-      }
+      const res = await logout().unwrap();
+      console.log('Logout successful');
+      userApi.util.resetApiState();
+      localStorage.removeItem('isAuth');
+      dispatch(resetState());
+      navigate('/login');
     } catch (error) {
       console.log('Logout failed with error: ', error);
     }
@@ -44,7 +37,7 @@ const NavBar = () => {
       <ul>
         <li>
           <Link className='routerLink' to='/settings'>Settings</Link>
-          <button className='routerLink' onClick={handleLogout}>Logout</button>
+          <button className='routerLink' onClick={handleLogout} type='button' >Logout</button>
         </li>
       </ul>
     </nav>
