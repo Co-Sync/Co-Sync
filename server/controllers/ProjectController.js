@@ -76,7 +76,7 @@ const createColumn = async (req, res, next) => {
 
 // Change a task from one column to another (eg. drag and drop one task from "To-do" to "Doing")
 const changeColumn = async (req, res, next) => {
-  const {projectId, oldColumnId, newColumnId, taskId} = req.body;
+  const { projectId, oldColumnId, newColumnId, taskId } = req.body;
   try {
     const project = await Project.findOne({
       _id: projectId
@@ -121,15 +121,15 @@ const changeColumn = async (req, res, next) => {
     // let newColumn;
     // let newColumnIndex;
 
-    for(let i=0; i < project.columns.length; i++){
-      if (project.columns[i]._id.toString() === newColumnId){
-        const newTask = { taskName : task.taskName, taskComments : task.taskComments, _id : task._id };
+    for (let i = 0; i < project.columns.length; i++) {
+      if (project.columns[i]._id.toString() === newColumnId) {
+        const newTask = { taskName: task.taskName, taskComments: task.taskComments, _id: task._id };
         project.columns[i].tasks.push(newTask);
         // newColumn = project.columns[i];
         break;
       }
-    }  
-    
+    }
+
     await project.save();
     return next();
   } catch (error) {
@@ -244,7 +244,11 @@ const updateTask = async (req, res, next) => {
       });
     }
     task.taskName = req.body.taskName;
-    task.taskComments = req.body.taskComments;
+    console.log(typeof (task.taskComments))
+    let num = Object.keys(task.taskComments).length
+    task.taskComments[num] = req.body.taskComments;
+    // task.taskComments = task.taskComments.append(req.body.taskComments);
+    console.log(task.taskComments)
     await project.save();
 
     res.locals.task = task;
@@ -254,7 +258,7 @@ const updateTask = async (req, res, next) => {
     console.log(error);
     next({
       log: 'Failed to udoate a task: ' + error,
-      message: { err: 'Failed to uodated a task' },
+      message: { err: 'Failed to updated a task' },
     })
   }
 };

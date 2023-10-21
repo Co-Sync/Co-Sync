@@ -18,6 +18,8 @@ const TableTask = ({ task, column, currentProject, index }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isCommentOpen, setIsCommentOpen] = useState(false);
   const [isMoveOpen, setIsMoveOpen] = useState(false);
+  const [subtasks, setSubtasks] = useState(["Subdue Operations", "Extract Anomalies", "Field Adjacencies"])
+
 
   // must call mutations in a destructered array to then call later 
   const [deleteTaskMutation] = useDeleteTaskMutation();
@@ -134,10 +136,23 @@ const TableTask = ({ task, column, currentProject, index }) => {
     <div style={{ zIndex: -index }} className="container" id="tableTaskMain">{ /* zIndex is used to make sure the task buttons are always on top of the task and the tasks below in the list */}
       <p className='taskText'>{task.taskName}</p>
       {task.taskComments !== '' &&
-        <h6>
-          Comments:
-          <p id='comments'>{task.taskComments}</p>
-        </h6>}
+        <>
+          {/* <h6>
+            Comments:
+            <p id='comments'>{task.taskComments}</p>
+          </h6> */}
+          <>
+            {task.taskComments.map(function (data) {
+              return (
+                <h6>
+                  Comment:  {data}
+                </h6>
+              )
+            })}
+          </>
+        </>}
+
+
       <div id='tableTaskButtons'>
         <TaskButton
           onClick={() => handleDeleteTask(task.taskName, column.columnName)}
