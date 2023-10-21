@@ -15,7 +15,7 @@ const Profile = () => {
    * TODO:
    * 1. Add friend request functionality
    * 2. Add friend list functionality
-  */
+  */ //test
   const dispatch = useDispatch();
   const [friend, setFriend] = useState('');
   const handleFriendRequest = (e) => {
