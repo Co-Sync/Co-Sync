@@ -7,32 +7,12 @@ import './css/index.css';
 import { BrowserRouter as Router } from 'react-router-dom';
 import {extendTheme, ChakraProvider } from '@chakra-ui/react'
 
-// import { theme as origTheme } from '@chakra-ui/react'
 
 
 const config = {
   initialColorMode: 'dark',
   useSystemColorMode: false,
-  // components: {
-  //   Alert: {
-  //     variants: {
-  //       solid: (props) => { // only applies to `subtle` variant
-  //         const { colorScheme: c } = props
-  //         if (c !== 'blue') {
-  //           // use original definition for all color schemes except "blue"
-  //           return origTheme.components.Alert.variants.solid(props)
-  //         }
-  //         return {
-  //           container: {
-  //             bg: '#FFA500', // or literal color, e.g. "#0984ff"
-  //           },
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
 }
-
 
 const theme = extendTheme({config})
 

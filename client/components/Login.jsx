@@ -12,34 +12,12 @@ const Login = () => {
   const [authenticated, setAuthenticated] = useState(false);
   const navigate = useNavigate();
   const toast = useToast();
+ 
   useEffect(() => {
     if (authenticated) {
       navigate('/');
     }
   }, [authenticated]);
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   const data = { username, password };
-  //   setUsername('');
-  //   setPassword('');
-  //   try {
-  //     //  should return user object to be sent to redux state and token to store in local storage
-  //     await sendUserCreds(data).unwrap();
-  //     localStorage.setItem('isAuth', true);
-  //     setAuthenticated(true);
-        
-  //   } catch (err) {
-  //     // display error for user
-  //     toast({
-  //       title: 'An error occurred.',
-  //       description: 'error',
-  //       status: 'error',
-  //       duration: 9000,
-  //       isClosable: true,
-  //   })
-  //   }
-  // }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -50,37 +28,34 @@ const Login = () => {
       const prom = sendUserCreds(data).unwrap()
       toast.promise(prom, {
         success: {
-          title: 'Promise Resolved',
+          title: 'Success',
           description: 'Promise Resolved Description',
-          isClosable: true
+          isClosable: true,
+          duration: 3000
         },
         error: {
-          title: 'Promise Rejected',
-          description: 'Promise Rejected Description',
+          title: 'Authentication Failed',
+          description: 'Incorrect Username or Password',
           isClosable: true,
-          duration: 3000,
-          containerStyle: {
-            backgroundColor: 'black'
-          }
+          duration: 3000
         },
         loading: {
-          title: 'Promise Pending',
-          description: 'Promise Pending Description',
-          isClosable: true
+          title: 'Loading',
+          description: 'Searching for Username and Password',
+          isClosable: true,
+          duration: 3000
         }
       })
-      // Handle the promise resolution
-      const result = await prom;
+      await prom; // needed await down here for toast notification to work
       localStorage.setItem('isAuth', true);
       setAuthenticated(true);
+      
     } catch (err) {
-      console.log('Unable to login');
+      console.log('Unable to login:', err.data.err);
     }
   }
   
-  
   return (
-    // <ChakraBaseProvider>
     <div className='outerContainer'>
       <div className="login container">
         <div className='header'>
@@ -124,27 +99,6 @@ const Login = () => {
         </div>
       </div>
     </div>
-    // </ChakraBaseProvider>
   );
 };
 export default Login;
-// fetch('/api/user/login', {
-//   method: 'POST',
-//   headers: {
-//     'Content-Type': 'application/json',
-//   },
-//   body: JSON.stringify(data),
-//   credentials: 'include',
-// }).then(res => {
-//   if (res.status === 200) {
-//     console.log('Login successful');
-//     localStorage.setItem('isAuth', true);
-//     setAuthenticated(true);
-//   } else {
-//     res.json()
-//       .then(data => console.log(data));
-//     // console.log(res.errorObj.message);
-//   }
-// }).catch(err => {
-//   console.log('Login failed with error: ', err);
-// });
