@@ -16,10 +16,8 @@ const App = () => {
   const isAuth = localStorage.getItem('isAuth');
   const { data, isSuccess } = useGetUserProjectsQuery(undefined, { skip: !isAuth }); // skip auto fetch if not authenticated
   useEffect(() => {
-    console.log('Inside useEffect')
     if (isAuth) {
       if (isSuccess && data) {
-        console.log('This is the data from the user query', data)
         const userData = data;
         const projects = {}
         for (const project of userData.projects) {

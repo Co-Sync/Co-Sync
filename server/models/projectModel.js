@@ -20,7 +20,7 @@ const columnSchema = new Schema({
 const projectSchema = new Schema({
   projectName: { type: String, required: true },
   columns: [columnSchema], 
-  collaborators: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+  collaborators: [{ type: Schema.Types.ObjectId, ref: 'Collaboration' }]
 })
 
 module.exports = mongoose.model('Project', projectSchema);

@@ -10,6 +10,7 @@ const initialState = {
   projects: {},
   numOfProjects: 0,
   currentProject: '',
+  loggedIn: false,
 };
 
 export const userSlice = createSlice({
@@ -21,6 +22,7 @@ export const userSlice = createSlice({
       state.numOfProjects = action.payload.numOfProjects;
       state.username = action.payload.username;
       state.userId = action.payload.userId;
+      state.loggedIn = true;
     },
     resetState: (state) => {
       state.projects = {};
@@ -28,6 +30,7 @@ export const userSlice = createSlice({
       state.username = '';
       state.userId = '';
       state.currentProject = '';
+      state.loggedIn =false; 
     },
     setUserName: (state, action) => {
       try {

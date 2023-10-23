@@ -19,7 +19,6 @@ const ScrollBar = ({ currentProject }) => {
   const [inviteUserMutation] = useInviteUserMutation();
   const dispatch = useDispatch();
 
-  // console.log(`Current project is: ${currentProject}`);
   const handleAddColumnClick = async (e) => {
     e.preventDefault();
     const body = {
@@ -63,12 +62,11 @@ const ScrollBar = ({ currentProject }) => {
     if (!currentProject) return console.log('No current project');
     const body = {
       username: invite,
-      projectID: currentProject?._id,
+      projectId: currentProject?._id,
     };
     setInvite('');
     try {
-      const res = await inviteUserMutation(body);
-      if (res.error) throw new Error(res.error.message);
+      await inviteUserMutation(body).unwrap()
     } catch (error) {
       console.log(error);
     }

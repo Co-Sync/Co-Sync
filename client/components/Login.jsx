@@ -31,28 +31,26 @@ const Login = () => {
       },
       body: JSON.stringify(data),
       credentials: 'include',
-    }).then(res => {
-      if (!res.ok) {
-        console.log('Login failed');
-        return res.json().then((err) => {
-          return toast({
-            title: 'Error',
-            description: `${err.err}`,
-            status: 'error',
-            duration: 9000,
-            isClosable: true,
-          });
-        })
-      }
-      return res.json();
-    }).then((data) => {
-      localStorage.setItem('isAuth', true);
-      console.log('received data from login', data);
-      navigate('/')
-      setAuthenticated(true);
-    }).catch(err => {
-      console.log('Login failed with error: ', err);
-    });
+    })
+      .then(res => {
+        if (!res.ok) {
+          return res.json().then((err) => {
+            return toast({
+              title: 'Error',
+              description: `${err.err}`,
+              status: 'error',
+              duration: 9000,
+              isClosable: true,
+            });
+          })
+        }
+        localStorage.setItem('isAuth', true);
+        console.log('received data from login', data);
+        setAuthenticated(true);
+      })
+      .catch(err => {
+        console.log('Login failed with error: ', err);
+      });
   };
   return (
     <div className='outerContainer'>

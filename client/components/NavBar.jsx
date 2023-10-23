@@ -15,11 +15,11 @@ const NavBar = () => {
   const [logout] = useLogoutUserMutation();
   const handleLogout = async (e) => {
     try {
+      localStorage.removeItem('isAuth');
       const res = await logout().unwrap();
       console.log('Logout successful');
-      userApi.util.resetApiState();
-      localStorage.removeItem('isAuth');
-      dispatch(resetState());
+      userApi.util.resetApiState(undefined);
+      dispatch(resetState(undefined));
       navigate('/login');
     } catch (error) {
       console.log('Logout failed with error: ', error);

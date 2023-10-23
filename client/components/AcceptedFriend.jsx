@@ -6,8 +6,6 @@ const AcceptedFriend = ({ refetch, senderId, receiverId, senderUsername, receive
   const userId = useSelector((state) => state.user.userId);
   const [removeFriend] = useRemoveFriendMutation();
 
-  console.log('receiverId', receiverId)
-  console.log('senderId', senderId)
   const isUserSender = userId === senderId;
 
   const handleRemoval = async () => {

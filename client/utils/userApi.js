@@ -11,7 +11,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const userApi = createApi({
   reducerPath: 'userApi',
   baseQuery: fetchBaseQuery({ baseUrl: '/api' }),
-  tagTypes: ['Projects', 'User', 'Friends'],
+  tagTypes: ['Projects', 'User', 'Friends', 'Collaborators'],
   endpoints: (builder) => ({
     getProject: builder.query({
       query: () => ({ url: '/project/', method: 'GET' }),
@@ -68,9 +68,13 @@ export const userApi = createApi({
       query: ({ projectId }) => ({ url: `/project/${projectId}`, method: 'DELETE' }),
       invalidatesTags: ['Projects'],
     }),
+    getAllCollaborators: builder.query({
+      query: ({projectId}) => ({ url: `/collaboration/${projectId}`, method: 'GET', credentials: 'include' }),
+      providesTags: ['Collaborators'],
+    }),
     inviteUser: builder.mutation({
-      query: (body) => ({ url: '/user/invite', method: 'POST', body }),
-      invalidatesTags: ['Projects'],
+      query: (body) => ({ url: '/collaboration/add', method: 'POST', body }),
+      invalidatesTags: ['Collaborators'],
     }),
     getAllFriends: builder.query({
       query: () => ({ url: '/friend-requests/all', method: 'GET', credentials: 'include' }),
@@ -107,10 +111,12 @@ export const {
   useDeleteColumnMutation,
   useDeleteProjectMutation,
   useGetUserProjectsQuery,
+  useGetAllCollaboratorsQuery, 
   useInviteUserMutation,
   useGetAllFriendsQuery,
   useSendFriendRequestMutation,
   useAcceptFriendRequestMutation,
   useRejectFriendRequestMutation,
   useRemoveFriendMutation,
+  abort
 } = userApi;
