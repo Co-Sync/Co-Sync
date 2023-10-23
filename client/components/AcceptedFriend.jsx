@@ -1,13 +1,20 @@
 import React from 'react';
+import {useSelector} from 'react-redux/es/hooks/useSelector.js';
 import { useRemoveFriendMutation } from '../utils/userApi.js'
 
-const AcceptedFriend = ({ receiverId, receiverUsername}) => {
+const AcceptedFriend = ({ refetch, senderId, receiverId, senderUsername, receiverUsername }) => {
+  const userId = useSelector((state) => state.user.userId);
   const [removeFriend] = useRemoveFriendMutation();
 
-  const handleRemoval = async () => { 
+  console.log('receiverId', receiverId)
+  console.log('senderId', senderId)
+  const isUserSender = userId === senderId;
+
+  const handleRemoval = async () => {
     try {
       console.log('handleRemoval')
-      const res = await removeFriend({receiverId}).unwrap();
+      const res = await removeFriend({ receiverId, senderId }).unwrap();
+      refetch(); 
       console.log(res);
     } catch (err) {
       console.log(err);
@@ -16,11 +23,17 @@ const AcceptedFriend = ({ receiverId, receiverUsername}) => {
   
   return (
     <li>
-      <p>{receiverUsername}</p>
-      <p>{receiverId}</p>
+      {
+        isUserSender ? (
+          <p>{receiverUsername}</p>
+        ) : (
+          <p>{senderUsername}</p>
+        )
+      } 
       <button onClick={handleRemoval} type='button'>Unfriend</button>
     </li>
-  );
+
+  )
 }
 
 export default AcceptedFriend;

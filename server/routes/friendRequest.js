@@ -19,7 +19,7 @@ friendRequestRouter.post('/sendRequest', friendRequestController.sendFriendReque
  * accept friend request
  * req.body: { username }   // username of user request sender
  */
-friendRequestRouter.put('/:id/accept', friendRequestController.acceptFriendRequest, (req, res) => {
+friendRequestRouter.patch('/accept', friendRequestController.acceptFriendRequest, (req, res) => {
   res.status(200).json({message: 'Successfully accepted friend request'}); // return accepted friend requests
 });
 
@@ -27,27 +27,11 @@ friendRequestRouter.put('/:id/accept', friendRequestController.acceptFriendReque
  * reject friend request
  * req.body: { username }   // username of user request sender
  */
-friendRequestRouter.put('/:id/reject', friendRequestController.rejectFriendRequest, (req, res) => {
-  res.status(200).end()
+friendRequestRouter.put('/reject', friendRequestController.rejectFriendRequest, (req, res) => {
+  res.status(200).json({message: 'Successfully rejected friend request'}); // return accepted friend requests
 });
 
-/**
- * get user's pending friend requests
- * req.body: { username }   // username of user request sender
- */
-friendRequestRouter.get('/pending', friendRequestController.getPendingFriends, (req, res) => {
-  res.status(200).json(res.locals.pendingFriendRequests);
-}); 
-
-/**
- * view user's accepted friends
- * req.body: { username }   // username of user request sender
- */
-friendRequestRouter.get('/accepted', friendRequestController.getAcceptedFriends, (req, res) => {
-  res.status(200).json(res.locals.acceptedFriendRequests);
-}); 
-
-friendRequestRouter.delete('/:id/remove', friendRequestController.removeFriend, (req, res) => {
+friendRequestRouter.delete('/remove', friendRequestController.removeFriend, (req, res) => {
   res.status(200).json({message: 'Successfully removed friend'})
 })
 

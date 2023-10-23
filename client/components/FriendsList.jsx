@@ -2,9 +2,10 @@ import React from 'react';
 import TextInput from './TextInput.jsx';
 import Button from './Button.jsx';
 import {useSelector} from 'react-redux/es/hooks/useSelector.js';
-import PendingFriendRequest from './PendingFriendRequest.jsx';
 import AcceptedFriend from './AcceptedFriend.jsx';
-import { useGetAcceptedFriendsQuery, useGetPendingFriendsQuery, useGetAllFriendsQuery} from '../utils/userApi.js';
+import PendingReceived from './PendingReceived.jsx';
+import PendingSent from './PendingSent.jsx';
+import { useGetAllFriendsQuery} from '../utils/userApi.js';
 
 /*
   W.I.P.
@@ -14,12 +15,7 @@ import { useGetAcceptedFriendsQuery, useGetPendingFriendsQuery, useGetAllFriends
 
 const FriendsList = ({ setIsOpen, title, saveFunc, setterFunction }) => {
   const userId = useSelector((state) => state.user.userId);
-
-  // const { data: acceptedFriends, isLoading: acceptedLoading, error: acceptedError } = useGetAcceptedFriendsQuery();
-  // const { data: pendingFriends, isLoading: pendingLoading, error: pendingError } = useGetPendingFriendsQuery();
-  const { data: allFriends } = useGetAllFriendsQuery();
-
-  console.log('All friends', allFriends)
+  const { data: allFriends, refetch } = useGetAllFriendsQuery();
 
   return (
     <div id="modal" className="textModalVisible">
@@ -27,48 +23,35 @@ const FriendsList = ({ setIsOpen, title, saveFunc, setterFunction }) => {
         <div className="textModalHeader">
           <p>{title}</p>
           <button
-            onClick={(e) => {
-              e.preventDefault();
+            onClick={() => {
               setIsOpen((prev) => !prev);
             }}
             className="closeModalButton"
+            type="button"
           >
             x
           </button>
         </div>
         <TextInput setterFunction={setterFunction} placeholder="Friends" />
-        <Button saveFunc={saveFunc} text="Save" setIsOpen={setIsOpen} />
+        <Button saveFunc={saveFunc} text="Save" setIsOpen={setIsOpen} type='button' />
         <div className="projectsList">
-          {/* Testing getAllFriendsQuery */}
           {allFriends ? <ol>
             {allFriends.map((friend) => {
               
               if (friend.status === 'accepted') { 
-                return <AcceptedFriend key={friend.id} receiverUsername={friend.receiverUsername} {...friend} />
+                return <AcceptedFriend key={friend.id} refetch={refetch} {...friend} />
               }
 
-              if (friend.status === 'pending') {
-                return <PendingFriendRequest key={friend.id} receiverUsername={friend.receiverUsername} {...friend} />
+              if (friend.status === 'pending' && friend.senderId === userId) {
+                return <PendingSent key={friend.id} refetch={refetch} {...friend} />
+              }
+
+              if (friend.status === 'pending' && friend.receiverId === userId) {
+                return <PendingReceived key={friend.id} refetch={refetch} {...friend} />
               }
 
             })}
           </ol> : null}
-          {/* // get pending friend requests */}
-          {/* // check if user is pending receiver or pending sender */}
-          {/* <p>Pending friends go here</p>
-          {pendingLoading ? <div>Loading...</div> : null}
-          {pendingFriends ? <ol>
-            {pendingFriends.map((friend) => (
-              <PendingFriendRequest key={friend.id} receiverUsername={friend.receiverUsername} {...friend} />
-            ))}
-          </ol> : <p>No Requests</p>} */}
-          {/* // get accepted friend requests */}
-          {/* <p>Accepted friends go here</p>
-          {acceptedFriends ? <ol> 
-            {acceptedFriends.map((friend) => (
-              <AcceptedFriend key={friend.id} receiverUsername={friend.receiverUsername} {...friend} />
-            ))}
-          </ol> : <p>No Friends</p> } */}
         </div>
       </form>
     </div>

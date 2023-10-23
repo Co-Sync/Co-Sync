@@ -15,12 +15,9 @@ const Home = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user._id);
   const isAuth = localStorage.getItem('isAuth');
-  console.log('isAuth', isAuth)
-  console.log('the Home component')
   const { data, isError, isLoading: isProjectsLoading, isSuccess, error } = useGetUserProjectsQuery(undefined, { skip: !isAuth && !user });
   useEffect(() => {
     if (isSuccess && data) {
-      console.log('Inside Home component', data)
       const userData = data;
       const projects = {}
       for (const project of userData.projects) {
@@ -30,6 +27,7 @@ const Home = () => {
         projects,
         numOfProjects: userData.projects.length,
         username: userData.username,
+        userId: userData.userId,
       };
       dispatch(setUserState(transformedData));
     }

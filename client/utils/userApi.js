@@ -81,23 +81,11 @@ export const userApi = createApi({
       invalidatesTags: ['Friends'],
     }),
     acceptFriendRequest: builder.mutation({
-      query: ({ receiverId }) => ({ url: `/friend-requests/${receiverId}/accept`, method: 'PUT', credentials: 'include' }),
-      invalidatesTags: ['Friends'],
-    }),
-    rejectFriendRequest: builder.mutation({
-      query: ({ receiverId }) => ({ url: `/friend-requests/${receiverId}/reject`, method: 'PUT', credentials: 'include' }),
-      invalidatesTags: ['Friends'],
-    }),
-    getAcceptedFriends: builder.query({
-      query: () => ({ url: '/friend-requests/accepted', method: 'GET', credentials: 'include' }),
-      providesTags: ['Friends'],
-    }),
-    getPendingFriends: builder.query({
-      query: () => ({ url: '/friend-requests/pending', method: 'GET', credentials: 'include' }),
-      providesTags: ['Friends'],
+      query: (body) => ({ url: '/friend-requests/accept', method: 'PATCH', body, credentials: 'include' }),
+      invalidatesTages:['Friends']
     }),
     removeFriend: builder.mutation({
-      query: ({ receiverId }) => ({ url: `/friend-requests/${receiverId}/remove`, method: 'DELETE', credentials: 'include' }),
+      query: (body) => ({ url: '/friend-requests/remove', method: 'DELETE', body, credentials: 'include' }),
       invalidatesTags: ['Friends'],
     }),
   }),
@@ -122,8 +110,6 @@ export const {
   useInviteUserMutation,
   useGetAllFriendsQuery,
   useSendFriendRequestMutation,
-  useGetAcceptedFriendsQuery,
-  useGetPendingFriendsQuery, 
   useAcceptFriendRequestMutation,
   useRejectFriendRequestMutation,
   useRemoveFriendMutation,

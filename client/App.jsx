@@ -29,6 +29,7 @@ const App = () => {
           projects,
           numOfProjects: userData.projects.length,
           username: userData.username,
+          userId: userData.userId,
         };
         dispatch(setUserState(transformedData));
       }

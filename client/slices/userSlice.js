@@ -20,6 +20,7 @@ export const userSlice = createSlice({
       state.projects = action.payload.projects;
       state.numOfProjects = action.payload.numOfProjects;
       state.username = action.payload.username;
+      state.userId = action.payload.userId;
     },
     resetState: (state) => {
       state.projects = {};

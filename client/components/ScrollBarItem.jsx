@@ -16,7 +16,7 @@ const ScrollBarItem = ({ setterFunction, saveFunc, placeholder, type, title }) =
   const [isOpen, setIsOpen] = useState(false);
   return (
     <li className='scrollBarListItem'>
-      <Button saveFunc={() => setIsOpen(!isOpen)} text={placeholder} />
+      <Button saveFunc={() => setIsOpen(!isOpen)} text={placeholder} type='button'/>
       {isOpen && type === 'text' ?
         <TextModal placeholder={placeholder} setterFunction={setterFunction} saveFunc={saveFunc} setIsOpen={setIsOpen} title={title} /> :
         isOpen && type === 'view' ?

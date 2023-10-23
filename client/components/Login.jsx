@@ -12,7 +12,6 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [authenticated, setAuthenticated] = useState(false);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const toast = useToast();
 
   useEffect(() => {
@@ -48,10 +47,9 @@ const Login = () => {
       return res.json();
     }).then((data) => {
       localStorage.setItem('isAuth', true);
-      setAuthenticated(true);
-      dispatch(setUser(data));
-      navigate('/')
       console.log('received data from login', data);
+      navigate('/')
+      setAuthenticated(true);
     }).catch(err => {
       console.log('Login failed with error: ', err);
     });

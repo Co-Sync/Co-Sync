@@ -17,11 +17,13 @@ const Profile = () => {
    * 2. Add friend list functionality
   */
   const dispatch = useDispatch();
+  const { numOfProjects, username, userId:senderId } = useSelector(state => state.user);
+
   const [sendFriendRequest] = useSendFriendRequestMutation();
   const [friend, setFriend] = useState('');
-  const handleFriendRequest = async (e) => {
+  const handleFriendRequest = async () => {
     try {
-      const res = await sendFriendRequest({ friend }).unwrap();
+      const res = await sendFriendRequest({ friend, senderId, username }).unwrap();
       console.log(res)
       setFriend('');
       
@@ -29,7 +31,6 @@ const Profile = () => {
       console.log(err.data);
     }
   }
-  const { numOfProjects, username } = useSelector(state => state.user);
   return (
     <div className="homeMain container">
       <NavBar />
