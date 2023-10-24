@@ -8,6 +8,17 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import { ChakraProvider,ColorModeScript} from '@chakra-ui/react';
 import theme from './theme.js'
+import {extendTheme, ChakraProvider } from '@chakra-ui/react'
+
+
+
+const config = {
+  initialColorMode: 'dark',
+  useSystemColorMode: false,
+}
+
+const theme = extendTheme({config})
+
 
 if (module.hot) module.hot.accept();
 ReactDOM.createRoot(document.getElementById('root')).render(
