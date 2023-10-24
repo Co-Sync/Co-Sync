@@ -1,7 +1,8 @@
 const FriendRequest = require('../models/FriendRequestModel');
 const User = require('../models/userModel');
+const Notification = require('../models/notificationModel');
 
-// ! Refactor controllers to take username instead of id, re 
+// ! Refactor controllers to take username instead of id, and then find id from username
 const FriendRequestController = {
   controllerName: 'FriendRequestController',
   
@@ -17,14 +18,16 @@ const FriendRequestController = {
         }
       } 
 
-      const { _id: receiverId } = await User.findOne({ username: receiverUsername }); 
+      const receiver = await User.findOne({ username: receiverUsername }); 
 
-      if ( !receiverId ) {
+      if (!receiver) {
         throw {
           status: 404,
           message: { err: 'User not found' }
-        }; 
+        }
       }
+
+      const { _id:  receiverId } = receiver;
 
       if (receiverId.equals(senderId)) {
         console.log('Yes, ID are equal')
@@ -33,7 +36,26 @@ const FriendRequestController = {
           message: { err: 'Cannot send friend request to yourself' }
         }
       }
-      await FriendRequest.create({ senderId: senderId, senderUsername: senderUsername, receiverId: receiverId, receiverUsername: receiverUsername});
+      
+      const {_id: friendRequestId} = await FriendRequest.create({ senderId: senderId, senderUsername: senderUsername, receiverId: receiverId, receiverUsername: receiverUsername});
+
+      const newNotification = await Notification.create({
+        userId: receiverId,
+        message: `${senderUsername} sent you a friend request`,
+        type: 'Invite', 
+        relatedType: 'friendRequest',
+        relatedId:  friendRequestId,
+      }); 
+
+      if (!newNotification) {
+        throw {
+          logEntry: 'Problem creating notification',
+          message: { err: 'Error creating notification' }
+        }
+      }
+
+      console.log('newNotification', newNotification)
+      
       return next();
 
     } catch (error) {
@@ -42,7 +64,7 @@ const FriendRequestController = {
         error.message = { err: 'Friend request already sent' }
       }
       return next({
-        log: 'FriendRequestController.sendFriendRequest', 
+        log: `FriendRequestController.sendFriendRequest:  ${ error.logEntry ? error.logEntry : '' }`,
         status: error.status || 500, 
         message: error.message || { err: 'Unknown error' }
       })
@@ -71,12 +93,28 @@ const FriendRequestController = {
       acceptedFriendRequest.status = 'accepted';
       acceptedFriendRequest.save();
 
+      const newNotification = await Notification.create({
+        userId: senderId,
+        message: `${receiverId} accepted your friend request`,
+        type: 'Invite',
+        relatedType: 'friendRequest',
+        relatedId: acceptedFriendRequest._id,
+      })
+
+      if (!newNotification) { 
+        throw {
+          logEntry: 'Problem creating notification',
+          message: { err: 'Error creating notification' }
+        }
+      }
+
+      console.log('newNotification', newNotification)
+
       next();
-
-
+      
     } catch (error) {
       return next({
-        log: 'FriendRequestController.acceptFriendRequest',
+        log: `FriendRequestController.acceptFriendRequest:  ${error.logEntry ? error.logEntry : ''}` ,
         status: error.status || 500,
         message: error.message || { err: 'Unknown error' }
       });
@@ -129,9 +167,7 @@ const FriendRequestController = {
         status: error.status || 500, 
         message: error.message || { err: 'Unknown error' }
       })
-
     }
-
   },
 
   removeFriend: async (req, res, next) => {

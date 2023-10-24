@@ -1,5 +1,6 @@
 const Project = require('../models/projectModel');
 const User = require('../models/userModel');
+const Notification = require('../models/notificationModel');
 
 // get all projects
 const getProjects = async (req, res, next) => {

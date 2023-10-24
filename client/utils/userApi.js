@@ -92,6 +92,10 @@ export const userApi = createApi({
       query: (body) => ({ url: '/friend-requests/remove', method: 'DELETE', body, credentials: 'include' }),
       invalidatesTags: ['Friends'],
     }),
+    getNotifications: builder.query({
+      query: () => ({ url: '/notification',  method: 'GET', credentials: 'include' }),
+      providesTags: ['Notifications'],
+    }),
   }),
 });
 
@@ -118,5 +122,5 @@ export const {
   useAcceptFriendRequestMutation,
   useRejectFriendRequestMutation,
   useRemoveFriendMutation,
-  abort
+  useGetNotificationsQuery,
 } = userApi;

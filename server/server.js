@@ -9,6 +9,7 @@ const projectRouter = require('./routes/project');
 const userRouter = require('./routes/user');
 const friendRequestRouter = require('./routes/friendRequest');
 const collaborationRouter = require('./routes/collaboration');
+const notificationRouter = require('./routes/notification');
 
 app.use(cookieParser());
 app.use(express.json());
@@ -20,6 +21,7 @@ app.use('/api/project', projectRouter);
 app.use('/api/user', userRouter);
 app.use('/api/friend-requests', friendRequestRouter);
 app.use('/api/collaboration', collaborationRouter);
+app.use('/api/notification', notificationRouter);
 
 app.use('/favicon.ico', (req, res) => {
   res.status(200).sendFile(path.resolve(__dirname, '../assets', 'favicon.ico'));

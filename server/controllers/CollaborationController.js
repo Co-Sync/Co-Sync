@@ -1,5 +1,6 @@
 const Collaboration = require('../models/collaborationModel');
 const User = require('../models/userModel');
+const Notification = require('../models/notificationModel');
 const Project = require('../models/projectModel');
 
 const collaborationController = {
@@ -7,10 +8,10 @@ const collaborationController = {
    * takes the projectId the username of would be collaborator
    */
 
+  // ! Reconfigure to also take projectName
   addCollaborator: async (req, res, next) => { 
     try {
       console.log('addCollaborator'); 
-      console.log(req.body, req.cookies);
 
       const { cookies: { ssid: creator }, body: { projectId, username } } = req;
       if (!projectId || !username || !creator) { 
@@ -39,11 +40,7 @@ const collaborationController = {
 
         res.locals.collaboration = collaboration;
 
-        return next();
-
       } else {
-
-        console.log('inside else condition')
 
         const { collaborators } = collaboration;
           
@@ -55,18 +52,32 @@ const collaborationController = {
         }
 
         collaborators.push({ userId: collaboratorId });
-
         await collaboration.save();
-  
         res.locals.collaboration = collaboration;
-  
-        return next();
-        
       }
+
+      const newNotification = await Notification.create({
+        userId: collaboratorId,
+        message: `${creator} has invited you to collaborate on ${projectId}`,
+        type: 'Invite',
+        relatedType: 'Collaboration',
+        relatedId: collaboration._id, 
+      })
+
+      if (!newNotification) {
+        throw {
+          logEntry: 'Problem creating notification',
+          message: { err: 'Error creating notification' }
+        }
+      }
+
+      console.log('newNotification', newNotification)
+
+      return next();
   
     } catch (error) {
       return next({
-        log: 'Error in collaborationController.addCollaborator',
+        log: `Error in collaborationController.addCollaborator:  ${ error.logEntry ? error.logEntry : '' }`,
         status: error.status || 500,
         message: error.message || { err: 'Unknown error' }
       })

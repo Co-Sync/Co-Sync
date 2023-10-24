@@ -3,9 +3,9 @@ import TableDisplay from './TableDisplay.jsx';
 import NavBar from './NavBar.jsx';
 import '../css/Home.scss';
 import '../css/Modal.scss'
-import { useDispatch } from 'react-redux';
+import { useDispatch, } from 'react-redux';
 import { setUserState } from '../slices/userSlice.js';
-import { useGetUserProjectsQuery, abort } from '../utils/userApi.js';
+import { useGetUserProjectsQuery, useGetNotificationsQuery } from '../utils/userApi.js';
 /*
   This is the main component for the home page. It renders the NavBar and TableDisplay components.
   It also checks for authentication and redirects to the login page if the user is not authenticated.
@@ -13,7 +13,9 @@ import { useGetUserProjectsQuery, abort } from '../utils/userApi.js';
 const Home = () => {
   const dispatch = useDispatch();
   const isAuth = localStorage.getItem('isAuth');
-  const { data, isError, isLoading: isProjectsLoading, isSuccess, error} = useGetUserProjectsQuery({ skip: !isAuth});
+  const { data, isError, isLoading: isProjectsLoading, isSuccess, error } = useGetUserProjectsQuery({ skip: !isAuth });
+  const { data: notifications, isError: isNotificationsError, isLoading: isNotificationsLoading, isSuccess: isNotificationsSuccess, error: notificationsError } = useGetNotificationsQuery( { skip: !isAuth });
+  
   useEffect(() => {
     if (isSuccess && data) {
       const userData = data;
