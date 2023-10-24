@@ -1,15 +1,15 @@
 const FriendRequest = require('../models/FriendRequestModel');
 const User = require('../models/userModel');
 
+// ! Refactor controllers to take username instead of id, re 
 const FriendRequestController = {
-  controllerName : 'FriendRequestController',
-
+  controllerName: 'FriendRequestController',
+  
   sendFriendRequest: async (req, res, next) => {
     try {
-      console.log('sendFriendRequest')
-      // const { cookies: { ssid: senderId }, body: { friend: receiverUsername, username: senderUsername } } = req;
+      console.log('sendFriendRequest');
       const { friend: receiverUsername, senderId, username: senderUsername } = req.body; 
-      console.log('senderId', typeof senderId)
+  
       if (!senderId || !receiverUsername || !senderUsername) {
         throw {
           status: 400, 
@@ -42,7 +42,7 @@ const FriendRequestController = {
         error.message = { err: 'Friend request already sent' }
       }
       return next({
-        log: 'FriendRequestController.sendFriendRequest' + JSON.stringify(error), 
+        log: 'FriendRequestController.sendFriendRequest', 
         status: error.status || 500, 
         message: error.message || { err: 'Unknown error' }
       })
@@ -110,7 +110,6 @@ const FriendRequestController = {
     try {
       console.log('getAllFriends');
       const { ssid: userId } = req.cookies;
-      // searches for all friend requests where the senderId or receiverId is the userId
       const allFriendRequest = await FriendRequest.find({ $or: [{ senderId: userId }, { receiverId: userId }] })
       console.log('allFriendRequest', allFriendRequest)
       if (!allFriendRequest) {

@@ -5,8 +5,8 @@ const Project = require('../models/projectModel');
 const collaborationController = {
   /**
    * takes the projectId the username of would be collaborator
-   * 
    */
+
   addCollaborator: async (req, res, next) => { 
     try {
       console.log('addCollaborator'); 
@@ -102,12 +102,7 @@ const collaborationController = {
         message: error.message || { err: 'Unknown error' }
       })
     }
-
-    
   }
-
-
-
 };
 
 module.exports = collaborationController;
