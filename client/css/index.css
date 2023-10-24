@@ -12,6 +12,7 @@
   0% {
     transform: translateY(-120%);
   }
+
   100% {
     transform: translateY(0);
   }
@@ -51,6 +52,7 @@ body {
   background: url(https://images.pexels.com/photos/176851/pexels-photo-176851.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2) !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: url(https://images.pexels.com/photos/176851/pexels-photo-176851.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2) !important;
 }
 
 
