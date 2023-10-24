@@ -3,7 +3,6 @@ import TableColumn from './TableColumn.jsx';
 import ScrollBar from './ScrollBar.jsx';
 import TableHeader from './TableHeader.jsx'
 import { useSelector } from 'react-redux';
-import {useGetAllCollaboratorsQuery} from '../utils/userApi.js';
 
 /*
   This component renders the ScrollBar and TableColumn components.

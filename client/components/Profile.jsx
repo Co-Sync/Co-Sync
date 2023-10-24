@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import NavBar from './NavBar.jsx';
 import '../css/Profile.scss';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import ScrollBarItem from './ScrollBarItem.jsx';
 import { useSendFriendRequestMutation} from '../utils/userApi.js';
 /*
@@ -11,12 +11,6 @@ import { useSendFriendRequestMutation} from '../utils/userApi.js';
 */
 
 const Profile = () => {
-  /**
-   * TODO:
-   * 1. Add friend request functionality
-   * 2. Add friend list functionality
-  */
-  const dispatch = useDispatch();
   const { numOfProjects, username, userId:senderId } = useSelector(state => state.user);
 
   const [sendFriendRequest] = useSendFriendRequestMutation();

@@ -4,8 +4,6 @@ import '../css/Login.scss';
 import Button from './Button.jsx';
 import { useNavigate, Link } from 'react-router-dom';
 import { useToast } from '@chakra-ui/react'
-import { setUserName, setUser } from '../slices/userSlice.js';
-import { useDispatch } from 'react-redux';
 
 const Login = () => {
   const [username, setUsername] = useState('');
