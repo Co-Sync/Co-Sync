@@ -15,8 +15,6 @@ const Login = () => {
   const navigate = useNavigate();
   const toast = useToast();
 
-  const toast = useToast();
- 
   useEffect(() => {
     if (authenticated) {
       navigate('/');
