@@ -2,54 +2,63 @@ import React, { useEffect, useState } from 'react';
 import TextInput from './TextInput.jsx';
 import '../css/Login.scss';
 import Button from './Button.jsx';
+import { useSendUserCredsMutation } from '../utils/userApi.js';
 import { useNavigate, Link } from 'react-router-dom';
 import { useToast } from '@chakra-ui/react'
 
+import {useToast} from '@chakra-ui/react';
 const Login = () => {
+  const [sendUserCreds] = useSendUserCredsMutation();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [authenticated, setAuthenticated] = useState(false);
   const navigate = useNavigate();
   const toast = useToast();
 
+  const toast = useToast();
+ 
   useEffect(() => {
     if (authenticated) {
       navigate('/');
     }
   }, [authenticated]);
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = { username, password };
+    const data = {username, password};
     setUsername('');
     setPassword('');
-    fetch('/api/user/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-      credentials: 'include',
-    })
-      .then(res => {
-        if (!res.ok) {
-          return res.json().then((err) => {
-            return toast({
-              title: 'Error',
-              description: `${err.err}`,
-              status: 'error',
-              duration: 9000,
-              isClosable: true,
-            });
-          })
+    try {
+      const prom = sendUserCreds(data).unwrap()
+      toast.promise(prom, {
+        success: {
+          title: 'Success',
+          description: 'Promise Resolved Description',
+          isClosable: true,
+          duration: 3000
+        },
+        error: {
+          title: 'Authentication Failed',
+          description: 'Incorrect Username or Password',
+          isClosable: true,
+          duration: 3000
+        },
+        loading: {
+          title: 'Loading',
+          description: 'Searching for Username and Password',
+          isClosable: true,
+          duration: 3000
         }
-        localStorage.setItem('isAuth', true);
-        console.log('received data from login', data);
-        setAuthenticated(true);
       })
-      .catch(err => {
-        console.log('Login failed with error: ', err);
-      });
-  };
+      await prom; // needed await down here for toast notification to work
+      localStorage.setItem('isAuth', true);
+      setAuthenticated(true);
+      
+    } catch (err) {
+      console.log('Unable to login:', err.data.err);
+    }
+  }
+  
   return (
     <div className='outerContainer'>
       <div className="login container">
@@ -66,7 +75,10 @@ const Login = () => {
             <form className='formContainer'>
               <TextInput placeholder='Username' setterFunction={setUsername} value={username} />
               <TextInput placeholder='Password' setterFunction={setPassword} type='password' value={password}/>
-              <Button saveFunc={handleSubmit} text='Login' />
+              <Button 
+                saveFunc={handleSubmit} 
+                text='Login' 
+              />
             </form>
           </div>
           <div className='footer'>

@@ -42,7 +42,7 @@ html {
   scrollbar-color: #2ee3ffae #1B2735;
   scrollbar-width: auto;
   scroll-behavior: smooth;
-  scrollbar-gutter: stable both-edges;
+  /* scrollbar-gutter: stable both-edges; */
 }
 
 body {

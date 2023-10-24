@@ -130,10 +130,10 @@ userController.verifyUser = async (req, res, next) => {
     .then((user) => {
       if(user === null){
         return next({
-          log: 'Error in userController.verifyUser: User Not Found',
-          status: 401,
-          message: { err: 'Incorrect Username/Password' }
-        });
+          log: 'Verification failure',
+          status : 401,
+          message: {err: 'Username or password is incorrect.'}
+        })
       }
       console.log('made it to Bcrypt')
       try {
@@ -141,9 +141,9 @@ userController.verifyUser = async (req, res, next) => {
           .compare(password, user.password)
           .then((result) => {
             if(result === false) return next({
-              log: 'Incorrect username or password',
-              status: 400,
-              message: { err: 'Error: Incorrect username or password'}
+              log: 'Verification failure',
+              status : 401,
+              message: {err: 'Username or password is incorrect.'}
             });
             if(result === true) {
               console.log('Bcrypt compare confirmed');
@@ -156,10 +156,12 @@ userController.verifyUser = async (req, res, next) => {
               return next()
             }
           })
-      } catch (err) {
+      } 
+      catch (err) {
         return next(err);
       }
-    });
+    })
+
 };
 
 userController.getUserProjects = (req, res, next) => {

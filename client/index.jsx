@@ -6,23 +6,26 @@ import { store } from './utils/store.js';
 import './css/index.css';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-// import ChakraProvider component
-import { extendTheme, ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider,ColorModeScript, extendTheme} from '@chakra-ui/react';
+import theme from './theme.js'
 
-const config = {
-  initialColorMode: 'dark', 
-  useSystemColorMode: false,
-}
 
-const theme = extendTheme({ config });
+
+// const config = {
+//   initialColorMode: 'dark',
+//   useSystemColorMode: false,
+// }
+
+// const theme = extendTheme({config})
+
 
 if (module.hot) module.hot.accept();
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
       <Router>
-        {/* Wrap ChakraProvider around App component */}
         <ChakraProvider theme={theme}>
+          <ColorModeScript initialColorMode={theme.config.initialColorMode}/>
           <App />
         </ChakraProvider>
       </Router>
