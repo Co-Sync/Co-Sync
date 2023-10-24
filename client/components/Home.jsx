@@ -14,7 +14,6 @@ const Home = () => {
   const dispatch = useDispatch();
   const isAuth = localStorage.getItem('isAuth');
   const { data, isError, isLoading: isProjectsLoading, isSuccess, error } = useGetUserProjectsQuery({ skip: !isAuth });
-  const { data: notifications, isError: isNotificationsError, isLoading: isNotificationsLoading, isSuccess: isNotificationsSuccess, error: notificationsError } = useGetNotificationsQuery( { skip: !isAuth });
   
   useEffect(() => {
     if (isSuccess && data) {

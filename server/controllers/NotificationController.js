@@ -10,7 +10,9 @@ const NotificationController = {
 
       const userNotifications = await Notification.find({ userId }).sort({ createdAt: -1 });
 
-      console.log(userNotifications); 
+      res.locals.notifications = userNotifications;
+
+      next()
       
     } catch (error) {
       return next({

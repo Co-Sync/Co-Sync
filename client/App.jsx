@@ -36,9 +36,9 @@ const App = () => {
   });
   return (
     <div>
-      <div id='toggleButton'>      
+      {/* <div id='toggleButton'>      
         <ToggleColorMode/>
-      </div>
+      </div> */}
       <div className="App">
         <Routes>
           <Route

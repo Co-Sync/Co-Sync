@@ -3,6 +3,22 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { resetState } from '../slices/userSlice.js';
 import { userApi, useLogoutUserMutation } from '../utils/userApi.js';
+import { useGetNotificationsQuery } from '../utils/userApi.js';
+// import { BellIcon } from '@chakra-ui/icons'
+
+// import {
+//   Popover,
+//   PopoverTrigger,
+//   PopoverContent,
+//   PopoverHeader,
+//   PopoverBody,
+//   PopoverFooter,
+//   PopoverArrow,
+//   PopoverCloseButton,
+//   PopoverAnchor,
+// } from '@chakra-ui/react'
+
+import NotificationPopover from './NotificationsPopover.jsx';
 
 /*
   This component is the navbar. It contains the links to the home, profile, settings, and logout pages.
@@ -13,6 +29,9 @@ const NavBar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [logout] = useLogoutUserMutation();
+  const isAuth = localStorage.getItem('isAuth');
+  const { data: notifications, isError: isNotificationsError, isLoading: isNotificationsLoading, isSuccess: isNotificationsSuccess, error: notificationsError } = useGetNotificationsQuery( { skip: !isAuth });
+
   const handleLogout = async (e) => {
     try {
       localStorage.removeItem('isAuth');
@@ -36,6 +55,7 @@ const NavBar = () => {
       </ul>
       <ul>
         <li>
+          <NotificationPopover notifications={notifications} />
           <Link className='routerLink' to='/settings'>Settings</Link>
           <button className='routerLink' onClick={handleLogout} type='button' >Logout</button>
         </li>

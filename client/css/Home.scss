@@ -22,9 +22,12 @@
   overflow: auto;
 }
 
+// the NavBar is the top bar with the logo and the buttons
 .NavBar {
+  // without z-index NavBar 'sinks' below the TableDispay
+  z-index: 2;
   display: grid;
-  height: 10vh;
+  height: 20vh;
   align-items: center;
   position: relative;
   width: 100%;
@@ -61,7 +64,7 @@
       }
     }
   }
-
+  
   h1 {
     margin: 0;
     padding: 1px 10px;
