@@ -13,6 +13,7 @@
   height: 30vh;
   border: 2px solid white;
   overflow: auto;
+
   .projectsList {
     width: fit-content;
     height: 30vh;
@@ -22,6 +23,7 @@
     align-items: center;
     padding: 0.5rem;
   }
+
   .textModalInner {
     display: flex;
     flex-direction: column;
@@ -31,6 +33,7 @@
     padding: 5px;
     margin: 5px;
   }
+
   .projectsListButton {
     display: flex;
     justify-content: center;
@@ -40,11 +43,13 @@
     background-color: #6fcdff00;
     transition: all 0.2s ease-in-out;
     margin: 0.2rem 0.5rem;
+
     &:hover {
       scale: 1.1;
       background-color: rgba(255, 255, 255, 0.1);
     }
   }
+
   button {
     position: relative;
     cursor: pointer;
@@ -63,50 +68,62 @@
     text-wrap: nowrap;
     word-wrap: break-word;
     white-space: nowrap;
+
     &:hover {
       scale: 1.1;
       background-color: rgba(255, 255, 255, 0.1);
     }
   }
+
   span {
     font-size: 1rem;
     top: 0.4rem;
   }
+
   div {
     height: fit-content !important;
   }
+
   input {
     width: 10rem;
     height: 2vh !important;
     overflow: auto;
     font-size: 0.5rem;
-    &:not(:placeholder-shown) + legend + .TextInputHighlight {
+
+    &:not(:placeholder-shown)+legend+.TextInputHighlight {
       transform-origin: left top 0px;
       transform: translate(0.5rem, -1rem) scale(0.5);
     }
-    &:not(:placeholder-shown) + legend {
+
+    &:not(:placeholder-shown)+legend {
       position: relative;
       max-width: 100%;
     }
+
     &:focus {
       border: none;
       outline: none;
-      & + legend {
+
+      &+legend {
         position: relative;
         max-width: 100%;
       }
-      & + legend + .TextInputHighlight {
+
+      &+legend+.TextInputHighlight {
         transform-origin: left top 0px;
         transform: translate(0.5rem, -1rem) scale(0.5);
       }
     }
   }
+
   fieldset {
     padding-left: 0.7rem;
     height: fit-content;
   }
+
   legend {
     height: 0;
+
     span {
       font-size: 0.47rem;
       top: 0.5rem;
@@ -125,6 +142,7 @@
   height: fit-content;
   width: 100%;
   padding: 1px 5px;
+
   p {
     font-size: 1rem;
     margin: 0px 5px;
@@ -133,7 +151,34 @@
     white-space: nowrap;
     overflow: auto;
   }
+
   button {
     color: red;
   }
+}
+
+.commentBox {
+  border: 1px solid #cb2103 !important;
+  border-radius: 3px !important;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.buttonBox {
+  border: 1px solid #cb2103 !important;
+  border-radius: 3px !important;
+  display: flex;
+  flex-direction: row;
+  margin-left: auto !important;
+  margin-right: 0 !important;
+}
+
+.commentButton {
+  border: 1px solid #cb2103 !important;
+  border-radius: 3px !important;
+  color: #fff !important;
+  // margin-left: auto;
+  // margin-right: 0;
+  // display: inline-block;
 }

@@ -5,13 +5,21 @@ import App from './App.jsx'
 import { store } from './utils/store.js';
 import './css/index.css';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { extendTheme, ChakraProvider } from '@chakra-ui/react'
+
+const config = {
+  initialColorMode: 'dark',
+  useSystemColorMode: 'false'
+}
 
 if (module.hot) module.hot.accept();
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
       <Router>
-        <App />
+        <ChakraProvider>
+          <App />
+        </ChakraProvider>
       </Router>
     </Provider>
   </React.StrictMode>

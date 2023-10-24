@@ -244,10 +244,12 @@ const updateTask = async (req, res, next) => {
       });
     }
     task.taskName = req.body.taskName;
-    console.log(typeof (task.taskComments))
+
+    console.log(task.taskComments)
+
     let num = Object.keys(task.taskComments).length
     task.taskComments[num] = req.body.taskComments;
-    // task.taskComments = task.taskComments.append(req.body.taskComments);
+
     console.log(task.taskComments)
     await project.save();
 
