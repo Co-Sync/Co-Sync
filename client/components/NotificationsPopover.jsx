@@ -5,29 +5,13 @@ import Notification from './Notification.jsx';
 
 const NotificationPopover = ({notifications}) => { 
   
-  // return (
-  //   <Popover
-  //     border='dotted'
-  //     bg='white'
-  //     className='popover'>
-  //     <PopoverTrigger>
-  //       <BellIcon className='bellIcon' />
-  //     </PopoverTrigger>
-  //     <PopoverContent
-  //       bg='white'
-  //       className='popoverContent'>
-  //       <PopoverArrow />
-  //       <PopoverCloseButton />
-  //       <PopoverHeader>Notifications</PopoverHeader>
-  //       <PopoverBody>Nothing here yet!</PopoverBody>
-  //     </PopoverContent>
-  //   </Popover>
-  // )
   return (
-    <Box>
+    <Box
+    display='inline-block'
+    >
       <Popover size='md' >
         <PopoverTrigger>
-        <BellIcon className='bellIcon' />
+          <BellIcon className='bellIcon' />
         </PopoverTrigger>
         <PopoverContent>
           <PopoverArrow />

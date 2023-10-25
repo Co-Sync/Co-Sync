@@ -19,7 +19,7 @@ import { useGetNotificationsQuery } from '../utils/userApi.js';
 // } from '@chakra-ui/react'
 
 import NotificationPopover from './NotificationsPopover.jsx';
-
+import ProfilePopover from './ProfilePopover.jsx';
 /*
   This component is the navbar. It contains the links to the home, profile, settings, and logout pages.
   And should exist everywhere except the login and signup pages.
@@ -30,20 +30,8 @@ const NavBar = () => {
   const dispatch = useDispatch();
   const [logout] = useLogoutUserMutation();
   const isAuth = localStorage.getItem('isAuth');
-  const { data: notifications, isError: isNotificationsError, isLoading: isNotificationsLoading, isSuccess: isNotificationsSuccess, error: notificationsError } = useGetNotificationsQuery( { skip: !isAuth });
-
-  const handleLogout = async (e) => {
-    try {
-      localStorage.removeItem('isAuth');
-      const res = await logout().unwrap();
-      console.log('Logout successful');
-      userApi.util.resetApiState(undefined);
-      dispatch(resetState(undefined));
-      navigate('/login');
-    } catch (error) {
-      console.log('Logout failed with error: ', error);
-    }
-  }
+  const { data: notifications, isError: isNotificationsError, isLoading: isNotificationsLoading, isSuccess: isNotificationsSuccess, error: notificationsError } = useGetNotificationsQuery({ skip: !isAuth });
+  
   return (
     <nav className='NavBar'>
       <h1><a href='https://github.com/Co-Sync/Co-Sync'>Co-Sync</a></h1>
@@ -56,8 +44,9 @@ const NavBar = () => {
       <ul>
         <li>
           <NotificationPopover notifications={notifications} />
-          <Link className='routerLink' to='/settings'>Settings</Link>
-          <button className='routerLink' onClick={handleLogout} type='button' >Logout</button>
+          <ProfilePopover />
+          {/* <Link className='routerLink' to='/settings'>Settings</Link> */}
+          {/* <button className='routerLink' onClick={handleLogout} type='button' >Logout</button> */}
         </li>
       </ul>
     </nav>

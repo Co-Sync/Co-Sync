@@ -24,45 +24,56 @@
 
 // the NavBar is the top bar with the logo and the buttons
 .NavBar {
-  // without z-index NavBar 'sinks' below the TableDispay
+  // ? Without z-index NavBar 'sinks' below the TableDispay
   z-index: 2;
-  display: grid;
-  height: 20vh;
+  // ? Changed display from grid to flex
+  // display: grid;
+  // grid-template-columns: 1fr 1fr auto;
+
+  display: flex;
+  justify-content: space-between;
+  
+  //  ? does the NavBar need to be this big? 
   align-items: center;
   position: relative;
-  width: 100%;
-  grid-template-columns: 1fr 1fr auto;
   padding: 0rem 1rem;
   backdrop-filter: blur(10px);
   background-color: rgba(255, 255, 255, 0.01);
   border-bottom: 1px solid rgb(255, 255, 255);
+  // * sizing 
+  height: 20vh;
+  width: 100%;
   font-size: 3vh;
+  // * animation 
   animation: slideInFromTop 1s;
   animation-delay: 0.5s;
   animation-fill-mode: both;
+
+
   ul {
-    height: fit-content;
+    display: flex;
     margin: 0;
+    height: fit-content;
     width: fit-content;
     padding: 0;
-    list-style: none;
-    .routerLink {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: fit-content;
-      padding: 0;
-      border: 0px solid transparent;
-      background-color: transparent;
-      cursor: pointer;
-      border-radius: 10px;
-      transition: all 0.2s ease-in-out;
-      font-size: 1.5vw;
-      &:hover {
-        scale: 1.1;
-        background-color: rgba(255, 255, 255, 0.1);
-      }
-    }
+    list-style: none; 
+    // .routerLink {
+    //   display: flex;
+    //   align-items: center;
+    //   justify-content: center;
+    //   height: fit-content;
+    //   padding: 0;
+    //   border: 0px solid transparent;
+    //   background-color: transparent;
+    //   cursor: pointer;
+    //   border-radius: 10px;
+    //   transition: all 0.2s ease-in-out;
+    //   font-size: 1.5vw;
+    //   &:hover {
+    //     scale: 1.1;
+    //     background-color: rgba(255, 255, 255, 0.1);
+    //   }
+    // }
   }
   
   h1 {
