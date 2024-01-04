@@ -1,7 +1,7 @@
 const express = require('express');
 
 const projectController = require('../controllers/ProjectController');
-const sessionController = require('../controllers/SessionController');
+// const sessionController = require('../controllers/SessionController');
 
 const projectRouter = express.Router();
 
@@ -106,7 +106,7 @@ projectRouter.delete('/column/:projectId/:columnId',
 //   - taskId
 // returns a 200 status with a success message.
 projectRouter.delete('/task/:projectId/:columnId/:taskId',
-// sessionController.isLoggedIn,
+  // sessionController.isLoggedIn,
   projectController.deleteTask,
   (req, res) => {
     res.statusMessage = 'Task deleted';
