@@ -39,6 +39,10 @@ html {
   font-family: JetBrainsMono-Regular;
   color: white;
   text-shadow: 0rem 0rem 0.35rem rgba(255, 255, 255, 0.5);
+  scrollbar-color: #2ee3ffae #1B2735;
+  scrollbar-width: auto;
+  scroll-behavior: smooth;
+  scrollbar-gutter: stable both-edges;
 }
 
 body {
